@@ -242,8 +242,8 @@
         <li class="nav-item">
             <span class="nav-link">Projects <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
             <ul class="dropdown-menu">
-                <li><a href="#"><i class="fas fa-list-ul"></i> All Projects</a></li>
-                <li><a href="#"><i class="fas fa-plus"></i> Add New Project</a></li>
+                <li><a href="projects/index.php"><i class="fas fa-list-ul"></i> All Projects</a></li>
+                <li><a href="projects/add-project.php"><i class="fas fa-plus-circle"></i> Add Project</a></li>
                 <li><a href="#"><i class="fas fa-star"></i> Featured Items</a></li>
             </ul>
         </li>
