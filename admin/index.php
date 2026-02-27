@@ -1,4 +1,11 @@
-<?php include 'includes/header.php'; ?>
+<?php
+session_start();
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: login.php");
+    exit();
+}
+include 'includes/header.php'; 
+?>
 
 <div class="main-content">
     <div class="dashboard-welcome" style="margin-bottom: 30px;">
