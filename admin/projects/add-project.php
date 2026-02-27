@@ -126,8 +126,8 @@ include '../includes/header.php';
     <?php endif; ?>
 
     <!-- Load Summernote Assets From Vendor -->
-    <link href="../../vendor/summernote/summernote-lite.min.css" rel="stylesheet">
-    <script src="../../vendor/summernote/summernote-lite.min.js"></script>
+    <link href="../../vendor/summernote/summernote/dist/summernote-lite.css" rel="stylesheet">
+    <script src="../../vendor/summernote/summernote/dist/summernote-lite.js"></script>
 
     <form method="POST" enctype="multipart/form-data" class="add-project-form">
         <style>
