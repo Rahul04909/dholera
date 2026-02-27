@@ -253,7 +253,7 @@
                 <div class="user-avatar">AD</div>
                 <span class="nav-link">Admin <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
                 <ul class="dropdown-menu" style="left: auto; right: 0;">
-                    <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+                    <li><a href="profile.php"><i class="fas fa-user-circle"></i> Profile</a></li>
                     <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
                     <li><hr style="border: none; border-top: 1px solid #eee;"></li>
                     <li><a href="logout.php" style="color: #e53e3e;"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
