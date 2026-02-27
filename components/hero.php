@@ -1,5 +1,24 @@
 <?php
 // Hero Component for Real Estate Agency
+require_once 'database/db_config.php';
+
+// Fetch dynamic slides
+try {
+    $slide_stmt = $conn->query("SELECT * FROM hero_slides WHERE status = 'active' ORDER BY order_index ASC");
+    $dynamic_slides = $slide_stmt->fetchAll();
+} catch (PDOException $e) {
+    $dynamic_slides = []; // Fallback to empty
+}
+
+// Default slides if no dynamic ones exist
+$default_slides = [
+    ['image_path' => 'assets/hero/hero-slide-3.webp'],
+    ['image_path' => 'assets/hero/hero-slide-2.webp'],
+    ['image_path' => 'assets/hero/hero-slide-1.webp']
+];
+
+$active_slides = !empty($dynamic_slides) ? $dynamic_slides : $default_slides;
+$total_slides_count = count($active_slides);
 ?>
 <style>
     .hero-section {
@@ -20,7 +39,7 @@
 
     .slider-container {
         display: flex;
-        width: 300%; /* For 3 slides */
+        width: <?php echo $total_slides_count * 100; ?>%; /* Dynamic width based on slides */
         height: 100%;
         transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
     }
@@ -43,11 +62,6 @@
         }
     }
 
-    /* Mock Slider Images - Real estate themed placeholders */
-    .slide-1 { background-image: url('assets/hero/hero-slide-3.webp'); }
-    .slide-2 { background-image: url('assets/hero/hero-slide-2.webp'); }
-    .slide-3 { background-image: url('assets/hero/hero-slide-1.webp'); }
-
     /* Slider Controls */
     .slider-nav {
         position: absolute;
@@ -61,7 +75,7 @@
 
     .slider-dot {
         width: 40px;
-        height: 4px;
+        height: 5px;
         background: rgba(255, 255, 255, 0.5);
         cursor: pointer;
         transition: background 0.3s;
@@ -69,14 +83,14 @@
     }
 
     .slider-dot.active {
-        background: #fff;
+        background: var(--primary-gold, #b8860b);
     }
 
     .slider-arrow {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.3);
+        background: rgba(0, 0, 0, 0.3);
         color: #fff;
         padding: 15px;
         cursor: pointer;
@@ -90,7 +104,7 @@
         height: 50px;
     }
 
-    .slider-arrow:hover { background: rgba(255, 255, 255, 0.5); }
+    .slider-arrow:hover { background: rgba(184, 134, 11, 0.7); }
     .arrow-left { left: 20px; }
     .arrow-right { right: 20px; }
 
@@ -196,17 +210,18 @@
     }
 
     .form-group {
-        margin-bottom: 10px;
+        margin-bottom: 16px;
     }
 
     .form-control {
         width: 100%;
         padding: 12px 15px;
-        border: 2px solid #ccc;
-        border-radius: 6px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
         font-size: 14px;
         outline: none;
         transition: border-color 0.3s;
+        box-shadow: none;
     }
 
     .form-control:focus {
@@ -215,36 +230,65 @@
 
     .submit-btn {
         grid-column: span 2;
-        background: #d4a75c;
+        background: var(--primary-gold, #b8860b);
         color: #fff;
         border: none;
         padding: 15px;
-        border-radius: 6px;
+        border-radius: 4px;
         font-size: 16px;
         font-weight: 700;
         cursor: pointer;
         transition: background 0.3s;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        text-transform: uppercase;
     }
 
     .submit-btn:hover {
-        background: #c39243;
+        background: #966d09;
+    }
+
+    /* Dynamic Slide Title Overlay */
+    .slide-content {
+        position: absolute;
+        top: 50%;
+        left: 80px;
+        transform: translateY(-50%);
+        color: #fff;
+        max-width: 600px;
+        z-index: 5;
+    }
+
+    .slide-content h2 {
+        font-size: 48px;
+        font-weight: 800;
+        margin-bottom: 15px;
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .slide-content p {
+        font-size: 20px;
+        font-weight: 500;
+        background: rgba(0,0,0,0.4);
+        padding: 10px 20px;
+        display: inline-block;
+        border-left: 4px solid var(--primary-gold);
     }
 
     /* Responsive Styles */
     @media (max-width: 992px) {
         .hero-slider-col {
             flex: 1 1 100%;
-            min-height: 300px;
-            aspect-ratio: 4 / 3;
+            min-height: 350px;
         }
         .hero-enquiry-col {
             flex: 1 1 100%;
             border-left: none;
-            border-top: 5px solid #eee;
+            padding: 40px 20px;
         }
-        .hero-title {
-            font-size: 28px;
+        .slide-content {
+            left: 30px;
+        }
+        .slide-content h2 {
+            font-size: 32px;
         }
     }
 
@@ -255,8 +299,8 @@
         .submit-btn {
             grid-column: span 1;
         }
-        .info-badge {
-            font-size: 14px;
+        .slide-content h2 {
+            font-size: 26px;
         }
     }
 </style>
@@ -265,23 +309,34 @@
     <!-- Left Column: Slider -->
     <div class="hero-slider-col">
         <div class="slider-container" id="slider">
-            <div class="slide slide-1"></div>
-            <div class="slide slide-2"></div>
-            <div class="slide slide-3"></div>
+            <?php foreach ($active_slides as $slide): ?>
+                <div class="slide" style="background-image: url('<?php echo htmlspecialchars($slide['image_path']); ?>');">
+                    <?php if (isset($slide['title']) && $slide['title']): ?>
+                        <div class="slide-content">
+                            <h2><?php echo htmlspecialchars($slide['title']); ?></h2>
+                            <?php if (isset($slide['subtitle']) && $slide['subtitle']): ?>
+                                <p><?php echo htmlspecialchars($slide['subtitle']); ?></p>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
         </div>
 
-        <div class="slider-arrow arrow-left" id="prevSlide">
-            <i class="fas fa-chevron-left"></i>
-        </div>
-        <div class="slider-arrow arrow-right" id="nextSlide">
-            <i class="fas fa-chevron-right"></i>
-        </div>
+        <?php if ($total_slides_count > 1): ?>
+            <div class="slider-arrow arrow-left" id="prevSlide">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="slider-arrow arrow-right" id="nextSlide">
+                <i class="fas fa-chevron-right"></i>
+            </div>
 
-        <div class="slider-nav">
-            <div class="slider-dot active" data-index="0"></div>
-            <div class="slider-dot" data-index="1"></div>
-            <div class="slider-dot" data-index="2"></div>
-        </div>
+            <div class="slider-nav">
+                <?php for($i = 0; $i < $total_slides_count; $i++): ?>
+                    <div class="slider-dot <?php echo $i === 0 ? 'active' : ''; ?>" data-index="<?php echo $i; ?>"></div>
+                <?php endfor; ?>
+            </div>
+        <?php endif; ?>
     </div>
 
     <!-- Right Column: Enquiry Form -->
@@ -339,35 +394,37 @@
     const nextBtn = document.getElementById('nextSlide');
     
     let currentSlide = 0;
-    const totalSlides = 3;
+    const totalSlides = <?php echo $total_slides_count; ?>;
 
-    function updateSlider() {
-        sliderContainer.style.transform = `translateX(-${(currentSlide * 100) / totalSlides}%)`;
-        dots.forEach((dot, idx) => {
-            dot.classList.toggle('active', idx === currentSlide);
-        });
-    }
+    if (totalSlides > 1) {
+        function updateSlider() {
+            sliderContainer.style.transform = `translateX(-${(currentSlide * 100) / totalSlides}%)`;
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentSlide);
+            });
+        }
 
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        updateSlider();
-    }
-
-    function prevSlide() {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        updateSlider();
-    }
-
-    nextBtn.addEventListener('click', nextSlide);
-    prevBtn.addEventListener('click', prevSlide);
-
-    dots.forEach(dot => {
-        dot.addEventListener('click', () => {
-            currentSlide = parseInt(dot.dataset.index);
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
             updateSlider();
-        });
-    });
+        }
 
-    // Autoplay
-    setInterval(nextSlide, 5000);
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        }
+
+        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                currentSlide = parseInt(dot.dataset.index);
+                updateSlider();
+            });
+        });
+
+        // Autoplay
+        setInterval(nextSlide, 5000);
+    }
 </script>

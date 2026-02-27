@@ -233,6 +233,13 @@
             </a>
         </li>
         <li class="nav-item">
+            <span class="nav-link">Frontend <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
+            <ul class="dropdown-menu">
+                <li><a href="frontend/manage-hero.php"><i class="fas fa-image"></i> Hero Slider</a></li>
+                <li><a href="#"><i class="fas fa-info-circle"></i> Overview</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
             <span class="nav-link">Projects <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
             <ul class="dropdown-menu">
                 <li><a href="#"><i class="fas fa-list-ul"></i> All Projects</a></li>
