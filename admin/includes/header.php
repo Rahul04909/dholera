@@ -250,8 +250,8 @@
         <li class="nav-item">
             <span class="nav-link">Enquiries <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
             <ul class="dropdown-menu">
-                <li><a href="#"><i class="fas fa-envelope"></i> Contact Leads</a></li>
-                <li><a href="#"><i class="fas fa-file-pdf"></i> Brochure Requests</a></li>
+                <li><a href="enquiries/manage-enquiries.php"><i class="fas fa-envelope-open-text"></i> All Enquiries</a></li>
+                <li><a href="#"><i class="fas fa-file-download"></i> Brochure Requests</a></li>
                 <li><a href="#"><i class="fas fa-calendar-alt"></i> Site Visit Requests</a></li>
             </ul>
         </li>

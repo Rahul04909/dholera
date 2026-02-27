@@ -368,7 +368,7 @@ $total_slides_count = count($active_slides);
             <div class="form-heading">
                 <i class="far fa-envelope-open"></i> Send A Message !
             </div>
-            <form action="#" method="POST" class="enquiry-grid">
+            <form id="enquiryForm" class="enquiry-grid">
                 <div class="form-group">
                     <input type="text" name="name" class="form-control" placeholder="Enter Name" required>
                 </div>
@@ -386,6 +386,18 @@ $total_slides_count = count($active_slides);
         </div>
     </div>
 </section>
+
+<!-- Success Popup Modal -->
+<div id="successModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background: #fff; padding: 40px; border-radius: 8px; text-align: center; max-width: 400px; position: relative; border-top: 5px solid var(--primary-gold);">
+        <div style="width: 80px; height: 80px; background: #f0fff4; color: #38a169; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 20px;">
+            <i class="fas fa-check"></i>
+        </div>
+        <h2 style="font-size: 24px; margin-bottom: 10px; color: #333;">Thank You!</h2>
+        <p style="color: #666; margin-bottom: 25px;">Your enquiry has been received. Our team will contact you shortly.</p>
+        <button onclick="document.getElementById('successModal').style.display = 'none'" style="background: var(--primary-gold); color: #fff; border: none; padding: 12px 30px; border-radius: 4px; font-weight: 700; cursor: pointer; text-transform: uppercase;">Close</button>
+    </div>
+</div>
 
 <script>
     const sliderContainer = document.getElementById('slider');
@@ -427,4 +439,38 @@ $total_slides_count = count($active_slides);
         // Autoplay
         setInterval(nextSlide, 5000);
     }
+
+    // AJAX Enquiry Submission
+    document.getElementById('enquiryForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const form = this;
+        const formData = new FormData(form);
+        const submitBtn = form.querySelector('.submit-btn');
+        const originalBtnText = submitBtn.innerText;
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Submitting...';
+
+        fetch('ajax/submit-enquiry.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                document.getElementById('successModal').style.display = 'flex';
+                form.reset();
+            } else {
+                alert(data.message || 'Something went wrong. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('A technical error occurred.');
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerText = originalBtnText;
+        });
+    });
 </script>
