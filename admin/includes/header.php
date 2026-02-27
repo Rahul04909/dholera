@@ -252,6 +252,7 @@
             <ul class="dropdown-menu">
                 <li><a href="enquiries/manage-enquiries.php"><i class="fas fa-envelope-open-text"></i> All Enquiries</a></li>
                 <li><a href="#"><i class="fas fa-file-download"></i> Brochure Requests</a></li>
+                <li><a href="enquiries/manage-callbacks.php"><i class="fas fa-phone-square-alt"></i> Callback Requests</a></li>
                 <li><a href="#"><i class="fas fa-calendar-alt"></i> Site Visit Requests</a></li>
             </ul>
         </li>

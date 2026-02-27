@@ -202,9 +202,9 @@
         <!-- Enquiry Section -->
         <div class="footer-enquiry">
             <div class="footer-enquiry-header">
-                <i class="far fa-envelope"></i> Send A Message !
+                <i class="fas fa-phone-volume"></i> Request A Callback !
             </div>
-            <form action="#" method="POST" class="footer-form-grid">
+            <form id="callbackForm" class="footer-form-grid">
                 <div class="footer-form-group">
                     <label>Enter Name</label>
                     <input type="text" class="footer-form-control" name="footer_name" placeholder="Name" required>
@@ -218,8 +218,14 @@
                     <input type="tel" class="footer-form-control" name="footer_number" placeholder="Mobile Number" required>
                 </div>
                 <div class="footer-form-group">
-                    <label>Enter Comments</label>
-                    <input type="text" class="footer-form-control" name="footer_comments" placeholder="Write a message...">
+                    <label>Preferred Time</label>
+                    <select class="footer-form-control" name="callback_time" required>
+                        <option value="">Select Timing</option>
+                        <option value="Morning (9 AM - 12 PM)">Morning (9 AM - 12 PM)</option>
+                        <option value="Afternoon (12 PM - 4 PM)">Afternoon (12 PM - 4 PM)</option>
+                        <option value="Evening (4 PM - 7 PM)">Evening (4 PM - 7 PM)</option>
+                        <option value="Anytime">Anytime</option>
+                    </select>
                 </div>
                 <button type="submit" class="footer-submit-btn">Request A Call</button>
             </form>
@@ -238,3 +244,51 @@
         </div>
     </div>
 </footer>
+
+<!-- Callback Success Popup -->
+<div id="callbackModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background: #fff; padding: 40px; border-radius: 8px; text-align: center; max-width: 400px; position: relative; border-top: 5px solid #000;">
+        <div style="width: 80px; height: 80px; background: #f0fff4; color: #38a169; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 20px;">
+            <i class="fas fa-phone"></i>
+        </div>
+        <h2 style="font-size: 24px; margin-bottom: 10px; color: #333; font-family: 'Outfit', sans-serif;">Request Confirmed</h2>
+        <p style="color: #666; margin-bottom: 25px; font-family: 'Outfit', sans-serif;">We've received your request. One of our specialists will call you at your preferred time.</p>
+        <button onclick="document.getElementById('callbackModal').style.display = 'none'" style="background: #000; color: #fff; border: none; padding: 12px 30px; border-radius: 4px; font-weight: 700; cursor: pointer; text-transform: uppercase;">Awesome</button>
+    </div>
+</div>
+
+<script>
+    // AJAX Callback Request
+    document.getElementById('callbackForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const form = this;
+        const formData = new FormData(form);
+        const submitBtn = form.querySelector('.footer-submit-btn');
+        const originalBtnText = submitBtn.innerText;
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Requesting...';
+
+        fetch('ajax/submit-callback.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                document.getElementById('callbackModal').style.display = 'flex';
+                form.reset();
+            } else {
+                alert(data.message || 'Something went wrong.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('A technical error occurred.');
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerText = originalBtnText;
+        });
+    });
+</script>
