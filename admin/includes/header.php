@@ -237,24 +237,24 @@
         <li class="nav-item">
             <span class="nav-link">Frontend <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
             <ul class="dropdown-menu">
-                <li><a href="frontend/manage-hero.php"><i class="fas fa-image"></i> Hero Slider</a></li>
+                <li><a href="/dholera/admin/frontend/manage-hero.php"><i class="fas fa-image"></i> Hero Slider</a></li>
                 <li><a href="#"><i class="fas fa-info-circle"></i> Overview</a></li>
             </ul>
         </li>
         <li class="nav-item">
             <span class="nav-link">Projects <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
             <ul class="dropdown-menu">
-                <li><a href="projects/index.php"><i class="fas fa-list-ul"></i> All Projects</a></li>
-                <li><a href="projects/add-project.php"><i class="fas fa-plus-circle"></i> Add Project</a></li>
+                <li><a href="/dholera/admin/projects/index.php"><i class="fas fa-list-ul"></i> All Projects</a></li>
+                <li><a href="/dholera/admin/projects/add-project.php"><i class="fas fa-plus-circle"></i> Add Project</a></li>
                 <li><a href="#"><i class="fas fa-star"></i> Featured Items</a></li>
             </ul>
         </li>
         <li class="nav-item">
             <span class="nav-link">Enquiries <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
             <ul class="dropdown-menu">
-                <li><a href="enquiries/manage-enquiries.php"><i class="fas fa-envelope-open-text"></i> All Enquiries</a></li>
+                <li><a href="/dholera/admin/enquiries/manage-enquiries.php"><i class="fas fa-envelope-open-text"></i> All Enquiries</a></li>
                 <li><a href="#"><i class="fas fa-file-download"></i> Brochure Requests</a></li>
-                <li><a href="enquiries/manage-callbacks.php"><i class="fas fa-phone-square-alt"></i> Callback Requests</a></li>
+                <li><a href="/dholera/admin/enquiries/manage-callbacks.php"><i class="fas fa-phone-square-alt"></i> Callback Requests</a></li>
                 <li><a href="#"><i class="fas fa-calendar-alt"></i> Site Visit Requests</a></li>
             </ul>
         </li>
@@ -263,10 +263,10 @@
                 <div class="user-avatar">AD</div>
                 <span class="nav-link">Admin <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
                 <ul class="dropdown-menu" style="left: auto; right: 0;">
-                    <li><a href="profile.php"><i class="fas fa-user-circle"></i> Profile</a></li>
+                    <li><a href="/dholera/admin/profile.php"><i class="fas fa-user-circle"></i> Profile</a></li>
                     <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
                     <li><hr style="border: none; border-top: 1px solid #eee;"></li>
-                    <li><a href="logout.php" style="color: #e53e3e;"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    <li><a href="/dholera/admin/logout.php" style="color: #e53e3e;"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
             </div>
         </li>
@@ -275,23 +275,23 @@
 
 <aside class="admin-sidebar">
     <ul class="sidebar-menu">
-        <li class="sidebar-item active">
-            <a href="index.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <li class="sidebar-item <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' && strpos($_SERVER['PHP_SELF'], 'projects') === false ? 'active' : ''; ?>">
+            <a href="/dholera/admin/index.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
         </li>
-        <li class="sidebar-item">
-            <a href="#"><i class="fas fa-building"></i> Properties</a>
+        <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'manage-hero.php') !== false ? 'active' : ''; ?>">
+            <a href="/dholera/admin/frontend/manage-hero.php"><i class="fas fa-images"></i> Hero Slider</a>
         </li>
-        <li class="sidebar-item">
-            <a href="#"><i class="fas fa-users"></i> Users</a>
+        <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'projects') !== false ? 'active' : ''; ?>">
+            <a href="/dholera/admin/projects/index.php"><i class="fas fa-building"></i> Manage Projects</a>
         </li>
-        <li class="sidebar-item">
-            <a href="#"><i class="fas fa-images"></i> Media Library</a>
+        <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'manage-enquiries.php') !== false ? 'active' : ''; ?>">
+            <a href="/dholera/admin/enquiries/manage-enquiries.php"><i class="fas fa-envelope-open-text"></i> Leads / Enquiries</a>
         </li>
-        <li class="sidebar-item">
-            <a href="#"><i class="fas fa-chart-line"></i> Analytics</a>
+        <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'manage-callbacks.php') !== false ? 'active' : ''; ?>">
+            <a href="/dholera/admin/enquiries/manage-callbacks.php"><i class="fas fa-phone-volume"></i> Callback Requests</a>
         </li>
-        <li class="sidebar-item">
-            <a href="#"><i class="fas fa-tools"></i> Configuration</a>
+        <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'profile.php') !== false ? 'active' : ''; ?>">
+            <a href="/dholera/admin/profile.php"><i class="fas fa-user-cog"></i> Admin Profile</a>
         </li>
     </ul>
 </aside>
