@@ -77,8 +77,8 @@ include '../includes/header.php';
         <div style="background: #f0fff4; color: #38a169; padding: 15px; border-radius: 4px; margin-bottom: 25px;"><?php echo $success_msg; ?></div>
     <?php endif; ?>
 
-    <link href="../../vendor/summernote/summernote/dist/summernote-lite.css" rel="stylesheet">
-    <script src="../../vendor/summernote/summernote/dist/summernote-lite.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
     <form method="POST" enctype="multipart/form-data">
         <style>

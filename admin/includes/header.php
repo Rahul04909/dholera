@@ -6,10 +6,10 @@
     <title>Admin Dashboard | Dholera Smart City</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary-gold: #b8860b;
@@ -224,7 +224,7 @@
 
 <header class="admin-header">
     <div class="logo-area">
-        <img src="../assets/logo.webp" alt="Dholera Smart City Logo">
+        <img src="/dholera/assets/logo.webp" alt="Dholera Smart City Logo">
         <span class="logo-text"></span>
     </div>
 

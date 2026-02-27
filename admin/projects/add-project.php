@@ -125,9 +125,9 @@ include '../includes/header.php';
         <div style="background: #fff5f5; color: #e53e3e; padding: 15px; border-radius: 4px; margin-bottom: 25px;"><?php echo $error_msg; ?></div>
     <?php endif; ?>
 
-    <!-- Load Summernote Assets From Vendor -->
-    <link href="../../vendor/summernote/summernote/dist/summernote-lite.css" rel="stylesheet">
-    <script src="../../vendor/summernote/summernote/dist/summernote-lite.js"></script>
+    <!-- Summernote CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
     <form method="POST" enctype="multipart/form-data" class="add-project-form">
         <style>
