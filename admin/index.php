@@ -4,6 +4,7 @@ if (!isset($_SESSION['admin_id'])) {
     header("Location: login.php");
     exit();
 }
+require_once '../database/db_config.php';
 include 'includes/header.php'; 
 ?>
 
@@ -145,6 +146,12 @@ include 'includes/header.php';
         }
     </style>
 
+    <?php
+    // Fetch Dynamic Stats
+    $total_projects = $conn->query("SELECT COUNT(*) FROM projects")->fetchColumn();
+    $total_leads = $conn->query("SELECT COUNT(*) FROM enquiries")->fetchColumn();
+    $total_callbacks = $conn->query("SELECT COUNT(*) FROM callback_requests")->fetchColumn();
+    ?>
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-icon icon-blue">
@@ -152,7 +159,7 @@ include 'includes/header.php';
             </div>
             <div class="stat-info">
                 <h3>Total Projects</h3>
-                <div class="value">24</div>
+                <div class="value"><?php echo number_format($total_projects); ?></div>
             </div>
         </div>
         <div class="stat-card">
@@ -161,25 +168,25 @@ include 'includes/header.php';
             </div>
             <div class="stat-info">
                 <h3>Total Leads</h3>
-                <div class="value">1,284</div>
-            </div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon icon-green">
-                <i class="fas fa-file-invoice-dollar"></i>
-            </div>
-            <div class="stat-info">
-                <h3>Revenue</h3>
-                <div class="value">₹ 4.2 Cr</div>
+                <div class="value"><?php echo number_format($total_leads); ?></div>
             </div>
         </div>
         <div class="stat-card">
             <div class="stat-icon icon-purple">
-                <i class="fas fa-bell"></i>
+                <i class="fas fa-phone-alt"></i>
             </div>
             <div class="stat-info">
-                <h3>New Alerts</h3>
-                <div class="value">12</div>
+                <h3>Callbacks</h3>
+                <div class="value"><?php echo number_format($total_callbacks); ?></div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon icon-green">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="stat-info">
+                <h3>Active Projects</h3>
+                <div class="value"><?php echo $conn->query("SELECT COUNT(*) FROM projects WHERE status = 'active'")->fetchColumn(); ?></div>
             </div>
         </div>
     </div>
