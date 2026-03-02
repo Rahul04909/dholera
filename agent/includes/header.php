@@ -246,7 +246,7 @@ try {
             <a href="index.php"><i class="fas fa-th-large"></i> Dashboard View</a>
         </li>
         <li class="sidebar-item <?php echo basename($_SERVER['PHP_SELF']) == 'leads.php' ? 'active' : ''; ?>">
-            <a href="#"><i class="fas fa-users"></i> My Leads</a>
+            <a href="leads.php"><i class="fas fa-users"></i> My Leads</a>
         </li>
         <li class="sidebar-item <?php echo basename($_SERVER['PHP_SELF']) == 'projects.php' ? 'active' : ''; ?>">
             <a href="#"><i class="fas fa-building"></i> Browse Projects</a>

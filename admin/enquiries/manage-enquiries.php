@@ -49,6 +49,35 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 if ($page < 1) $page = 1;
 $offset = ($page - 1) * $limit;
 
+// Handle Lead Forwarding
+if (isset($_POST['forward_lead'])) {
+    $agent_id = (int)$_POST['agent_id'];
+    $source_id = (int)$_POST['source_id'];
+    $source_type = $_POST['source_type'];
+    $admin_note = trim($_POST['admin_note']);
+
+    try {
+        $stmt = $conn->prepare("INSERT INTO agent_leads (agent_id, source_type, source_id, admin_note) VALUES (:agent_id, :source_type, :source_id, :admin_note)");
+        $stmt->execute([
+            'agent_id' => $agent_id,
+            'source_type' => $source_type,
+            'source_id' => $source_id,
+            'admin_note' => $admin_note
+        ]);
+        $success_msg = "Lead forwarded to agent successfully!";
+    } catch (PDOException $e) {
+        $error_msg = "Error forwarding lead: " . $e->getMessage();
+    }
+}
+
+// Fetch all active agents for forwarding
+try {
+    $agents_stmt = $conn->query("SELECT id, full_name FROM agents WHERE status = 'active' ORDER BY full_name ASC");
+    $active_agents = $agents_stmt->fetchAll();
+} catch (PDOException $e) {
+    $active_agents = [];
+}
+
 try {
     // Get total count
     $count_stmt = $conn->query("SELECT COUNT(*) FROM enquiries");
@@ -203,6 +232,7 @@ include '../includes/header.php';
                                 </td>
                                 <td>
                                     <div class="action-btns">
+                                        <a href="javascript:void(0)" class="btn-status" title="Forward to Agent" onclick="openForwardModal(<?php echo $row['id']; ?>, 'enquiry', '<?php echo addslashes($row['name']); ?>')"><i class="fas fa-share-square"></i></a>
                                         <?php if ($row['status'] == 'pending'): ?>
                                             <a href="?action=update_status&id=<?php echo $row['id']; ?>&status=closed" class="btn-status" title="Mark Closed"><i class="fas fa-check-double"></i></a>
                                         <?php else: ?>
@@ -231,6 +261,58 @@ include '../includes/header.php';
         <?php endif; ?>
     </div>
 </div>
+
+<!-- Forward Modal -->
+<div id="forwardModal" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+    <div style="background:#fff; width:100%; max-width:500px; padding:30px; border-radius:8px; box-shadow:0 10px 25px rgba(0,0,0,0.2);">
+        <h2 id="modalTitle" style="margin-top:0; border-bottom:1px solid #edf2f7; padding-bottom:15px;">Forward Lead</h2>
+        <form method="POST">
+            <input type="hidden" name="source_id" id="modalSourceId">
+            <input type="hidden" name="source_type" id="modalSourceType">
+            
+            <div style="margin-bottom:20px;">
+                <label style="display:block; font-weight:700; margin-bottom:10px;">Select Agent <span style="color:red">*</span></label>
+                <select name="agent_id" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:4px;">
+                    <option value="">-- Select Agent --</option>
+                    <?php foreach ($active_agents as $agent): ?>
+                        <option value="<?php echo $agent['id']; ?>"><?php echo htmlspecialchars($agent['full_name']); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            
+            <div style="margin-bottom:20px;">
+                <label style="display:block; font-weight:700; margin-bottom:10px;">Admin Note (Optional)</label>
+                <textarea name="admin_note" rows="3" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:4px;" placeholder="Add special instructions for the agent..."></textarea>
+            </div>
+            
+            <div style="display:flex; justify-content:flex-end; gap:10px;">
+                <button type="button" onclick="closeForwardModal()" style="padding:10px 20px; background:#f7fafc; border:1px solid #e2e8f0; border-radius:4px; cursor:pointer;">Cancel</button>
+                <button type="submit" name="forward_lead" style="padding:10px 20px; background:var(--primary-gold); color:#fff; border:none; border-radius:4px; font-weight:700; cursor:pointer;">Apply Forwarding</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openForwardModal(id, type, name) {
+    document.getElementById('modalSourceId').value = id;
+    document.getElementById('modalSourceType').value = type;
+    document.getElementById('modalTitle').innerHTML = 'Forward: ' + name;
+    document.getElementById('forwardModal').style.display = 'flex';
+}
+
+function closeForwardModal() {
+    document.getElementById('forwardModal').style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    var modal = document.getElementById('forwardModal');
+    if (event.target == modal) {
+        closeForwardModal();
+    }
+}
+</script>
 
 </body>
 </html>
