@@ -44,19 +44,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $city = trim($_POST['city']);
     $pincode = trim($_POST['pincode']);
     $full_address = trim($_POST['full_address']);
-    $password = $_POST['password']; // New password if changing
+    $password = $_POST['password'];
 
     if (empty($full_name) || empty($email) || empty($mobile)) {
         $_SESSION['msg'] = ['status' => 'error', 'text' => 'Required fields are missing.'];
     } else {
         try {
-            // Check for duplicates (excluding current agent)
             $check_stmt = $conn->prepare("SELECT id FROM agents WHERE (email = :email OR mobile = :mobile) AND id != :id");
             $check_stmt->execute(['email' => $email, 'mobile' => $mobile, 'id' => $agent_id]);
             if ($check_stmt->rowCount() > 0) {
                 $_SESSION['msg'] = ['status' => 'error', 'text' => 'Email or Mobile already used by another agent.'];
             } else {
-                // Update Logic
                 $profile_image_path = $agent['profile_image'];
                 if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === 0) {
                     $allowed = ['jpg', 'jpeg', 'png', 'webp'];
@@ -67,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $new_name = 'agent_' . time() . '.' . $ext;
                         $upload_dir = '../../uploads/agents/';
                         if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $upload_dir . $new_name)) {
-                            // Delete old image
                             if ($agent['profile_image'] && file_exists('../../' . $agent['profile_image'])) {
                                 unlink('../../' . $agent['profile_image']);
                             }
@@ -100,7 +97,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'id' => $agent_id
                 ];
 
-                // Update password if provided
                 if (!empty($password)) {
                     $query .= ", password = :password";
                     $params['password'] = password_hash($password, PASSWORD_DEFAULT);
@@ -120,7 +116,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Get message from session if redirected
 if (isset($_SESSION['msg'])) {
     $status = $_SESSION['msg']['status'];
     $message = $_SESSION['msg']['text'];
@@ -130,104 +125,172 @@ if (isset($_SESSION['msg'])) {
 include '../includes/header.php';
 ?>
 
-<div class="content-body">
-    <div class="container-fluid">
-        <div class="row page-titles mx-0">
-            <div class="col-sm-6 p-md-0">
-                <div class="welcome-text">
-                    <h4>Edit Agent Details</h4>
+<div class="main-content">
+    <div class="dashboard-welcome" style="margin-bottom: 30px;">
+        <h1 style="font-size: 28px; font-weight: 700;">Edit Agent Info</h1>
+        <p style="color: #666;">Updating profile for <?php echo htmlspecialchars($agent['full_name']); ?>.</p>
+    </div>
+
+    <?php if ($message): ?>
+        <div style="background-color: <?php echo $status === 'success' ? '#f0fff4' : '#fff5f5'; ?>; color: <?php echo $status === 'success' ? '#38a169' : '#c53030'; ?>; padding: 15px; border-radius: 4px; margin-bottom: 25px; border-left: 4px solid <?php echo $status === 'success' ? '#38a169' : '#c53030'; ?>;">
+            <i class="fas <?php echo $status === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'; ?>"></i> <?php echo $message; ?>
+        </div>
+    <?php endif; ?>
+
+    <style>
+        .form-card {
+            background: #fff;
+            padding: 35px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .form-card h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #edf2f7;
+            padding-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 15px;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+        }
+
+        .btn-update {
+            background-color: var(--primary-gold);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-cancel {
+            background-color: #f7fafc;
+            color: #4a5568;
+            border: 1px solid #e2e8f0;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .img-preview-container {
+            margin-top: 15px;
+            width: 120px;
+            height: 120px;
+            border: 2px dashed #e2e8f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f7fafc;
+        }
+
+        .img-preview-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+
+    <div class="form-card">
+        <form action="edit-agent.php?id=<?php echo $agent_id; ?>" method="POST" enctype="multipart/form-data">
+            <h2><i class="fas fa-id-card" style="color: var(--primary-gold);"></i> Personal & Account Info</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Full Name <span style="color:red">*</span></label>
+                    <input type="text" name="full_name" class="form-control" value="<?php echo htmlspecialchars($agent['full_name']); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address <span style="color:red">*</span></label>
+                    <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($agent['email']); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label>Mobile Number <span style="color:red">*</span></label>
+                    <input type="tel" name="mobile" class="form-control" value="<?php echo htmlspecialchars($agent['mobile']); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label>Update Password (Leave blank to keep current)</label>
+                    <input type="password" name="password" class="form-control" placeholder="New secure password">
+                </div>
+                <div class="form-group">
+                    <label>New Profile Image</label>
+                    <input type="file" name="profile_image" class="form-control" accept="image/*" onchange="previewImage(this)">
+                </div>
+                <div class="form-group">
+                    <div class="img-preview-container">
+                        <img id="imgPreview" src="<?php echo $agent['profile_image'] ? '../../'.$agent['profile_image'] : '../../assets/images/placeholder-user.png'; ?>" alt="Preview">
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.php">Agents</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Edit Agent</a></li>
-                </ol>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-xl-12 col-lg-12">
-                <div class="card">
-                    <div class="card-headers">
-                        <h4 class="card-title p-4">Modify Information</h4>
-                    </div>
-                    <div class="card-body">
-                        <?php if($message): ?>
-                            <div class="alert alert-<?php echo $status === 'success' ? 'success' : 'danger'; ?> alert-dismissible fade show">
-                                <?php echo $message; ?>
-                                <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-                            </div>
-                        <?php endif; ?>
-
-                        <div class="basic-form">
-                            <form action="edit-agent.php?id=<?php echo $agent_id; ?>" method="POST" enctype="multipart/form-data">
-                                <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <label>Full Name <span class="text-danger">*</span></label>
-                                        <input type="text" name="full_name" class="form-control" value="<?php echo htmlspecialchars($agent['full_name']); ?>" required>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Email Address <span class="text-danger">*</span></label>
-                                        <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($agent['email']); ?>" required>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Mobile Number <span class="text-danger">*</span></label>
-                                        <input type="tel" name="mobile" class="form-control" value="<?php echo htmlspecialchars($agent['mobile']); ?>" required>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-md-4">
-                                        <label>Profile Image (Leave blank to keep current)</label>
-                                        <div class="custom-file">
-                                            <input type="file" name="profile_image" class="custom-file-input" id="imgInput" accept="image/*" onchange="previewImage(this)">
-                                            <label class="custom-file-label">Choose file</label>
-                                        </div>
-                                        <div class="mt-3">
-                                            <img id="imgPreview" src="<?php echo $agent['profile_image'] ? '../../'.$agent['profile_image'] : '../../assets/images/placeholder-user.png'; ?>" alt="Preview" style="max-width: 150px; border-radius: 10px; border: 1px solid #ddd; padding: 5px;">
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label>New Password (Leave blank to keep old password)</label>
-                                        <input type="password" name="password" class="form-control" placeholder="Update Password">
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label>Country</label>
-                                        <input type="text" name="country" class="form-control" value="<?php echo htmlspecialchars($agent['country']); ?>">
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-md-3">
-                                        <label>State</label>
-                                        <input type="text" name="state" class="form-control" value="<?php echo htmlspecialchars($agent['state']); ?>">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>City</label>
-                                        <input type="text" name="city" class="form-control" value="<?php echo htmlspecialchars($agent['city']); ?>">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Pincode</label>
-                                        <input type="text" name="pincode" class="form-control" value="<?php echo htmlspecialchars($agent['pincode']); ?>">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Full Address</label>
-                                    <textarea name="full_address" class="form-control" rows="3"><?php echo htmlspecialchars($agent['full_address']); ?></textarea>
-                                </div>
-
-                                <div class="mt-4">
-                                    <button type="submit" class="btn btn-primary px-5">Update Agent</button>
-                                    <a href="index.php" class="btn btn-light ml-2">Back to List</a>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+            <h2 style="margin-top: 20px;"><i class="fas fa-map-marker-alt" style="color: var(--primary-gold);"></i> Address & Location</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Country</label>
+                    <input type="text" name="country" class="form-control" value="<?php echo htmlspecialchars($agent['country']); ?>">
+                </div>
+                <div class="form-group">
+                    <label>State</label>
+                    <input type="text" name="state" class="form-control" value="<?php echo htmlspecialchars($agent['state']); ?>">
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" name="city" class="form-control" value="<?php echo htmlspecialchars($agent['city']); ?>">
+                </div>
+                <div class="form-group">
+                    <label>Pincode</label>
+                    <input type="text" name="pincode" class="form-control" value="<?php echo htmlspecialchars($agent['pincode']); ?>">
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                    <label>Full Residential Address</label>
+                    <textarea name="full_address" class="form-control" rows="2"><?php echo htmlspecialchars($agent['full_address']); ?></textarea>
                 </div>
             </div>
-        </div>
+
+            <div style="margin-top: 30px; border-top: 1px solid #edf2f7; padding-top: 30px;">
+                <button type="submit" class="btn-update">Update Agent Account</button>
+                <a href="index.php" class="btn-cancel">Back to Agents List</a>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -238,15 +301,11 @@ include '../includes/header.php';
             const reader = new FileReader();
             reader.onload = function(e) {
                 preview.src = e.target.result;
-                preview.style.display = 'block';
             }
             reader.readAsDataURL(input.files[0]);
-            
-            // Update label
-            let fileName = input.files[0].name;
-            input.nextElementSibling.innerText = fileName;
         }
     }
 </script>
 
-<?php include '../footer.php'; ?>
+</body>
+</html>
