@@ -250,6 +250,13 @@
             </ul>
         </li>
         <li class="nav-item">
+            <span class="nav-link">Agents <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
+            <ul class="dropdown-menu">
+                <li><a href="<?php echo BASE_URL; ?>admin/agents/index.php"><i class="fas fa-users"></i> All Agents</a></li>
+                <li><a href="<?php echo BASE_URL; ?>admin/agents/add-agent.php"><i class="fas fa-user-plus"></i> Add Agent</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
             <span class="nav-link">Enquiries <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
             <ul class="dropdown-menu">
                 <li><a href="<?php echo BASE_URL; ?>admin/enquiries/manage-enquiries.php"><i class="fas fa-envelope-open-text"></i> All Enquiries</a></li>
@@ -283,6 +290,9 @@
         </li>
         <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'projects') !== false ? 'active' : ''; ?>">
             <a href="<?php echo BASE_URL; ?>admin/projects/index.php"><i class="fas fa-building"></i> Manage Projects</a>
+        </li>
+        <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'agents') !== false ? 'active' : ''; ?>">
+            <a href="<?php echo BASE_URL; ?>admin/agents/index.php"><i class="fas fa-user-tie"></i> Manage Agents</a>
         </li>
         <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'manage-enquiries.php') !== false ? 'active' : ''; ?>">
             <a href="<?php echo BASE_URL; ?>admin/enquiries/manage-enquiries.php"><i class="fas fa-envelope-open-text"></i> Leads / Enquiries</a>
