@@ -206,14 +206,14 @@ include '../includes/header.php';
                 <div class="form-group">
                     <label>Featured Image</label>
                     <?php if($project['featured_image']): ?>
-                        <img src="/dholera/<?php echo $project['featured_image']; ?>" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; border: 1px solid #eee;">
+                        <img src="<?php echo BASE_URL . $project['featured_image']; ?>" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; border: 1px solid #eee;">
                     <?php endif; ?>
                     <input type="file" name="featured_image" class="input-box" accept="image/*">
                 </div>
                 <div class="form-group">
                     <label>Site Plan Image</label>
                     <?php if($project['site_plan_image']): ?>
-                        <img src="/dholera/<?php echo $project['site_plan_image']; ?>" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; border: 1px solid #eee;">
+                        <img src="<?php echo BASE_URL . $project['site_plan_image']; ?>" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; border: 1px solid #eee;">
                     <?php endif; ?>
                     <input type="file" name="site_plan_image" class="input-box" accept="image/*">
                 </div>

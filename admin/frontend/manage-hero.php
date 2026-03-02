@@ -259,7 +259,7 @@ include '../includes/header.php';
                             <?php foreach ($slides as $slide): ?>
                                 <tr>
                                     <td>
-                                        <img src="/dholera/<?php echo htmlspecialchars($slide['image_path']); ?>" class="thumb-img">
+                                        <img src="<?php echo BASE_URL . $slide['image_path']; ?>" class="thumb-img">
                                     </td>
                                     <td>
                                         <div style="font-weight: 600;"><?php echo htmlspecialchars($slide['title']); ?></div>

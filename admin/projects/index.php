@@ -119,7 +119,7 @@ include '../includes/header.php';
                             <tr>
                                 <td>
                                     <?php if ($row['featured_image']): ?>
-                                        <img src="/dholera/<?php echo $row['featured_image']; ?>" class="thumb">
+                                        <img src="<?php echo BASE_URL . $row['featured_image']; ?>" class="thumb">
                                     <?php else: ?>
                                         <div class="thumb" style="display: flex; align-items: center; justify-content: center;"><i class="fas fa-image" style="color:#ccc;"></i></div>
                                     <?php endif; ?>
