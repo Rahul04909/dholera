@@ -1,5 +1,25 @@
 <?php
-// Floor Plan Component
+/**
+ * Floor Plan Component
+ * Dholera Smart City
+ */
+require_once 'database/db_config.php';
+
+try {
+    $plan_settings = $conn->query("SELECT * FROM floor_plan_settings WHERE id = 1")->fetch();
+    $all_plans = $conn->query("SELECT * FROM floor_plans ORDER BY sort_order ASC")->fetchAll();
+    
+    $floor_plans_data = [];
+    foreach ($all_plans as $p) {
+        $stmt_specs = $conn->prepare("SELECT * FROM floor_plan_specs WHERE plan_id = ? ORDER BY sort_order ASC");
+        $stmt_specs->execute([$p['id']]);
+        $p['specs'] = $stmt_specs->fetchAll();
+        $floor_plans_data[] = $p;
+    }
+} catch (PDOException $e) {
+    $plan_settings = null;
+    $floor_plans_data = [];
+}
 ?>
 <style>
     .floor-plan-section {
@@ -38,7 +58,6 @@
         margin: 0;
     }
 
-    /* Tabs Navigation */
     .floor-tabs-nav {
         display: flex;
         justify-content: center;
@@ -71,7 +90,6 @@
         color: #fff;
     }
 
-    /* Tab Content Layout */
     .floor-tab-content {
         display: none;
         background: #fff;
@@ -90,7 +108,6 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Left Side: Info */
     .floor-info-side {
         flex: 1;
         padding: 50px;
@@ -139,7 +156,6 @@
         font-weight: 700;
     }
 
-    /* Right Side: Image */
     .floor-image-side {
         flex: 1.2;
         background-color: #000;
@@ -156,39 +172,21 @@
         object-fit: contain;
     }
 
-    /* Responsive */
     @media (max-width: 992px) {
-        .floor-tab-content.active {
-            flex-direction: column;
-        }
-        .floor-info-side {
-            padding: 40px 30px;
-        }
+        .floor-tab-content.active { flex-direction: column; }
+        .floor-info-side { padding: 40px 30px; }
     }
 
     @media (max-width: 768px) {
-        .floor-tabs-nav {
-            overflow-x: auto;
-            justify-content: flex-start;
-        }
-        .floor-tab-btn {
-            padding: 12px 25px;
-        }
-        .plan-main-title {
-            font-size: 32px;
-        }
+        .floor-tabs-nav { overflow-x: auto; justify-content: flex-start; }
+        .floor-tab-btn { padding: 12px 25px; }
+        .plan-main-title { font-size: 32px; }
     }
 
     @media (max-width: 480px) {
-        .floor-info-side {
-            padding: 30px 20px;
-        }
-        .floor-type-title {
-            font-size: 26px;
-        }
-        .specs-table td {
-            font-size: 14px;
-        }
+        .floor-info-side { padding: 30px 20px; }
+        .floor-type-title { font-size: 26px; }
+        .specs-table td { font-size: 14px; }
     }
 </style>
 
@@ -196,210 +194,48 @@
     <div class="floor-plan-container">
         <!-- Header -->
         <div class="floor-plan-header">
-            <div class="sketch-title">Apartments Sketch</div>
-            <h2 class="plan-main-title">Apartments Plan</h2>
+            <div class="sketch-title"><?php echo htmlspecialchars($plan_settings['sketch_title'] ?? 'Apartments Sketch'); ?></div>
+            <h2 class="plan-main-title"><?php echo htmlspecialchars($plan_settings['main_title'] ?? 'Apartments Plan'); ?></h2>
         </div>
 
         <!-- Tabs Navigation -->
         <div class="floor-tabs-nav">
-            <button class="floor-tab-btn active" onclick="switchTab(event, 'studio')">The Studio</button>
-            <button class="floor-tab-btn" onclick="switchTab(event, 'deluxe')">Deluxe Portion</button>
-            <button class="floor-tab-btn" onclick="switchTab(event, 'penthouse')">Penthouse</button>
-            <button class="floor-tab-btn" onclick="switchTab(event, 'garden')">Top Garden</button>
-            <button class="floor-tab-btn" onclick="switchTab(event, 'double')">Double Height</button>
+            <?php foreach ($floor_plans_data as $index => $p): ?>
+                <button class="floor-tab-btn <?php echo ($index === 0) ? 'active' : ''; ?>" onclick="switchTab(event, 'plan-<?php echo $p['id']; ?>')">
+                    <?php echo htmlspecialchars($p['tab_title']); ?>
+                </button>
+            <?php endforeach; ?>
         </div>
 
         <!-- Tab Contents -->
-        
-        <!-- Studio -->
-        <div id="studio" class="floor-tab-content active">
-            <div class="floor-info-side">
-                <h3 class="floor-type-title">The Studio</h3>
-                <p class="floor-desc">
-                    A modern, open-concept studio apartment designed for efficiency and style. Perfect for individuals or small families seeking a premium Smart City lifestyle with optimized space management.
-                </p>
-                <table class="specs-table">
-                    <tr>
-                        <td class="spec-label">Total Area</td>
-                        <td class="spec-value">2800 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Bedroom</td>
-                        <td class="spec-value">150 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Bathroom</td>
-                        <td class="spec-value">45 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Balcony/Pets</td>
-                        <td class="spec-value">Allowed</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Lounge</td>
-                        <td class="spec-value">650 Sq. Ft</td>
-                    </tr>
-                </table>
+        <?php foreach ($floor_plans_data as $index => $p): ?>
+            <div id="plan-<?php echo $p['id']; ?>" class="floor-tab-content <?php echo ($index === 0) ? 'active' : ''; ?>">
+                <div class="floor-info-side">
+                    <h3 class="floor-type-title"><?php echo htmlspecialchars($p['plan_title']); ?></h3>
+                    <p class="floor-desc"><?php echo htmlspecialchars($p['plan_desc']); ?></p>
+                    <table class="specs-table">
+                        <?php foreach ($p['specs'] as $spec): ?>
+                            <tr>
+                                <td class="spec-label"><?php echo htmlspecialchars($spec['label']); ?></td>
+                                <td class="spec-value"><?php echo htmlspecialchars($spec['value']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <div class="floor-image-side">
+                    <img src="<?php echo strpos($p['image_path'], 'http') === 0 ? $p['image_path'] : BASE_URL . $p['image_path']; ?>" alt="<?php echo htmlspecialchars($p['plan_title']); ?>" class="floor-plan-img">
+                </div>
             </div>
-            <div class="floor-image-side">
-                <img src="https://images.unsplash.com/photo-1574362848149-11496d93a7c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Studio Floor Plan" class="floor-plan-img">
-            </div>
-        </div>
-
-        <!-- Deluxe -->
-        <div id="deluxe" class="floor-tab-content">
-            <div class="floor-info-side">
-                <h3 class="floor-type-title">Deluxe Portion</h3>
-                <p class="floor-desc">
-                    Spacious deluxe portions featuring enhanced privacy and larger living areas. These units offer high-end finishes and a perfect balance between luxury and functionality.
-                </p>
-                <table class="specs-table">
-                    <tr>
-                        <td class="spec-label">Total Area</td>
-                        <td class="spec-value">3500 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Bedroom</td>
-                        <td class="spec-value">220 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Bathroom</td>
-                        <td class="spec-value">60 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Balcony/Pets</td>
-                        <td class="spec-value">Allowed</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Lounge</td>
-                        <td class="spec-value">800 Sq. Ft</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="floor-image-side">
-                <img src="https://images.unsplash.com/photo-1628592102751-ba83b03a442a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Deluxe Floor Plan" class="floor-plan-img">
-            </div>
-        </div>
-
-        <!-- Penthouse -->
-        <div id="penthouse" class="floor-tab-content">
-            <div class="floor-info-side">
-                <h3 class="floor-type-title">Penthouse</h3>
-                <p class="floor-desc">
-                    The pinnacle of luxury living. Our penthouses offer panoramic city views, expansive private terraces, and double-height ceilings for a truly majestic living experience.
-                </p>
-                <table class="specs-table">
-                    <tr>
-                        <td class="spec-label">Total Area</td>
-                        <td class="spec-value">5200 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Bedroom</td>
-                        <td class="spec-value">450 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Bathroom</td>
-                        <td class="spec-value">120 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Terrace Area</td>
-                        <td class="spec-value">1200 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Lounge</td>
-                        <td class="spec-value">1200 Sq. Ft</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="floor-image-side">
-                <img src="https://images.unsplash.com/photo-1600607687989-ce8a6c72159c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Penthouse Floor Plan" class="floor-plan-img">
-            </div>
-        </div>
-
-        <!-- Top Garden -->
-        <div id="garden" class="floor-tab-content">
-            <div class="floor-info-side">
-                <h3 class="floor-type-title">Top Garden Units</h3>
-                <p class="floor-desc">
-                    Unique garden-facing apartments that bring nature to your doorstep. Featuring dedicated green zones and large glass walls to integrate indoor and outdoor living.
-                </p>
-                <table class="specs-table">
-                    <tr>
-                        <td class="spec-label">Total Area</td>
-                        <td class="spec-value">4000 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Garden Space</td>
-                        <td class="spec-value">500 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Bedroom</td>
-                        <td class="spec-value">200 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Bathroom</td>
-                        <td class="spec-value">55 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Lounge</td>
-                        <td class="spec-value">750 Sq. Ft</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="floor-image-side">
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Garden Unit Floor Plan" class="floor-plan-img">
-            </div>
-        </div>
-
-        <!-- Double Height -->
-        <div id="double" class="floor-tab-content">
-            <div class="floor-info-side">
-                <h3 class="floor-type-title">Double Height</h3>
-                <p class="floor-desc">
-                    Architectural masterpieces featuring double-volume living rooms. These units create an incredible sense of scale and allow for massive artistic installations or libraries.
-                </p>
-                <table class="specs-table">
-                    <tr>
-                        <td class="spec-label">Total Area</td>
-                        <td class="spec-value">4800 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Ceiling Height</td>
-                        <td class="spec-value">22 Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Bedroom</td>
-                        <td class="spec-value">300 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Bathroom</td>
-                        <td class="spec-value">90 Sq. Ft</td>
-                    </tr>
-                    <tr>
-                        <td class="spec-label">Lounge</td>
-                        <td class="spec-value">1100 Sq. Ft</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="floor-image-side">
-                <img src="https://images.unsplash.com/photo-1628592102173-b3a9920150d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Double Height Floor Plan" class="floor-plan-img">
-            </div>
-        </div>
-
+        <?php endforeach; ?>
     </div>
 </section>
 
 <script>
     function switchTab(evt, tabId) {
-        // Hide all contents
         const contents = document.querySelectorAll('.floor-tab-content');
         contents.forEach(content => content.classList.remove('active'));
-
-        // Remove active class from all buttons
         const buttons = document.querySelectorAll('.floor-tab-btn');
         buttons.forEach(btn => btn.classList.remove('active'));
-
-        // Show the current tab, and add an "active" class to the button that opened the tab
         document.getElementById(tabId).classList.add('active');
         evt.currentTarget.classList.add('active');
     }
