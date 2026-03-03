@@ -123,7 +123,7 @@
 
     /* Bottom Section / Disclaimer */
     .footer-bottom {
-        background: #000;
+        background: #0b1622;
         padding: 40px 20px;
         text-align: center;
     }
