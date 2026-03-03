@@ -240,6 +240,7 @@
                 <li><a href="<?php echo BASE_URL; ?>admin/frontend/manage-hero.php"><i class="fas fa-image"></i> Hero Slider</a></li>
                 <li><a href="<?php echo BASE_URL; ?>admin/frontend/manage-hero-info.php"><i class="fas fa-info-circle"></i> Hero Info Bar</a></li>
                 <li><a href="<?php echo BASE_URL; ?>admin/frontend/manage-overview.php"><i class="fas fa-align-left"></i> Overview Section</a></li>
+                <li><a href="<?php echo BASE_URL; ?>admin/frontend/manage-highlights.php"><i class="fas fa-star"></i> Highlights Section</a></li>
             </ul>
         </li>
         <li class="nav-item">

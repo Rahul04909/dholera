@@ -1,5 +1,17 @@
 <?php
-// Highlights Component
+/**
+ * Highlights Component
+ * Dholera Smart City
+ */
+require_once 'database/db_config.php';
+
+try {
+    $highlights_settings = $conn->query("SELECT * FROM site_highlights_settings WHERE id = 1")->fetch();
+    $highlights_items = $conn->query("SELECT * FROM site_highlights_items ORDER BY sort_order ASC")->fetchAll();
+} catch (PDOException $e) {
+    $highlights_settings = null;
+    $highlights_items = [];
+}
 ?>
 <style>
     .highlights-section {
@@ -15,7 +27,7 @@
         padding: 60px 40px;
         position: relative;
         background-image: radial-gradient(rgba(0,0,0,0.1) 2px, transparent 2px);
-        background-size: 30px 30px; /* Dotted texture */
+        background-size: 30px 30px;
     }
 
     .highlights-header {
@@ -63,7 +75,6 @@
         transform: translateY(-5px);
     }
 
-    /* Asymmetric cut/style for the cards as seen in image */
     .highlight-card::after {
         content: "";
         position: absolute;
@@ -96,98 +107,44 @@
 
     .highlights-image-side {
         flex: 1;
-        background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') no-repeat center center;
+        background: url('<?php echo $highlights_settings['side_image'] ?? ''; ?>') no-repeat center center;
         background-size: cover;
         min-height: 400px;
     }
 
-    /* Responsive */
     @media (max-width: 1200px) {
-        .highlights-content {
-            padding: 40px 20px;
-        }
-        .highlights-header h2 {
-            font-size: 28px;
-        }
+        .highlights-content { padding: 40px 20px; }
+        .highlights-header h2 { font-size: 28px; }
     }
 
     @media (max-width: 992px) {
-        .highlights-section {
-            flex-direction: column;
-        }
-        .highlights-image-side {
-            order: 2;
-            height: 400px;
-        }
-        .highlights-content {
-            order: 1;
-        }
+        .highlights-section { flex-direction: column; }
+        .highlights-image-side { order: 2; height: 400px; }
+        .highlights-content { order: 1; }
     }
 
     @media (max-width: 600px) {
-        .highlights-grid {
-            grid-template-columns: 1fr;
-        }
-        .highlights-header h2::after {
-            width: 80px;
-        }
-        .highlight-card {
-            padding: 15px 20px;
-        }
+        .highlights-grid { grid-template-columns: 1fr; }
+        .highlights-header h2::after { width: 80px; }
+        .highlight-card { padding: 15px 20px; }
     }
 </style>
 
 <section class="highlights-section">
-    <!-- Left Side: Content -->
     <div class="highlights-content">
         <div class="highlights-header">
-            <h2>Highlights</h2>
+            <h2><?php echo htmlspecialchars($highlights_settings['title'] ?? 'Highlights'); ?></h2>
         </div>
 
         <div class="highlights-grid">
-            <!-- 1 -->
-            <div class="highlight-card">
-                <div class="highlight-text">World-class infrastructure & connectivity: within & outside.</div>
-                <div class="highlight-number">1</div>
-            </div>
-            <!-- 2 -->
-            <div class="highlight-card">
-                <div class="highlight-text">Airport & Sea Port in the vicinity.</div>
-                <div class="highlight-number">2</div>
-            </div>
-            <!-- 3 -->
-            <div class="highlight-card">
-                <div class="highlight-text">Benefit of the sea coast, nature park, and golf course.</div>
-                <div class="highlight-number">3</div>
-            </div>
-            <!-- 4 -->
-            <div class="highlight-card">
-                <div class="highlight-text">Premium civic amenities.</div>
-                <div class="highlight-number">4</div>
-            </div>
-            <!-- 5 -->
-            <div class="highlight-card">
-                <div class="highlight-text">Capable to cater to both the International & Domestic Markets.</div>
-                <div class="highlight-number">5</div>
-            </div>
-            <!-- 6 -->
-            <div class="highlight-card">
-                <div class="highlight-text">Close to Gujarat International Finance TechCity (GIFT).</div>
-                <div class="highlight-number">6</div>
-            </div>
-            <!-- 7 -->
-            <div class="highlight-card">
-                <div class="highlight-text">Logistic support of the Dedicated Freight Corridor (DMIC).</div>
-                <div class="highlight-number">7</div>
-            </div>
-            <!-- 8 -->
-            <div class="highlight-card">
-                <div class="highlight-text">Public investment in core infrastructure.</div>
-                <div class="highlight-number">8</div>
-            </div>
+            <?php foreach ($highlights_items as $index => $item): ?>
+                <div class="highlight-card">
+                    <div class="highlight-text"><?php echo htmlspecialchars($item['text']); ?></div>
+                    <div class="highlight-number"><?php echo $index + 1; ?></div>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 
-    <!-- Right Side: Decorative Image -->
     <div class="highlights-image-side"></div>
 </section>
