@@ -1,7 +1,29 @@
 <?php
-// Hero Info Bar Component
+/**
+ * Hero Info Bar Component
+ * Dholera Smart City
+ */
+require_once 'database/db_config.php';
+
+// Fetch Stats
+try {
+    $stats_stmt = $conn->query("SELECT * FROM hero_info_stats ORDER BY sort_order ASC LIMIT 4");
+    $stats_data = $stats_stmt->fetchAll();
+
+    $settings_stmt = $conn->query("SELECT * FROM hero_info_settings");
+    $settings_data = $settings_stmt->fetchAll();
+    $hero_settings = [];
+    foreach ($settings_data as $s) {
+        $hero_settings[$s['setting_key']] = $s['setting_value'];
+    }
+} catch (PDOException $e) {
+    // Fallback or error handling
+    $stats_data = [];
+    $hero_settings = [];
+}
 ?>
 <style>
+    /* ... (CSS remains same as before) ... */
     .hero-info-bar {
         background-color: var(--primary-gold, #b8860b);
         color: #fff;
@@ -10,7 +32,7 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         position: relative;
         z-index: 10;
-        margin-top: -5px; /* Slight overlap with hero if needed, but safe at 0 */
+        margin-top: -5px;
     }
 
     .hero-info-container {
@@ -64,7 +86,6 @@
         line-height: 1.2;
     }
 
-    /* Download Brochure Button */
     .brochure-btn-wrapper {
         background: rgba(255, 255, 255, 0.2);
         display: flex;
@@ -92,62 +113,25 @@
         white-space: nowrap;
     }
 
-    /* Responsive Styles */
     @media (max-width: 1100px) {
-        .brochure-text {
-            font-size: 16px;
-        }
-        .info-value {
-            font-size: 16px;
-        }
-        .brochure-btn-wrapper {
-            padding: 0 25px;
-        }
+        .brochure-text { font-size: 16px; }
+        .info-value { font-size: 16px; }
+        .brochure-btn-wrapper { padding: 0 25px; }
     }
 
     @media (max-width: 900px) {
-        .hero-info-container {
-            flex-direction: column;
-        }
-        
-        .info-items-wrapper {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            padding: 30px 20px;
-        }
-
-        .info-item {
-            justify-content: flex-start;
-        }
-
-        .brochure-btn-wrapper {
-            padding: 25px;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.1);
-        }
+        .hero-info-container { flex-direction: column; }
+        .info-items-wrapper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 30px 20px; }
+        .info-item { justify-content: flex-start; }
+        .brochure-btn-wrapper { padding: 25px; justify-content: center; background: rgba(0, 0, 0, 0.1); }
     }
 
     @media (max-width: 480px) {
-        .info-items-wrapper {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding: 20px 10px;
-        }
-        .info-icon-circle {
-            width: 35px;
-            height: 35px;
-            font-size: 14px;
-        }
-        .info-label {
-            font-size: 11px;
-        }
-        .info-value {
-            font-size: 14px;
-        }
-        .brochure-text {
-            font-size: 18px;
-        }
+        .info-items-wrapper { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px 10px; }
+        .info-icon-circle { width: 35px; height: 35px; font-size: 14px; }
+        .info-label { font-size: 11px; }
+        .info-value { font-size: 14px; }
+        .brochure-text { font-size: 18px; }
     }
 </style>
 
@@ -155,55 +139,31 @@
     <div class="hero-info-container">
         <!-- Info Stats -->
         <div class="info-items-wrapper">
-            <!-- Land Parcel -->
-            <div class="info-item">
-                <div class="info-icon-circle">
-                    <i class="fas fa-home"></i>
-                </div>
-                <div class="info-text">
-                    <span class="info-label">Land Parcel</span>
-                    <span class="info-value">130 Sq.Yd.</span>
-                </div>
-            </div>
-
-            <!-- Type -->
-            <div class="info-item">
-                <div class="info-icon-circle">
-                    <i class="fas fa-th-large"></i>
-                </div>
-                <div class="info-text">
-                    <span class="info-label">Type</span>
-                    <span class="info-value">Plots</span>
-                </div>
-            </div>
-
-            <!-- Amenities -->
-            <div class="info-item">
-                <div class="info-icon-circle">
-                    <i class="fas fa-road"></i>
-                </div>
-                <div class="info-text">
-                    <span class="info-label">Amenities</span>
-                    <span class="info-value">Infrastructure &<br>Connectivity</span>
-                </div>
-            </div>
-
-            <!-- Price -->
-            <div class="info-item">
-                <div class="info-icon-circle">
-                    <i class="fas fa-tag"></i>
-                </div>
-                <div class="info-text">
-                    <span class="info-label">Price</span>
-                    <span class="info-value">₹ 12.5 Lacs*</span>
-                </div>
-            </div>
+            <?php if (!empty($stats_data)): ?>
+                <?php foreach ($stats_data as $stat): ?>
+                    <div class="info-item">
+                        <div class="info-icon-circle">
+                            <i class="<?php echo htmlspecialchars($stat['icon']); ?>"></i>
+                        </div>
+                        <div class="info-text">
+                            <span class="info-label"><?php echo htmlspecialchars($stat['label']); ?></span>
+                            <span class="info-value"><?php echo $stat['value']; ?></span>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <!-- Fallback if DB is empty -->
+                <div class="info-item"><div class="info-text"><span class="info-value">Data Loading...</span></div></div>
+            <?php endif; ?>
         </div>
 
         <!-- Download Brochure Action -->
-        <a href="#" class="brochure-btn-wrapper">
-            <i class="far fa-map brochure-icon"></i>
-            <span class="brochure-text">Download Brochure</span>
+        <?php 
+            $brochure_link = (isset($hero_settings['brochure_file']) && $hero_settings['brochure_file'] != '#') ? BASE_URL . $hero_settings['brochure_file'] : '#';
+        ?>
+        <a href="<?php echo $brochure_link; ?>" class="brochure-btn-wrapper" <?php echo ($brochure_link != '#') ? 'target="_blank"' : ''; ?>>
+            <i class="<?php echo htmlspecialchars($hero_settings['brochure_icon'] ?? 'fas fa-file-pdf'); ?> brochure-icon"></i>
+            <span class="brochure-text"><?php echo htmlspecialchars($hero_settings['brochure_text'] ?? 'Download Brochure'); ?></span>
         </a>
     </div>
 </div>

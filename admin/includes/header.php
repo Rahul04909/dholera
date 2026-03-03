@@ -238,6 +238,7 @@
             <span class="nav-link">Frontend <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
             <ul class="dropdown-menu">
                 <li><a href="<?php echo BASE_URL; ?>admin/frontend/manage-hero.php"><i class="fas fa-image"></i> Hero Slider</a></li>
+                <li><a href="<?php echo BASE_URL; ?>admin/frontend/manage-hero-info.php"><i class="fas fa-info-circle"></i> Hero Info Bar</a></li>
                 <li><a href="#"><i class="fas fa-info-circle"></i> Overview</a></li>
             </ul>
         </li>
