@@ -298,7 +298,7 @@
     </div>
 
     <!-- Main footer called here -->
-    <?php include 'components/main-footer.php'; ?>
+    <?php include 'main-footer.php'; ?>
     
     <!-- Disclaimer Section -->
     <div class="footer-bottom">
