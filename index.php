@@ -5,4 +5,5 @@
 <?php include 'components/highlights.php'; ?>
 <?php include 'components/floor-plan.php'; ?>
 <?php include 'components/projects.php'; ?>
+<?php include 'components/stats-counter.php'; ?>
 <?php include 'includes/footer.php'; ?>
