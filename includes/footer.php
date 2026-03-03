@@ -187,16 +187,81 @@
             grid-column: span 1;
         }
     }
+    /* Interactive Footer Buttons */
+    .footer-btns-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .footer-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 20px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        border: 2px solid #fff;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        animation: blink-bg 3s infinite;
+    }
+
+    .footer-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        animation-play-state: paused;
+        background: #000;
+        color: var(--primary-gold, #b8860b);
+        border-color: #000;
+    }
+
+    @keyframes blink-bg {
+        0%, 100% { background: transparent; }
+        50% { background: rgba(0,0,0,0.3); border-color: #000; }
+    }
+
+    .footer-btn.partner { animation-delay: 0s; }
+    .footer-btn.book { animation-delay: 1s; }
+    .footer-btn.meeting { animation-delay: 2s; }
+
+    @media (max-width: 576px) {
+        .footer-btns-container {
+            flex-direction: column;
+        }
+        .footer-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
 </style>
 
 <footer>
     <div class="footer-top">
         <!-- About Developer -->
         <div class="about-developer">
-            <h2>About Developer</h2>
+            <h2>Connect With Dholera</h2>
             <p>
                 We are the leading developer of India's First Greenfield Smart City Dholera Smart City in India, with a focus on developing sustainable and modern residential and commercial, and industrial projects. we aim to develop dholera's first green township..
             </p>
+            <div class="footer-btns-container">
+                <a href="#" class="footer-btn partner">
+                    <i class="fas fa-handshake"></i> Be Our Channel Partner
+                </a>
+                <a href="#" class="footer-btn book">
+                    <i class="fas fa-key"></i> Book a Plot Now
+                </a>
+                <a href="#" class="footer-btn meeting">
+                    <i class="fas fa-calendar-alt"></i> Schedule a Meeting
+                </a>
+            </div>
         </div>
 
         <!-- Enquiry Section -->
