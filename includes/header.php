@@ -107,8 +107,8 @@ try {
             top: 100%;
             left: 0;
             background: #ffffff;
-            min-width: 250px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            min-width: 280px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             border-radius: 4px;
             padding: 10px 0;
             opacity: 0;
@@ -116,16 +116,15 @@ try {
             transform: translateY(10px);
             transition: all 0.3s ease;
             z-index: 100;
-        }
-
-        nav ul li:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
+            display: block !important; /* Force block to override nav ul flex */
+            margin: 0;
+            list-style: none;
         }
 
         .dropdown-menu li {
-            width: 100%;
+            width: 100% !important;
+            display: block !important;
+            margin: 0 !important;
         }
 
         .dropdown-menu li a {
