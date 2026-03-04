@@ -192,10 +192,6 @@
         <li><a href="#home">Home</a></li>
         <li><a href="#overview">Overview</a></li>
         <li><a href="#highlights">Highlights</a></li>
-        <li><a href="#price-list">Price List</a></li>
-        <li><a href="#amenities">Amenities</a></li>
-        <li><a href="#floor-plans">Floor Plans</a></li>
-        <li><a href="#location-map">Location Map</a></li>
         <li><a href="#gallery">Gallery</a></li>
     </ul>
 </div>
