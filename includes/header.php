@@ -121,6 +121,12 @@ try {
             list-style: none;
         }
 
+        nav ul li:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
         .dropdown-menu li {
             width: 100% !important;
             display: block !important;
