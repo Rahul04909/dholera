@@ -101,21 +101,22 @@ try {
             color: #f0c040;
         }
 
-        /* Dropdown Styling */
+        /* Dropdown Styling - Professional List Type */
         .dropdown-menu {
             position: absolute;
             top: 100%;
             left: 0;
-            background: #fff;
-            min-width: 220px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border-radius: 4px;
-            padding: 10px 0;
+            background: #ffffff;
+            min-width: 260px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            padding: 15px 0;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
+            transform: translateY(15px);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             z-index: 100;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
         nav ul li:hover .dropdown-menu {
@@ -126,24 +127,45 @@ try {
 
         .dropdown-menu li {
             width: 100%;
+            margin-bottom: 2px;
+        }
+
+        .dropdown-menu li:last-child {
+            margin-bottom: 0;
         }
 
         .dropdown-menu li a {
-            color: #333 !important;
-            padding: 10px 20px !important;
+            color: #2d3748 !important;
+            padding: 12px 25px !important;
             font-size: 15px !important;
-            border-bottom: 1px solid #f0f0f0;
-            display: block;
+            font-weight: 500 !important;
+            display: flex !important;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            text-transform: none !important; /* Keep it natural */
         }
 
-        .dropdown-menu li:last-child a {
-            border-bottom: none;
+        .dropdown-menu li a::before {
+            content: "\f105"; /* FontAwesome angle right */
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            font-size: 12px;
+            color: var(--primary-gold);
+            opacity: 0;
+            transition: all 0.3s ease;
         }
 
         .dropdown-menu li a:hover {
-            background: #f8f9fa;
+            background: #f7fafc;
             color: var(--primary-gold) !important;
-            padding-left: 25px !important;
+            padding-left: 30px !important;
+            border-left-color: var(--primary-gold);
+        }
+
+        .dropdown-menu li a:hover::before {
+            opacity: 1;
         }
 
         /* Mobile Toggle */
