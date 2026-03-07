@@ -34,14 +34,6 @@ try {
     ");
     $visits_stmt->execute([$_SESSION['agent_id']]);
     $site_visits = $visits_stmt->fetchAll();
-    
-    // Debug info (To file)
-    $debug_log = "../debug_agent_visits.txt";
-    $log_data = date('Y-m-d H:i:s') . " - Agent ID: " . $_SESSION['agent_id'] . " | Found: " . count($site_visits) . "\n";
-    if (count($site_visits) > 0) {
-        $log_data .= "First Result ID: " . $site_visits[0]['id'] . "\n";
-    }
-    file_put_contents($debug_log, $log_data, FILE_APPEND);
 } catch (PDOException $e) {
     $site_visits = [];
     $error_msg = "Error fetching site visits.";
