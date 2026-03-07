@@ -268,17 +268,19 @@ try {
 <!-- Update Status Modal -->
 <div id="updateModal" class="modal">
     <div class="modal-content">
-        <h2 style="margin-top: 0; font-size: 20px; border-bottom: 1px solid #edf2f7; padding-bottom: 15px; margin-bottom: 20px;">Update Request Status</h2>
+        <div class="modal-header">
+            <h2>Update Request Status</h2>
+        </div>
         <form action="" method="POST">
             <input type="hidden" name="visit_id" id="modal_visit_id">
             
             <div class="form-group">
-                <label>Lead Information</label>
-                <div id="modal_lead_info" style="padding: 10px; background: #f8fafc; border-radius: 6px; font-size: 13px; color: #4a5568;"></div>
+                <label><i class="fas fa-info-circle"></i> Lead Information</label>
+                <div id="modal_lead_info" class="lead-info-box"></div>
             </div>
 
             <div class="form-group">
-                <label>Update Status</label>
+                <label for="modal_status"><i class="fas fa-tasks"></i> Update Status</label>
                 <select name="status" id="modal_status" class="form-control" required>
                     <option value="pending">Pending</option>
                     <option value="contacted">Contacted</option>
@@ -288,13 +290,13 @@ try {
             </div>
 
             <div class="form-group">
-                <label>Professional Notes</label>
-                <textarea name="notes" id="modal_notes" class="form-control" rows="4" placeholder="Enter follow-up details..."></textarea>
+                <label for="modal_notes"><i class="fas fa-sticky-note"></i> Professional Notes</label>
+                <textarea name="notes" id="modal_notes" class="form-control" rows="4" placeholder="Enter follow-up details and client requirements..."></textarea>
             </div>
 
-            <div style="display: flex; gap: 10px; margin-top: 30px;">
-                <button type="submit" name="update_status" class="btn-gold" style="flex: 1;">Save Updates</button>
-                <button type="button" class="btn-action" style="flex: 1;" onclick="closeModal()">Cancel</button>
+            <div style="display: flex; gap: 15px; margin-top: 35px;">
+                <button type="submit" name="update_status" class="btn-gold" style="flex: 1; padding: 14px;">Save Updates</button>
+                <button type="button" class="btn-action" style="flex: 1; padding: 14px; border-radius: 6px;" onclick="closeModal()">Cancel</button>
             </div>
         </form>
     </div>
