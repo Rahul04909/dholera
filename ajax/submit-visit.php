@@ -44,21 +44,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
 
         $site_visit_id = $conn->lastInsertId();
+        $debug_file = '../debug_site_routing.txt';
+        $log_entry = date('Y-m-d H:i:s') . " - Site Visit Created: ID $site_visit_id for Project ID $project_id\n";
 
         // Route to Assigned Agents
         $agents_stmt = $conn->prepare("SELECT agent_id FROM agent_projects WHERE project_id = ?");
         $agents_stmt->execute([$project_id]);
         $assigned_agents = $agents_stmt->fetchAll(PDO::FETCH_COLUMN);
+        
+        $log_entry .= "Assigned Agents Found: " . implode(', ', $assigned_agents) . "\n";
 
         if (!empty($assigned_agents)) {
             $route_stmt = $conn->prepare("INSERT INTO agent_site_visits (agent_id, site_visit_id) VALUES (:agent_id, :site_visit_id)");
             foreach ($assigned_agents as $agent_id) {
-                $route_stmt->execute([
+                $status = $route_stmt->execute([
                     'agent_id' => $agent_id,
                     'site_visit_id' => $site_visit_id
                 ]);
+                $log_entry .= "Routing to Agent $agent_id: " . ($status ? "Success" : "Failed") . "\n";
             }
+        } else {
+            $log_entry .= "No agents assigned to project $project_id\n";
         }
+        
+        file_put_contents($debug_file, $log_entry, FILE_APPEND);
         
         echo json_encode(['status' => 'success', 'message' => 'Your site visit request has been scheduled! Our team will contact you shortly to confirm.']);
         
