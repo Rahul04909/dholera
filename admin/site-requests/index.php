@@ -34,27 +34,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'update_status' && isset($_GET[
     }
 }
 
-// Handle Lead Forwarding
-if (isset($_POST['forward_lead'])) {
-    $agent_id = (int)$_POST['agent_id'];
-    $source_id = (int)$_POST['source_id'];
-    $source_type = 'enquiry'; // Treating as enquiry for agent leads table for now, or we can add 'site-visit' 
-    $admin_note = trim($_POST['admin_note']);
-
-    try {
-        // We'll use 'enquiry' as source_type since the agent_leads table has it in enum, 
-        // or we could update the enum. For now, let's stick to the current schema.
-        $stmt = $conn->prepare("INSERT INTO agent_leads (agent_id, source_type, source_id, admin_note) VALUES (:agent_id, 'enquiry', :source_id, :admin_note)");
-        $stmt->execute([
-            'agent_id' => $agent_id,
-            'source_id' => $source_id,
-            'admin_note' => "SITE VISIT REQUEST: " . $admin_note
-        ]);
-        $success_msg = "Site visit request forwarded to agent!";
-    } catch (PDOException $e) {
-        $error_msg = "Error forwarding: " . $e->getMessage();
-    }
-}
 
 // Handle Delete
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
@@ -69,13 +48,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
     }
 }
 
-// Fetch active agents for forwarding
-try {
-    $agents_stmt = $conn->query("SELECT id, full_name FROM agents WHERE status = 'active' ORDER BY full_name ASC");
-    $active_agents = $agents_stmt->fetchAll();
-} catch (PDOException $e) {
-    $active_agents = [];
-}
 
 // Pagination setup
 $limit = 10;
@@ -232,8 +204,6 @@ include '../includes/header.php';
                                 </td>
                                 <td>
                                     <div class="action-btns">
-                                        <!-- Forward Lead -->
-                                        <a href="javascript:void(0)" class="btn-status-update" title="Forward to Agent" onclick="openForwardModal(<?php echo $row['id']; ?>, 'visit', '<?php echo addslashes($row['name']); ?>')"><i class="fas fa-share-square"></i></a>
                                         
                                         <!-- Status Updates -->
                                         <?php if ($row['status'] == 'pending'): ?>
@@ -270,56 +240,6 @@ include '../includes/header.php';
     </div>
 </div>
 
-<!-- Forward Modal -->
-<div id="forwardModal" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
-    <div style="background:#fff; width:100%; max-width:500px; padding:30px; border-radius:8px; box-shadow:0 10px 25px rgba(0,0,0,0.2);">
-        <h2 id="modalTitle" style="margin-top:0; border-bottom:1px solid #edf2f7; padding-bottom:15px;">Forward Request</h2>
-        <form method="POST">
-            <input type="hidden" name="source_id" id="modalSourceId">
-            <input type="hidden" name="source_type" id="modalSourceType">
-            
-            <div style="margin-bottom:20px;">
-                <label style="display:block; font-weight:700; margin-bottom:10px;">Select Agent <span style="color:red">*</span></label>
-                <select name="agent_id" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:4px;">
-                    <option value="">-- Select Agent --</option>
-                    <?php foreach ($active_agents as $agent): ?>
-                        <option value="<?php echo $agent['id']; ?>"><?php echo htmlspecialchars($agent['full_name']); ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            
-            <div style="margin-bottom:20px;">
-                <label style="display:block; font-weight:700; margin-bottom:10px;">Visit Note for Agent</label>
-                <textarea name="admin_note" rows="3" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:4px;" placeholder="Tell agent about visit timing or project priority..."></textarea>
-            </div>
-            
-            <div style="display:flex; justify-content:flex-end; gap:10px;">
-                <button type="button" onclick="closeForwardModal()" style="padding:10px 20px; background:#f7fafc; border:1px solid #e2e8f0; border-radius:4px; cursor:pointer;">Cancel</button>
-                <button type="submit" name="forward_lead" style="padding:10px 20px; background:var(--primary-gold); color:#fff; border:none; border-radius:4px; font-weight:700; cursor:pointer;">Assign Visit to Agent</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script>
-function openForwardModal(id, type, name) {
-    document.getElementById('modalSourceId').value = id;
-    document.getElementById('modalSourceType').value = type;
-    document.getElementById('modalTitle').innerHTML = 'Assign: ' + name;
-    document.getElementById('forwardModal').style.display = 'flex';
-}
-
-function closeForwardModal() {
-    document.getElementById('forwardModal').style.display = 'none';
-}
-
-window.onclick = function(event) {
-    var modal = document.getElementById('forwardModal');
-    if (event.target == modal) {
-        closeForwardModal();
-    }
-}
-</script>
 
 </body>
 </html>
