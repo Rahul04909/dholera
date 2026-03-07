@@ -21,6 +21,9 @@ try {
     $stmt = $conn->prepare("SELECT * FROM agents WHERE id = ?");
     $stmt->execute([$agent_id]);
     $current_agent = $stmt->fetch();
+    
+    // Debug session (Temporary)
+    file_put_contents('../debug_session.txt', date('Y-m-d H:i:s') . " - Page: " . $_SERVER['PHP_SELF'] . " | Agent ID: " . $agent_id . "\n", FILE_APPEND);
 } catch (PDOException $e) {
     error_log("Header Error: " . $e->getMessage());
 }
