@@ -31,6 +31,20 @@ try {
     die("Database error: " . $e->getMessage());
 }
 
+// Fetch All Active Projects
+try {
+    $all_projects_stmt = $conn->query("SELECT id, title FROM projects WHERE status = 'active' ORDER BY title ASC");
+    $all_projects = $all_projects_stmt->fetchAll();
+
+    // Fetch Currently Assigned Projects
+    $assigned_stmt = $conn->prepare("SELECT project_id FROM agent_projects WHERE agent_id = ?");
+    $assigned_stmt->execute([$agent_id]);
+    $assigned_project_ids = $assigned_stmt->fetchAll(PDO::FETCH_COLUMN);
+} catch (PDOException $e) {
+    $all_projects = [];
+    $assigned_project_ids = [];
+}
+
 $message = '';
 $status = '';
 
@@ -45,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pincode = trim($_POST['pincode']);
     $full_address = trim($_POST['full_address']);
     $password = $_POST['password'];
+    $assigned_projects = isset($_POST['assigned_projects']) ? $_POST['assigned_projects'] : [];
 
     if (empty($full_name) || empty($email) || empty($mobile)) {
         $_SESSION['msg'] = ['status' => 'error', 'text' => 'Required fields are missing.'];
@@ -106,7 +121,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt = $conn->prepare($query);
                 $stmt->execute($params);
 
-                $_SESSION['msg'] = ['status' => 'success', 'text' => 'Agent details updated successfully!'];
+                // Sync Project Assignments
+                // 1. Remove existing ones
+                $del_stmt = $conn->prepare("DELETE FROM agent_projects WHERE agent_id = ?");
+                $del_stmt->execute([$agent_id]);
+
+                // 2. Add new ones
+                if (!empty($assigned_projects)) {
+                    $assign_stmt = $conn->prepare("INSERT INTO agent_projects (agent_id, project_id) VALUES (:agent_id, :project_id)");
+                    foreach ($assigned_projects as $p_id) {
+                        $assign_stmt->execute([
+                            'agent_id' => $agent_id,
+                            'project_id' => $p_id
+                        ]);
+                    }
+                }
+
+                $_SESSION['msg'] = ['status' => 'success', 'text' => 'Agent details and project assignments updated successfully!'];
                 header("Location: edit-agent.php?id=" . $agent_id);
                 exit();
             }
@@ -283,6 +314,20 @@ include '../includes/header.php';
                 <div class="form-group" style="grid-column: span 2;">
                     <label>Full Residential Address</label>
                     <textarea name="full_address" class="form-control" rows="2"><?php echo htmlspecialchars($agent['full_address']); ?></textarea>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 20px;"><i class="fas fa-tasks" style="color: var(--primary-gold);"></i> Project Assignment</h2>
+            <div class="form-grid">
+                <div class="form-group" style="grid-column: span 3;">
+                    <label>Assign Projects <span style="font-weight: normal; font-size: 12px; color: #718096;">(Hold Ctrl/Cmd to select multiple)</span></label>
+                    <select name="assigned_projects[]" class="form-control" multiple style="height: 150px;">
+                        <?php foreach ($all_projects as $project): ?>
+                            <option value="<?php echo $project['id']; ?>" <?php echo in_array($project['id'], $assigned_project_ids) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($project['title']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
             </div>
 

@@ -12,6 +12,14 @@ if (!isset($_SESSION['admin_id'])) {
     exit();
 }
 
+// Fetch Active Projects for Assignment
+try {
+    $projects_stmt = $conn->query("SELECT id, title FROM projects WHERE status = 'active' ORDER BY title ASC");
+    $all_projects = $projects_stmt->fetchAll();
+} catch (PDOException $e) {
+    $all_projects = [];
+}
+
 $message = '';
 $status = '';
 
@@ -26,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pincode = trim($_POST['pincode']);
     $full_address = trim($_POST['full_address']);
     $password = $_POST['password'];
+    $assigned_projects = isset($_POST['assigned_projects']) ? $_POST['assigned_projects'] : [];
 
     // Validation
     if (empty($full_name) || empty($email) || empty($mobile) || empty($password)) {
@@ -72,7 +81,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'password' => $hashed_password
                 ]);
 
-                $_SESSION['msg'] = ['status' => 'success', 'text' => 'Agent created successfully!'];
+                $new_agent_id = $conn->lastInsertId();
+
+                // Assign Projects
+                if (!empty($assigned_projects)) {
+                    $assign_stmt = $conn->prepare("INSERT INTO agent_projects (agent_id, project_id) VALUES (:agent_id, :project_id)");
+                    foreach ($assigned_projects as $project_id) {
+                        $assign_stmt->execute([
+                            'agent_id' => $new_agent_id,
+                            'project_id' => $project_id
+                        ]);
+                    }
+                }
+
+                $_SESSION['msg'] = ['status' => 'success', 'text' => 'Agent created and projects assigned successfully!'];
                 header("Location: add-agent.php");
                 exit();
             }
@@ -249,6 +271,21 @@ include '../includes/header.php';
                 <div class="form-group" style="grid-column: span 2;">
                     <label>Full Residential Address</label>
                     <textarea name="full_address" class="form-control" rows="2" placeholder="Street, Landmark, Area..."></textarea>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 20px;"><i class="fas fa-tasks" style="color: var(--primary-gold);"></i> Project Assignment</h2>
+            <div class="form-grid">
+                <div class="form-group" style="grid-column: span 3;">
+                    <label>Assign Projects <span style="font-weight: normal; font-size: 12px; color: #718096;">(Hold Ctrl/Cmd to select multiple)</span></label>
+                    <select name="assigned_projects[]" class="form-control" multiple style="height: 150px;">
+                        <?php foreach ($all_projects as $project): ?>
+                            <option value="<?php echo $project['id']; ?>"><?php echo htmlspecialchars($project['title']); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <?php if (empty($all_projects)): ?>
+                        <p style="color: #e53e3e; font-size: 13px; margin-top: 5px;">No active projects found. Please add projects first.</p>
+                    <?php endif; ?>
                 </div>
             </div>
 
