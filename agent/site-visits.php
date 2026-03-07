@@ -132,19 +132,77 @@ try {
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 2000;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(4px);
         }
 
         .modal-content {
             background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            width: 500px;
-            max-width: 90%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 35px;
+            border-radius: 16px;
+            width: 550px;
+            max-width: 95%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 800;
+            color: #2d3748;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            color: #2d3748;
+            box-sizing: border-box;
+            background: #f8fafc;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.1);
+        }
+
+        .lead-info-box {
+            padding: 18px;
+            background: #f7fafc;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--primary-gold);
         }
     </style>
 
