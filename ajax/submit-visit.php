@@ -42,6 +42,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'visit_time' => $visit_time,
             'message' => $message
         ]);
+
+        $site_visit_id = $conn->lastInsertId();
+
+        // Route to Assigned Agents
+        $agents_stmt = $conn->prepare("SELECT agent_id FROM agent_projects WHERE project_id = ?");
+        $agents_stmt->execute([$project_id]);
+        $assigned_agents = $agents_stmt->fetchAll(PDO::FETCH_COLUMN);
+
+        if (!empty($assigned_agents)) {
+            $route_stmt = $conn->prepare("INSERT INTO agent_site_visits (agent_id, site_visit_id) VALUES (:agent_id, :site_visit_id)");
+            foreach ($assigned_agents as $agent_id) {
+                $route_stmt->execute([
+                    'agent_id' => $agent_id,
+                    'site_visit_id' => $site_visit_id
+                ]);
+            }
+        }
         
         echo json_encode(['status' => 'success', 'message' => 'Your site visit request has been scheduled! Our team will contact you shortly to confirm.']);
         
