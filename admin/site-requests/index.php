@@ -173,7 +173,6 @@ include '../includes/header.php';
             <table class="visit-table">
                 <thead>
                     <tr>
-                        <th>Visit Timing</th>
                         <th>Project</th>
                         <th>Customer</th>
                         <th>Status</th>
@@ -184,10 +183,6 @@ include '../includes/header.php';
                     <?php if (count($requests) > 0): ?>
                         <?php foreach ($requests as $row): ?>
                             <tr>
-                                <td>
-                                    <strong><i class="far fa-calendar-alt"></i> <?php echo date('d M Y', strtotime($row['visit_date'])); ?></strong><br>
-                                    <span style="font-size: 13px; color: #3182ce;"><i class="far fa-clock"></i> <?php echo htmlspecialchars($row['visit_time']); ?></span>
-                                </td>
                                 <td>
                                     <div style="font-weight: 700; color: var(--primary-gold);"><?php echo htmlspecialchars($row['project_name']); ?></div>
                                     <small style="color: #999;">Request on: <?php echo date('d M, h:i A', strtotime($row['created_at'])); ?></small>

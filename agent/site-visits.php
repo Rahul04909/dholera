@@ -213,7 +213,6 @@ try {
                     <tr>
                         <th>Lead Details</th>
                         <th>Project</th>
-                        <th>Preferred Time</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -239,12 +238,6 @@ try {
                                 <td>
                                     <div style="font-weight: 600;"><?php echo htmlspecialchars($visit['project_name']); ?></div>
                                     <div style="font-size: 12px; color: #718096;">Created: <?php echo date('d M Y', strtotime($visit['created_at'])); ?></div>
-                                </td>
-                                <td>
-                                    <div style="font-weight: 600; color: var(--primary-gold);">
-                                        <?php echo date('d M Y', strtotime($visit['visit_date'])); ?>
-                                    </div>
-                                    <div style="font-size: 12px; color: #718096;"><?php echo htmlspecialchars($visit['visit_time']); ?></div>
                                 </td>
                                 <td>
                                     <span class="status-badge status-<?php echo $visit['status']; ?>">
@@ -312,7 +305,6 @@ try {
         document.getElementById('modal_lead_info').innerHTML = `
             <strong>${visit.name}</strong> - ${visit.phone}<br>
             Project: ${visit.project_name}<br>
-            Visit Date: ${visit.visit_date} (${visit.visit_time})<br>
             Message: ${visit.message || 'No specific requirements.'}
         `;
         modal.style.display = 'flex';
