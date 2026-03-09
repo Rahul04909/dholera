@@ -251,8 +251,8 @@ try {
         <li class="sidebar-item <?php echo basename($_SERVER['PHP_SELF']) == 'site-visits.php' ? 'active' : ''; ?>">
             <a href="site-visits.php"><i class="fas fa-calendar-alt"></i> Site Visit Requests</a>
         </li>
-        <li class="sidebar-item <?php echo basename($_SERVER['PHP_SELF']) == 'projects.php' ? 'active' : ''; ?>">
-            <a href="#"><i class="fas fa-building"></i> Browse Projects</a>
+        <li class="sidebar-item <?php echo basename($_SERVER['PHP_SELF']) == 'my-projects.php' ? 'active' : ''; ?>">
+            <a href="my-projects.php"><i class="fas fa-building"></i> My Projects</a>
         </li>
         <li class="sidebar-item <?php echo basename($_SERVER['PHP_SELF']) == 'profile.php' ? 'active' : ''; ?>">
             <a href="profile.php"><i class="fas fa-user-circle"></i> My Account</a>

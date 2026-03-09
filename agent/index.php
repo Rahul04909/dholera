@@ -5,18 +5,25 @@
 include 'includes/header.php';
 
 // Fetch some stats for the agent
+$agent_id = $_SESSION['agent_id'];
 $total_projects = 0;
 $my_leads = 0;
 
 try {
-    // Total Active Projects
-    $proj_stmt = $conn->query("SELECT COUNT(*) FROM projects WHERE status = 'active'");
+    // Total Assigned Projects for this agent
+    $proj_stmt = $conn->prepare("
+        SELECT COUNT(*) 
+        FROM agent_projects ap 
+        INNER JOIN projects p ON ap.project_id = p.id 
+        WHERE ap.agent_id = :agent_id AND p.status = 'active'
+    ");
+    $proj_stmt->execute(['agent_id' => $agent_id]);
     $total_projects = $proj_stmt->fetchColumn();
 
-    // Leads assigned to this agent (Placeholder for now until we have a leads table with agent_id)
-    // $lead_stmt = $conn->prepare("SELECT COUNT(*) FROM leads WHERE agent_id = ?");
-    // $lead_stmt->execute([$_SESSION['agent_id']]);
-    // $my_leads = $lead_stmt->fetchColumn();
+    // Leads assigned to this agent
+    $lead_stmt = $conn->prepare("SELECT COUNT(*) FROM leads WHERE agent_id = :agent_id");
+    $lead_stmt->execute(['agent_id' => $agent_id]);
+    $my_leads = $lead_stmt->fetchColumn();
 } catch (PDOException $e) {
     error_log("Dashboard Stats Error: " . $e->getMessage());
 }
