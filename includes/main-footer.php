@@ -313,14 +313,14 @@
                 <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
                 <div class="contact-text">
                     <strong>Call Experts</strong>
-                    +91 999 000 0000 / +91 888 000 0000
+                    +91 999 000 0000
                 </div>
             </div>
             <div class="footer-contact-item">
                 <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                 <div class="contact-text">
                     <strong>Email Support</strong>
-                    info@dholerasmartcity.com
+                    info@dholerabyus.in
                 </div>
             </div>
         </div>
