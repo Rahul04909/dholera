@@ -138,6 +138,27 @@
         50% { opacity: 0.6; text-shadow: none; }
     }
 
+    /* Mineib Specific Blinking */
+    .mineib-blink {
+        color: var(--footer-gold) !important;
+        font-weight: 800 !important;
+        font-size: 17px !important;
+        text-decoration: none !important;
+        display: inline-block;
+        animation: mineib-blink 1s infinite ease-in-out;
+        transition: all 0.3s ease;
+    }
+
+    .mineib-blink:hover {
+        transform: scale(1.1);
+        text-shadow: 0 0 15px rgba(184, 134, 11, 0.8);
+    }
+
+    @keyframes mineib-blink {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.7; transform: scale(1.05); color: #fff !important; }
+    }
+
     /* Contact Info */
     .footer-contact-item {
         display: flex;
@@ -309,7 +330,7 @@
     <div class="footer-bottom-bar">
         <div class="footer-bottom-container">
             <div class="copyright-text">
-                &copy; <?php echo date('Y'); ?> Dholera Smart City. All Rights Reserved. A Website Powerd By <a href="https://mineib.com">Mineib</a>
+                &copy; <?php echo date('Y'); ?> Dholera Smart City. All Rights Reserved. A Website Powerd By <a href="https://mineib.com" class="mineib-blink">Mineib</a>
             </div>
             <div class="footer-bottom-links">
                 <a href="#">Privacy Policy</a>
