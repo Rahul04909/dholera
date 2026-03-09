@@ -258,10 +258,10 @@
         <div class="footer-col">
             <h3>Quick Links</h3>
             <ul class="footer-menu">
-                <li><a href="#"><i class="fas fa-chevron-right"></i> About Project</a></li>
+                <li><a href="../../about.php"><i class="fas fa-chevron-right"></i> About Dholera</a></li>
                 <li><a href="#" class="blink-menu"><i class="fas fa-chevron-right"></i> Book a Site Visit</a></li>
-                <li><a href="#"><i class="fas fa-chevron-right"></i> Project Highlights</a></li>
-                <li><a href="#"><i class="fas fa-chevron-right"></i> Floor Plans</a></li>
+                <li><a href="../../contact.php"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                <!-- <li><a href="#"><i class="fas fa-chevron-right"></i> Floor Plans</a></li> -->
                 <li><a href="#" class="blink-menu"><i class="fas fa-chevron-right"></i> Download Brochure</a></li>
             </ul>
         </div>
