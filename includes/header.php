@@ -230,7 +230,7 @@ try {
         <nav>
             <ul>
                 <li><a href="index.php">Home</a></li>
-                <li><a href="index.php#overview">Overview</a></li>
+                <!-- <li><a href="index.php#overview">Overview</a></li> -->
                 <li class="has-dropdown">
                     <a href="#">Projects <i class="fas fa-chevron-down" style="font-size: 12px;"></i></a>
                     <ul class="dropdown-menu">
@@ -243,8 +243,8 @@ try {
                         <?php endif; ?>
                     </ul>
                 </li>
-                <li><a href="index.php#highlights">Highlights</a></li>
-                <li><a href="index.php#floor-plans">Floor Plans</a></li>
+                <!-- <li><a href="index.php#highlights">Highlights</a></li>
+                <li><a href="index.php#floor-plans">Floor Plans</a></li> -->
             </ul>
         </nav>
 
