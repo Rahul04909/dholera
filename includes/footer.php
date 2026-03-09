@@ -252,13 +252,13 @@
                 We are the leading developer of India's First Greenfield Smart City Dholera Smart City in India, with a focus on developing sustainable and modern residential and commercial, and industrial projects. we aim to develop dholera's first green township..
             </p>
             <div class="footer-btns-container">
-                <a href="#" class="footer-btn partner">
+                <a href="" class="footer-btn partner">
                     <i class="fas fa-handshake"></i> Be Our Channel Partner
                 </a>
-                <a href="#" class="footer-btn book">
+                <a href="" class="footer-btn book">
                     <i class="fas fa-key"></i> Book a Plot Now
                 </a>
-                <a href="#" class="footer-btn meeting">
+                <a href="" class="footer-btn meeting">
                     <i class="fas fa-calendar-alt"></i> Schedule a Meeting
                 </a>
             </div>
