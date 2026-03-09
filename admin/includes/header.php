@@ -262,7 +262,7 @@
         <li class="nav-item">
             <span class="nav-link">Enquiries <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
             <ul class="dropdown-menu">
-                <li><a href="<?php echo BASE_URL; ?>admin/enquiries/manage-enquiries.php"><i class="fas fa-envelope-open-text"></i> All Enquiries</a></li>
+                <li><a href="<?php echo BASE_URL; ?>admin/enquiries/manage-enquiries.php"><i class="fas fa-envelope-open-text"></i> Contact Requests</a></li>
                 <li><a href="#"><i class="fas fa-file-download"></i> Brochure Requests</a></li>
                 <li><a href="<?php echo BASE_URL; ?>admin/enquiries/manage-callbacks.php"><i class="fas fa-phone-square-alt"></i> Callback Requests</a></li>
                 <li><a href="<?php echo BASE_URL; ?>admin/site-requests/index.php"><i class="fas fa-calendar-alt"></i> Site Visit Requests</a></li>
@@ -298,7 +298,7 @@
             <a href="<?php echo BASE_URL; ?>admin/agents/index.php"><i class="fas fa-user-tie"></i> Manage Agents</a>
         </li>
         <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'manage-enquiries.php') !== false ? 'active' : ''; ?>">
-            <a href="<?php echo BASE_URL; ?>admin/enquiries/manage-enquiries.php"><i class="fas fa-envelope-open-text"></i> Leads / Enquiries</a>
+            <a href="<?php echo BASE_URL; ?>admin/enquiries/manage-enquiries.php"><i class="fas fa-envelope-open-text"></i> Contact Requests</a>
         </li>
         <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'manage-callbacks.php') !== false ? 'active' : ''; ?>">
             <a href="<?php echo BASE_URL; ?>admin/enquiries/manage-callbacks.php"><i class="fas fa-phone-volume"></i> Callback Requests</a>
