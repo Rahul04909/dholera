@@ -1,28 +1,16 @@
 <?php
-// Mock SERVER variables for db_config.php
-$_SERVER['HTTPS'] = 'off';
-$_SERVER['HTTP_HOST'] = 'localhost';
-$_SERVER['SCRIPT_FILENAME'] = __FILE__;
-$_SERVER['SCRIPT_NAME'] = '/debug_db.php';
+$host = 'localhost';
+$db_name = 'jhdindus_dholera';
+$username = 'jhdindus_dholera';
+$password = 'Rd14072003@./';
 
-require_once 'database/db_config.php';
-
-function dumpTable($conn, $table) {
-    echo "--- Table: $table ---\n";
-    try {
-        $stmt = $conn->query("SELECT * FROM $table");
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($rows as $row) {
-            print_r($row);
-        }
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage() . "\n";
-    }
-    echo "\n";
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$db_name;charset=utf8", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $stmt = $conn->query("DESCRIBE enquiries");
+    $columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($columns, JSON_PRETTY_PRINT);
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
 }
-
-dumpTable($conn, 'agents');
-dumpTable($conn, 'projects');
-dumpTable($conn, 'agent_projects');
-dumpTable($conn, 'site_visits');
-dumpTable($conn, 'agent_site_visits');
+?>
