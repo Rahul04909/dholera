@@ -285,5 +285,3 @@ $recent_visits = $conn->query("SELECT sv.*, p.title as project_title FROM site_v
         </div>
     </div>
 </div>
-
-<?php include '../includes/footer.php'; ?>
