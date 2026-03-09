@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $phone = trim($_POST['number'] ?? ''); // Form uses 'number' as name
+    $subject = trim($_POST['subject'] ?? 'General Enquiry');
     $message = trim($_POST['comments'] ?? ''); // Form uses 'comments' as name
 
     // Basic Validation
@@ -25,10 +26,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $stmt = $conn->prepare("INSERT INTO enquiries (name, email, phone, message) VALUES (:name, :email, :phone, :message)");
+        // Prevent Duplicate Requests (Check if same enquiry was made in the last 5 minutes)
+        $dup_stmt = $conn->prepare("SELECT id FROM enquiries WHERE email = :email AND phone = :phone AND message = :message AND created_at > (NOW() - INTERVAL 5 MINUTE)");
+        $dup_stmt->execute(['email' => $email, 'phone' => $phone, 'message' => $message]);
+        
+        if ($dup_stmt->fetch()) {
+            echo json_encode(['status' => 'error', 'message' => 'Your enquiry has already been received. Please wait a few minutes before submitting again.']);
+            exit;
+        }
+
+        $stmt = $conn->prepare("INSERT INTO enquiries (name, email, phone, subject, message) VALUES (:name, :email, :phone, :subject, :message)");
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':subject', $subject);
         $stmt->bindParam(':message', $message);
         
         if ($stmt->execute()) {
