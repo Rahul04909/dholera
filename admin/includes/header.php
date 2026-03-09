@@ -249,7 +249,7 @@
             <ul class="dropdown-menu">
                 <li><a href="<?php echo BASE_URL; ?>admin/projects/index.php"><i class="fas fa-list-ul"></i> All Projects</a></li>
                 <li><a href="<?php echo BASE_URL; ?>admin/projects/add-project.php"><i class="fas fa-plus-circle"></i> Add Project</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Featured Items</a></li>
+                <!-- <li><a href="#"><i class="fas fa-star"></i> Featured Items</a></li> (No Longer Needed Now) -->
             </ul>
         </li>
         <li class="nav-item">
@@ -263,7 +263,7 @@
             <span class="nav-link">Enquiries <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
             <ul class="dropdown-menu">
                 <li><a href="<?php echo BASE_URL; ?>admin/enquiries/manage-enquiries.php"><i class="fas fa-envelope-open-text"></i> Contact Requests</a></li>
-                <li><a href="#"><i class="fas fa-file-download"></i> Brochure Requests</a></li>
+                <!-- <li><a href="#"><i class="fas fa-file-download"></i> Brochure Requests</a></li> (No Longer Needed Now) -->
                 <li><a href="<?php echo BASE_URL; ?>admin/enquiries/manage-callbacks.php"><i class="fas fa-phone-square-alt"></i> Callback Requests</a></li>
                 <li><a href="<?php echo BASE_URL; ?>admin/site-requests/index.php"><i class="fas fa-calendar-alt"></i> Site Visit Requests</a></li>
             </ul>
@@ -274,7 +274,7 @@
                 <span class="nav-link">Admin <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
                 <ul class="dropdown-menu" style="left: auto; right: 0;">
                     <li><a href="<?php echo BASE_URL; ?>admin/profile.php"><i class="fas fa-user-circle"></i> Profile</a></li>
-                    <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                    <!-- <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li> -->
                     <li><hr style="border: none; border-top: 1px solid #eee;"></li>
                     <li><a href="<?php echo BASE_URL; ?>admin/logout.php" style="color: #e53e3e;"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
