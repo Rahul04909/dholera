@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = trim($_POST['message'] ?? '');
 
     // Basic Validation
-    if (empty($name) || empty($email) || empty($phone) || empty($visit_date) || empty($visit_time)) {
+    if (empty($name) || empty($email) || empty($phone)) {
         echo json_encode(['status' => 'error', 'message' => 'Please fill in all required fields.']);
         exit;
     }

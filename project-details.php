@@ -65,6 +65,7 @@ include 'includes/header.php';
         max-width: 1200px;
         margin: 0 auto;
         padding: 40px 20px;
+        overflow-x: hidden;
     }
 
     /* Hero Section */
@@ -236,20 +237,7 @@ include 'includes/header.php';
     }
 
     .amenity-icon {
-        width: 40px;
-        height: 40px;
-        background: var(--section-bg);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--primary-gold);
-        font-size: 18px;
-    }
-
-    .amenity-icon img {
-        width: 24px;
-        height: 24px;
+        display: none;
     }
 
     /* Sticky Sidebar Form */
@@ -480,13 +468,6 @@ include 'includes/header.php';
                 <div class="amenities-grid">
                     <?php foreach($amenities as $amenity): ?>
                         <div class="amenity-card">
-                            <div class="amenity-icon">
-                                <?php if($amenity['icon_type'] == 'image'): ?>
-                                    <img src="<?php echo BASE_URL . $amenity['icon_path']; ?>">
-                                <?php else: ?>
-                                    <i class="<?php echo $amenity['icon_path']; ?>"></i>
-                                <?php endif; ?>
-                            </div>
                             <span style="font-weight: 600; font-size:14px;"><?php echo htmlspecialchars($amenity['name']); ?></span>
                         </div>
                     <?php endforeach; ?>
@@ -503,9 +484,6 @@ include 'includes/header.php';
                 <div class="amenities-grid">
                     <?php foreach($nearbys as $nearby): ?>
                         <div class="amenity-card">
-                            <div class="amenity-icon">
-                                <i class="fas fa-road"></i>
-                            </div>
                             <div style="display:flex; flex-direction:column;">
                                 <span style="font-weight: 700; font-size:15px;"><?php echo htmlspecialchars($nearby['name']); ?></span>
                                 <span style="font-size: 12px; color:var(--text-muted);"><?php echo htmlspecialchars($nearby['distance']); ?></span>
@@ -556,30 +534,10 @@ include 'includes/header.php';
                     <input type="tel" name="phone" placeholder="Phone Number" required>
                 </div>
                 <div class="input-group">
-                    <input type="date" name="visit_date" required>
-                </div>
-                <div class="input-group">
-                    <select name="visit_time" required>
-                        <option value="">Preferred Time</option>
-                        <option value="Morning">Morning (10 AM - 12 PM)</option>
-                        <option value="Afternoon">Afternoon (1 PM - 4 PM)</option>
-                        <option value="Evening">Evening (4 PM - 6 PM)</option>
-                    </select>
-                </div>
-                <div class="input-group">
                     <textarea name="message" rows="3" placeholder="Any special requirements?"></textarea>
                 </div>
-                
                 <button type="submit" class="submit-visit-btn">Schedule Visit Now</button>
             </form>
-
-            <div style="margin-top:25px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
-                <p style="font-size:12px; color:#a0aec0; margin-bottom:10px;">Quick Contact:</p>
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <i class="fab fa-whatsapp" style="color:#25D366; font-size:24px;"></i>
-                    <span style="font-weight:700;">+91 98765 43210</span>
-                </div>
-            </div>
         </div>
     </div>
 </div>
