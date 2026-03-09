@@ -330,7 +330,7 @@
     <div class="footer-bottom-bar">
         <div class="footer-bottom-container">
             <div class="copyright-text">
-                &copy; <?php echo date('Y'); ?> Dholera Smart City. All Rights Reserved. A Website Powerd By <a href="https://mineib.com" class="mineib-blink">Mineib</a>
+                &copy; <?php echo date('Y'); ?> Dholera Smart City. All Rights Reserved. A Website Powerd By <a href="https://mineib.com" class="mineib-blink">Mineib Creative Tech</a>
             </div>
             <div class="footer-bottom-links">
                 <a href="#">Privacy Policy</a>
