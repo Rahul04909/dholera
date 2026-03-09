@@ -243,8 +243,8 @@ try {
                         <?php endif; ?>
                     </ul>
                 </li>
-                <!-- <li><a href="index.php#highlights">Highlights</a></li>
-                <li><a href="index.php#floor-plans">Floor Plans</a></li> -->
+                <!-- <li><a href="index.php#highlights">Highlights</a></li> -->
+                <li><a href="">Contact us</a></li>
             </ul>
         </nav>
 
