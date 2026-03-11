@@ -238,6 +238,7 @@ include '../includes/header.php';
                         <div style="flex:1">
                             <label>Icon Class / Upload</label>
                             <input type="text" name="amenity_icon[]" class="input-box" placeholder="fas fa-home">
+                            <input type="file" name="amenity_image[]" class="input-box" accept="image/*" style="margin-top: 5px;">
                         </div>
                         <button type="button" class="btn-delete" style="border:none; background:none; padding-bottom:12px;"><i class="fas fa-times-circle"></i></button>
                     </div>
@@ -290,7 +291,10 @@ include '../includes/header.php';
         $('#amenity-container').append(`
             <div class="dynamic-row">
                 <div style="flex:1"><input type="text" name="amenity_name[]" class="input-box" placeholder="Name"></div>
-                <div style="flex:1"><input type="text" name="amenity_icon[]" class="input-box" placeholder="Icon Class"></div>
+                <div style="flex:1">
+                    <input type="text" name="amenity_icon[]" class="input-box" placeholder="fas fa-home">
+                    <input type="file" name="amenity_image[]" class="input-box" accept="image/*" style="margin-top: 5px;">
+                </div>
                 <button type="button" class="btn-delete" onclick="$(this).parent().remove()" style="border:none; background:none; padding-bottom:12px;"><i class="fas fa-times-circle"></i></button>
             </div>
         `);

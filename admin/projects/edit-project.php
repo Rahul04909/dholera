@@ -43,6 +43,25 @@ try {
     die($e->getMessage());
 }
 
+// Handle Slide Deletion
+if (isset($_POST['delete_slide'])) {
+    $slide_id = (int)$_POST['slide_id'];
+    try {
+        $slide_stmt = $conn->prepare("SELECT image_path FROM project_slides WHERE id = ? AND project_id = ?");
+        $slide_stmt->execute([$slide_id, $project_id]);
+        $slide_data = $slide_stmt->fetch();
+        if ($slide_data) {
+            if (file_exists("../../" . $slide_data['image_path'])) {
+                unlink("../../" . $slide_data['image_path']);
+            }
+            $conn->prepare("DELETE FROM project_slides WHERE id = ?")->execute([$slide_id]);
+            $success_msg = "Slide deleted successfully!";
+        }
+    } catch (PDOException $e) {
+        $error_msg = "Error deleting slide: " . $e->getMessage();
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_project'])) {
     $title = $_POST['title'];
     $label = $_POST['label'];
@@ -98,8 +117,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_project'])) {
                     $ext = pathinfo($_FILES['project_slides']['name'][$key], PATHINFO_EXTENSION);
                     $slide_path = "uploads/projects/slides/" . time() . "_slide_$key." . $ext;
                     if (move_uploaded_file($tmp_name, "../../" . $slide_path)) {
-                        $conn->prepare("INSERT INTO project_slides (project_id, image_path, order_index) VALUES (?, ?, ?)")->execute([$project_id, $slide_path, $key]);
+                        $conn->prepare("INSERT INTO project_slides (project_id, image_path, order_index) VALUES (?, ?, ?)")->execute([$project_id, $slide_path, 100]);
                     }
+                }
+            }
+        }
+
+        // Handle Amenities (Re-sync)
+        if (isset($_POST['amenity_name'])) {
+            // First clear existing
+            $conn->prepare("DELETE FROM project_amenities WHERE project_id = ?")->execute([$project_id]);
+            
+            foreach ($_POST['amenity_name'] as $key => $name) {
+                if (!empty($name)) {
+                    $icon_type = $_POST['amenity_icon_type'][$key] ?? 'icon_class';
+                    $icon_path = $_POST['amenity_icon'][$key] ?? '';
+                    
+                    if (!empty($_FILES['amenity_image']['name'][$key])) {
+                        $ext = pathinfo($_FILES['amenity_image']['name'][$key], PATHINFO_EXTENSION);
+                        $icon_path = "uploads/projects/amenities/" . time() . "_amenity_$key." . $ext;
+                        move_uploaded_file($_FILES['amenity_image']['tmp_name'][$key], "../../" . $icon_path);
+                        $icon_type = 'image';
+                    }
+                    
+                    $conn->prepare("INSERT INTO project_amenities (project_id, name, icon_path, icon_type) VALUES (?, ?, ?, ?)")->execute([$project_id, $name, $icon_path, $icon_type]);
+                }
+            }
+        }
+
+        // Handle Nearbys (Re-sync)
+        if (isset($_POST['nearby_name'])) {
+            $conn->prepare("DELETE FROM project_nearbys WHERE project_id = ?")->execute([$project_id]);
+            foreach ($_POST['nearby_name'] as $key => $name) {
+                if (!empty($name)) {
+                    $distance = $_POST['nearby_distance'][$key] ?? '';
+                    $conn->prepare("INSERT INTO project_nearbys (project_id, name, distance) VALUES (?, ?, ?)")->execute([$project_id, $name, $distance]);
                 }
             }
         }
@@ -111,8 +163,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_project'])) {
         $stmt = $conn->prepare("SELECT * FROM projects WHERE id = ?");
         $stmt->execute([$project_id]);
         $project = $stmt->fetch();
+
+        // Refresh Amenities & Nearbys
+        $amen_stmt = $conn->prepare("SELECT * FROM project_amenities WHERE project_id = ?");
+        $amen_stmt->execute([$project_id]);
+        $current_amenities = $amen_stmt->fetchAll();
+
+        $near_stmt = $conn->prepare("SELECT * FROM project_nearbys WHERE project_id = ?");
+        $near_stmt->execute([$project_id]);
+        $current_nearbys = $near_stmt->fetchAll();
+
+        $slides = $conn->prepare("SELECT * FROM project_slides WHERE project_id = ? ORDER BY order_index ASC");
+        $slides->execute([$project_id]);
+        $current_slides = $slides->fetchAll();
+
     } catch (Exception $e) {
-        $conn->rollBack();
+        if ($conn->inTransaction()) {
+            $conn->rollBack();
+        }
         $error_msg = "Error: " . $e->getMessage();
     }
 }
@@ -226,10 +294,104 @@ include '../includes/header.php';
                     <?php endif; ?>
                     <input type="file" name="brochure_pdf" class="input-box" accept="application/pdf">
                 </div>
+                <div class="form-group" style="grid-column: span 2;">
+                    <label>Manage Gallery Slides</label>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                        <?php foreach($current_slides as $slide): ?>
+                            <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1px solid #edf2f7; background: #fff;">
+                                <img src="<?php echo BASE_URL . $slide['image_path']; ?>" style="width: 100%; height: 100px; object-fit: cover;">
+                                <form method="POST" style="position: absolute; top: 5px; right: 5px;">
+                                    <input type="hidden" name="slide_id" value="<?php echo $slide['id']; ?>">
+                                    <button type="submit" name="delete_slide" onclick="return confirm('Delete this slide?')" style="background: rgba(229, 62, 62, 0.9); color: #fff; border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        <?php endforeach; ?>
+                        <?php if(empty($current_slides)): ?>
+                            <p style="font-size: 13px; color: #a0aec0; grid-column: 1/-1; text-align: center;">No slides uploaded yet.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label>Add More Gallery Slides</label>
                     <input type="file" name="project_slides[]" class="input-box" accept="image/*" multiple>
                 </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Amenities & Nearbys -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+            <div class="form-card">
+                <div class="section-title"><i class="fas fa-concierge-bell"></i> Amenities</div>
+                <div id="amenity-container">
+                    <?php if (!empty($current_amenities)): ?>
+                        <?php foreach ($current_amenities as $key => $amenity): ?>
+                            <div class="dynamic-row">
+                                <div style="flex:1">
+                                    <label>Amenity Name</label>
+                                    <input type="text" name="amenity_name[]" class="input-box" value="<?php echo htmlspecialchars($amenity['name']); ?>">
+                                </div>
+                                <div style="flex:1">
+                                    <label>Icon Class / Type</label>
+                                    <input type="hidden" name="amenity_icon_type[]" value="<?php echo $amenity['icon_type']; ?>">
+                                    <input type="text" name="amenity_icon[]" class="input-box" value="<?php echo htmlspecialchars($amenity['icon_path']); ?>" placeholder="fas fa-home">
+                                    <input type="file" name="amenity_image[]" class="input-box" accept="image/*" style="margin-top: 5px;">
+                                </div>
+                                <button type="button" class="btn-delete" onclick="$(this).parent().remove()" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="dynamic-row">
+                            <div style="flex:1">
+                                <label>Amenity Name</label>
+                                <input type="text" name="amenity_name[]" class="input-box" placeholder="Club House">
+                            </div>
+                        <div style="flex:1">
+                            <label>Icon Class / Upload</label>
+                            <input type="hidden" name="amenity_icon_type[]" value="icon_class">
+                            <input type="text" name="amenity_icon[]" class="input-box" placeholder="fas fa-home">
+                            <input type="file" name="amenity_image[]" class="input-box" accept="image/*" style="margin-top: 5px;">
+                        </div>
+                            <button type="button" class="btn-delete" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <button type="button" class="add-btn" onclick="addAmenityRow()"><i class="fas fa-plus"></i> Add Amenity</button>
+            </div>
+
+            <div class="form-card">
+                <div class="section-title"><i class="fas fa-map-marked-alt"></i> Nearby Places</div>
+                <div id="nearby-container">
+                    <?php if (!empty($current_nearbys)): ?>
+                        <?php foreach ($current_nearbys as $nearby): ?>
+                            <div class="dynamic-row">
+                                <div style="flex:1">
+                                    <label>Place Name</label>
+                                    <input type="text" name="nearby_name[]" class="input-box" value="<?php echo htmlspecialchars($nearby['name']); ?>">
+                                </div>
+                                <div style="flex:1">
+                                    <label>Distance</label>
+                                    <input type="text" name="nearby_distance[]" class="input-box" value="<?php echo htmlspecialchars($nearby['distance']); ?>">
+                                </div>
+                                <button type="button" class="btn-delete" onclick="$(this).parent().remove()" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="dynamic-row">
+                            <div style="flex:1">
+                                <label>Place Name</label>
+                                <input type="text" name="nearby_name[]" class="input-box" placeholder="Airport">
+                            </div>
+                            <div style="flex:1">
+                                <label>Distance</label>
+                                <input type="text" name="nearby_distance[]" class="input-box" placeholder="10 Mins">
+                            </div>
+                            <button type="button" class="btn-delete" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <button type="button" class="add-btn" onclick="addNearbyRow()"><i class="fas fa-plus"></i> Add Nearby</button>
             </div>
         </div>
 
@@ -238,10 +400,54 @@ include '../includes/header.php';
     </form>
 </div>
 
+<style>
+    .dynamic-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-bottom: 15px; align-items: end; }
+    .add-btn { background: #edf2f7; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; margin-top: 10px; }
+    .save-btn { background: var(--primary-gold); color: #fff; border: none; padding: 15px 40px; border-radius: 4px; font-weight: 700; cursor: pointer; float: right; margin-top: 20px; transition: 0.3s; }
+    .save-btn:hover { background: #966d09; }
+    .input-box:focus { border-color: var(--primary-gold); outline: none; }
+    .btn-delete:hover i { color: #c53030 !important; }
+</style>
+
 <script>
     $(document).ready(function() {
-        $('#summernote').summernote({ height: 300 });
+        $('#summernote').summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
     });
+
+    function addAmenityRow() {
+        $('#amenity-container').append(`
+            <div class="dynamic-row">
+                <div style="flex:1"><input type="text" name="amenity_name[]" class="input-box" placeholder="Name"></div>
+                <div style="flex:1">
+                    <input type="hidden" name="amenity_icon_type[]" value="icon_class">
+                    <input type="text" name="amenity_icon[]" class="input-box" placeholder="fas fa-home">
+                    <input type="file" name="amenity_image[]" class="input-box" accept="image/*" style="margin-top: 5px;">
+                </div>
+                <button type="button" class="btn-delete" onclick="$(this).parent().remove()" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
+            </div>
+        `);
+    }
+
+    function addNearbyRow() {
+        $('#nearby-container').append(`
+            <div class="dynamic-row">
+                <div style="flex:1"><input type="text" name="nearby_name[]" class="input-box" placeholder="Place"></div>
+                <div style="flex:1"><input type="text" name="nearby_distance[]" class="input-box" placeholder="Distance"></div>
+                <button type="button" class="btn-delete" onclick="$(this).parent().remove()" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
+            </div>
+        `);
+    }
 </script>
 </body>
 </html>
