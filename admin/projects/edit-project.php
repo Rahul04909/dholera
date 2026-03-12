@@ -130,15 +130,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_project'])) {
             
             foreach ($_POST['amenity_name'] as $key => $name) {
                 if (!empty($name)) {
-                    $icon_type = $_POST['amenity_icon_type'][$key] ?? 'icon_class';
                     $icon_path = $_POST['amenity_icon'][$key] ?? '';
-                    
-                    if (!empty($_FILES['amenity_image']['name'][$key])) {
-                        $ext = pathinfo($_FILES['amenity_image']['name'][$key], PATHINFO_EXTENSION);
-                        $icon_path = "uploads/projects/amenities/" . time() . "_amenity_$key." . $ext;
-                        move_uploaded_file($_FILES['amenity_image']['tmp_name'][$key], "../../" . $icon_path);
-                        $icon_type = 'image';
-                    }
+                    $icon_type = 'icon_class'; // Always icon_class now as requested
                     
                     $conn->prepare("INSERT INTO project_amenities (project_id, name, icon_path, icon_type) VALUES (?, ?, ?, ?)")->execute([$project_id, $name, $icon_path, $icon_type]);
                 }
@@ -196,6 +189,9 @@ include '../includes/header.php';
 
     <?php if ($success_msg): ?>
         <div style="background: #f0fff4; color: #38a169; padding: 15px; border-radius: 4px; margin-bottom: 25px;"><?php echo $success_msg; ?></div>
+    <?php endif; ?>
+    <?php if ($error_msg): ?>
+        <div style="background: #fff5f5; color: #e53e3e; padding: 15px; border-radius: 4px; margin-bottom: 25px;"><?php echo $error_msg; ?></div>
     <?php endif; ?>
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
@@ -333,10 +329,8 @@ include '../includes/header.php';
                                     <input type="text" name="amenity_name[]" class="input-box" value="<?php echo htmlspecialchars($amenity['name']); ?>">
                                 </div>
                                 <div style="flex:1">
-                                    <label>Icon Class / Type</label>
-                                    <input type="hidden" name="amenity_icon_type[]" value="<?php echo $amenity['icon_type']; ?>">
+                                    <label>Amenity Icon (Icon Class)</label>
                                     <input type="text" name="amenity_icon[]" class="input-box" value="<?php echo htmlspecialchars($amenity['icon_path']); ?>" placeholder="fas fa-home">
-                                    <input type="file" name="amenity_image[]" class="input-box" accept="image/*" style="margin-top: 5px;">
                                 </div>
                                 <button type="button" class="btn-delete" onclick="$(this).parent().remove()" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
                             </div>
@@ -347,12 +341,10 @@ include '../includes/header.php';
                                 <label>Amenity Name</label>
                                 <input type="text" name="amenity_name[]" class="input-box" placeholder="Club House">
                             </div>
-                        <div style="flex:1">
-                            <label>Icon Class / Upload</label>
-                            <input type="hidden" name="amenity_icon_type[]" value="icon_class">
-                            <input type="text" name="amenity_icon[]" class="input-box" placeholder="fas fa-home">
-                            <input type="file" name="amenity_image[]" class="input-box" accept="image/*" style="margin-top: 5px;">
-                        </div>
+                            <div style="flex:1">
+                                <label>Amenity Icon (Icon Class)</label>
+                                <input type="text" name="amenity_icon[]" class="input-box" placeholder="fas fa-home">
+                            </div>
                             <button type="button" class="btn-delete" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
                         </div>
                     <?php endif; ?>
@@ -430,9 +422,7 @@ include '../includes/header.php';
             <div class="dynamic-row">
                 <div style="flex:1"><input type="text" name="amenity_name[]" class="input-box" placeholder="Name"></div>
                 <div style="flex:1">
-                    <input type="hidden" name="amenity_icon_type[]" value="icon_class">
                     <input type="text" name="amenity_icon[]" class="input-box" placeholder="fas fa-home">
-                    <input type="file" name="amenity_image[]" class="input-box" accept="image/*" style="margin-top: 5px;">
                 </div>
                 <button type="button" class="btn-delete" onclick="$(this).parent().remove()" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
             </div>
