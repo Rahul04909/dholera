@@ -125,12 +125,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_project'])) {
 
         // Handle Amenities (Re-sync)
         if (isset($_POST['amenity_name'])) {
-            // First clear existing
+            // First clear existing - but we need to track images to not lose them if not re-uploaded
+            // For simplicity in re-sync, we usually delete all and re-insert. 
+            // Better: get existing icon_paths first.
+            $stmt_old = $conn->prepare("SELECT name, icon_path FROM project_amenities WHERE project_id = ?");
+            $stmt_old->execute([$project_id]);
+            $old_amenities = $stmt_old->fetchAll(PDO::FETCH_KEY_PAIR);
+
             $conn->prepare("DELETE FROM project_amenities WHERE project_id = ?")->execute([$project_id]);
             
             foreach ($_POST['amenity_name'] as $key => $name) {
                 if (!empty($name)) {
-                    $conn->prepare("INSERT INTO project_amenities (project_id, name, icon_path, icon_type) VALUES (?, ?, ?, ?)")->execute([$project_id, $name, '', 'icon_class']);
+                    $icon_path = $_POST['existing_amenity_icon'][$key] ?? '';
+                    $icon_type = 'icon_class';
+                    if (!empty($icon_path)) $icon_type = 'image';
+
+                    if (!empty($_FILES['amenity_image']['name'][$key])) {
+                        $ext = pathinfo($_FILES['amenity_image']['name'][$key], PATHINFO_EXTENSION);
+                        $icon_path = "uploads/projects/amenities/" . time() . "_amenity_$key." . $ext;
+                        move_uploaded_file($_FILES['amenity_image']['tmp_name'][$key], "../../" . $icon_path);
+                        $icon_type = 'image';
+                    }
+                    
+                    $conn->prepare("INSERT INTO project_amenities (project_id, name, icon_path, icon_type) VALUES (?, ?, ?, ?)")->execute([$project_id, $name, $icon_path, $icon_type]);
                 }
             }
         }
@@ -322,6 +339,18 @@ include '../includes/header.php';
                                     <label>Amenity Name</label>
                                     <input type="text" name="amenity_name[]" class="input-box" value="<?php echo htmlspecialchars($amenity['name']); ?>">
                                 </div>
+                                <div style="flex:1">
+                                    <label>Icon Image</label>
+                                    <?php if($amenity['icon_type'] == 'image' && $amenity['icon_path']): ?>
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+                                            <img src="<?php echo BASE_URL . $amenity['icon_path']; ?>" style="width: 30px; height: 30px; object-fit: contain;">
+                                            <input type="hidden" name="existing_amenity_icon[]" value="<?php echo $amenity['icon_path']; ?>">
+                                        </div>
+                                    <?php else: ?>
+                                        <input type="hidden" name="existing_amenity_icon[]" value="">
+                                    <?php endif; ?>
+                                    <input type="file" name="amenity_image[]" class="input-box" accept="image/*">
+                                </div>
                                 <button type="button" class="btn-delete" onclick="$(this).parent().remove()" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
                             </div>
                         <?php endforeach; ?>
@@ -330,6 +359,11 @@ include '../includes/header.php';
                             <div style="flex:1">
                                 <label>Amenity Name</label>
                                 <input type="text" name="amenity_name[]" class="input-box" placeholder="Club House">
+                            </div>
+                            <div style="flex:1">
+                                <label>Amenity Icon Image</label>
+                                <input type="file" name="amenity_image[]" class="input-box" accept="image/*">
+                                <input type="hidden" name="existing_amenity_icon[]" value="">
                             </div>
                             <button type="button" class="btn-delete" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
                         </div>
@@ -379,7 +413,7 @@ include '../includes/header.php';
 </div>
 
 <style>
-    .dynamic-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-bottom: 15px; align-items: end; }
+    .dynamic-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-bottom: 15px; align-items: end; }
     .add-btn { background: #edf2f7; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; margin-top: 10px; }
     .save-btn { background: var(--primary-gold); color: #fff; border: none; padding: 15px 40px; border-radius: 4px; font-weight: 700; cursor: pointer; float: right; margin-top: 20px; transition: 0.3s; }
     .save-btn:hover { background: #966d09; }
@@ -406,7 +440,11 @@ include '../includes/header.php';
     function addAmenityRow() {
         $('#amenity-container').append(`
             <div class="dynamic-row">
-                <div style="flex:1"><input type="text" name="amenity_name[]" class="input-box" placeholder="Name"></div>
+                <div style="flex:1"><input type="text" name="amenity_name[]" class="input-box" placeholder="Amenity Name"></div>
+                <div style="flex:1">
+                    <input type="file" name="amenity_image[]" class="input-box" accept="image/*">
+                    <input type="hidden" name="existing_amenity_icon[]" value="">
+                </div>
                 <button type="button" class="btn-delete" onclick="$(this).parent().remove()" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
             </div>
         `);

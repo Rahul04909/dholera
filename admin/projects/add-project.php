@@ -79,7 +79,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_project'])) {
         if (isset($_POST['amenity_name'])) {
             foreach ($_POST['amenity_name'] as $key => $name) {
                 if (!empty($name)) {
-                    $conn->prepare("INSERT INTO project_amenities (project_id, name, icon_path, icon_type) VALUES (?, ?, ?, ?)")->execute([$project_id, $name, '', 'icon_class']);
+                    $icon_path = '';
+                    $icon_type = 'icon_class';
+
+                    if (!empty($_FILES['amenity_image']['name'][$key])) {
+                        $ext = pathinfo($_FILES['amenity_image']['name'][$key], PATHINFO_EXTENSION);
+                        $icon_path = "uploads/projects/amenities/" . time() . "_amenity_$key." . $ext;
+                        move_uploaded_file($_FILES['amenity_image']['tmp_name'][$key], "../../" . $icon_path);
+                        $icon_type = 'image';
+                    }
+                    
+                    $conn->prepare("INSERT INTO project_amenities (project_id, name, icon_path, icon_type) VALUES (?, ?, ?, ?)")->execute([$project_id, $name, $icon_path, $icon_type]);
                 }
             }
         }
@@ -134,7 +144,7 @@ include '../includes/header.php';
             .form-group.full { grid-column: span 3; }
             label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #4a5568; }
             .input-box { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 5px; outline: none; }
-            .dynamic-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-bottom: 10px; align-items: end; }
+            .dynamic-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-bottom: 10px; align-items: end; }
             .add-btn { background: #edf2f7; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; margin-top: 10px; }
             .save-btn { background: var(--primary-gold); color: #fff; border: none; padding: 15px 40px; border-radius: 4px; font-size: 16px; font-weight: 700; cursor: pointer; float: right; margin-top: 20px; }
         </style>
@@ -237,6 +247,10 @@ include '../includes/header.php';
                             <label>Amenity Name</label>
                             <input type="text" name="amenity_name[]" class="input-box" placeholder="Club House">
                         </div>
+                        <div style="flex:1">
+                            <label>Amenity Icon Image</label>
+                            <input type="file" name="amenity_image[]" class="input-box" accept="image/*">
+                        </div>
                         <button type="button" class="btn-delete" style="border:none; background:none; padding-bottom:12px;"><i class="fas fa-times-circle"></i></button>
                     </div>
                 </div>
@@ -287,7 +301,8 @@ include '../includes/header.php';
     function addAmenityRow() {
         $('#amenity-container').append(`
             <div class="dynamic-row">
-                <div style="flex:1"><input type="text" name="amenity_name[]" class="input-box" placeholder="Name"></div>
+                <div style="flex:1"><input type="text" name="amenity_name[]" class="input-box" placeholder="Amenity Name"></div>
+                <div style="flex:1"><input type="file" name="amenity_image[]" class="input-box" accept="image/*"></div>
                 <button type="button" class="btn-delete" onclick="$(this).parent().remove()" style="border:none; background:none; padding-bottom:12px;"><i class="fas fa-times-circle"></i></button>
             </div>
         `);

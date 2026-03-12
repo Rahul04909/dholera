@@ -468,6 +468,9 @@ include 'includes/header.php';
                 <div class="amenities-grid">
                     <?php foreach($amenities as $amenity): ?>
                         <div class="amenity-card">
+                            <?php if($amenity['icon_type'] == 'image' && $amenity['icon_path']): ?>
+                                <img src="<?php echo BASE_URL . $amenity['icon_path']; ?>" style="width: 24px; height: 24px; object-fit: contain;">
+                            <?php endif; ?>
                             <span style="font-weight: 600; font-size:14px;"><?php echo htmlspecialchars($amenity['name']); ?></span>
                         </div>
                     <?php endforeach; ?>
