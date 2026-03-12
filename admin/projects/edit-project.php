@@ -44,8 +44,8 @@ try {
 }
 
 // Handle Slide Deletion
-if (isset($_POST['delete_slide'])) {
-    $slide_id = (int)$_POST['slide_id'];
+if (isset($_GET['delete_slide'])) {
+    $slide_id = (int)$_GET['delete_slide'];
     try {
         $slide_stmt = $conn->prepare("SELECT image_path FROM project_slides WHERE id = ? AND project_id = ?");
         $slide_stmt->execute([$slide_id, $project_id]);
@@ -130,10 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_project'])) {
             
             foreach ($_POST['amenity_name'] as $key => $name) {
                 if (!empty($name)) {
-                    $icon_path = $_POST['amenity_icon'][$key] ?? '';
-                    $icon_type = 'icon_class'; // Always icon_class now as requested
-                    
-                    $conn->prepare("INSERT INTO project_amenities (project_id, name, icon_path, icon_type) VALUES (?, ?, ?, ?)")->execute([$project_id, $name, $icon_path, $icon_type]);
+                    $conn->prepare("INSERT INTO project_amenities (project_id, name, icon_path, icon_type) VALUES (?, ?, ?, ?)")->execute([$project_id, $name, '', 'icon_class']);
                 }
             }
         }
@@ -296,12 +293,9 @@ include '../includes/header.php';
                         <?php foreach($current_slides as $slide): ?>
                             <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1px solid #edf2f7; background: #fff;">
                                 <img src="<?php echo BASE_URL . $slide['image_path']; ?>" style="width: 100%; height: 100px; object-fit: cover;">
-                                <form method="POST" style="position: absolute; top: 5px; right: 5px;">
-                                    <input type="hidden" name="slide_id" value="<?php echo $slide['id']; ?>">
-                                    <button type="submit" name="delete_slide" onclick="return confirm('Delete this slide?')" style="background: rgba(229, 62, 62, 0.9); color: #fff; border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px;">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </form>
+                                <a href="?id=<?php echo $project_id; ?>&delete_slide=<?php echo $slide['id']; ?>" onclick="return confirm('Delete this slide?')" style="position: absolute; top: 5px; right: 5px; background: rgba(229, 62, 62, 0.9); color: #fff; border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; text-decoration: none;">
+                                    <i class="fas fa-times"></i>
+                                </a>
                             </div>
                         <?php endforeach; ?>
                         <?php if(empty($current_slides)): ?>
@@ -328,10 +322,6 @@ include '../includes/header.php';
                                     <label>Amenity Name</label>
                                     <input type="text" name="amenity_name[]" class="input-box" value="<?php echo htmlspecialchars($amenity['name']); ?>">
                                 </div>
-                                <div style="flex:1">
-                                    <label>Amenity Icon (Icon Class)</label>
-                                    <input type="text" name="amenity_icon[]" class="input-box" value="<?php echo htmlspecialchars($amenity['icon_path']); ?>" placeholder="fas fa-home">
-                                </div>
                                 <button type="button" class="btn-delete" onclick="$(this).parent().remove()" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
                             </div>
                         <?php endforeach; ?>
@@ -340,10 +330,6 @@ include '../includes/header.php';
                             <div style="flex:1">
                                 <label>Amenity Name</label>
                                 <input type="text" name="amenity_name[]" class="input-box" placeholder="Club House">
-                            </div>
-                            <div style="flex:1">
-                                <label>Amenity Icon (Icon Class)</label>
-                                <input type="text" name="amenity_icon[]" class="input-box" placeholder="fas fa-home">
                             </div>
                             <button type="button" class="btn-delete" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
                         </div>
@@ -393,7 +379,7 @@ include '../includes/header.php';
 </div>
 
 <style>
-    .dynamic-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-bottom: 15px; align-items: end; }
+    .dynamic-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-bottom: 15px; align-items: end; }
     .add-btn { background: #edf2f7; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; margin-top: 10px; }
     .save-btn { background: var(--primary-gold); color: #fff; border: none; padding: 15px 40px; border-radius: 4px; font-weight: 700; cursor: pointer; float: right; margin-top: 20px; transition: 0.3s; }
     .save-btn:hover { background: #966d09; }
@@ -421,9 +407,6 @@ include '../includes/header.php';
         $('#amenity-container').append(`
             <div class="dynamic-row">
                 <div style="flex:1"><input type="text" name="amenity_name[]" class="input-box" placeholder="Name"></div>
-                <div style="flex:1">
-                    <input type="text" name="amenity_icon[]" class="input-box" placeholder="fas fa-home">
-                </div>
                 <button type="button" class="btn-delete" onclick="$(this).parent().remove()" style="border:none; background:none; padding-bottom:12px; cursor: pointer;"><i class="fas fa-times-circle" style="color: #e53e3e;"></i></button>
             </div>
         `);

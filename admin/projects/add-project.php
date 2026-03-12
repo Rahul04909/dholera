@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_project'])) {
     $plot_size_to = $_POST['plot_size_to'];
     $total_units = $_POST['total_units'];
     $price_range = $_POST['price_range'];
+    $status = $_POST['status'] ?? 'active';
 
     try {
         $conn->beginTransaction();
@@ -56,18 +57,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_project'])) {
         }
 
         // Insert Project
-        $stmt = $conn->prepare("INSERT INTO projects (title, label, project_type, legitimate, location, google_map_url, about_project, featured_image, brochure_pdf, site_plan_image, plot_size_from, plot_size_to, total_units, price_range) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$title, $label, $project_type, $legitimate, $location, $google_map_url, $about_project, $featured_image, $brochure_pdf, $site_plan_image, $plot_size_from, $plot_size_to, $total_units, $price_range]);
+        $stmt = $conn->prepare("INSERT INTO projects (title, label, project_type, legitimate, location, google_map_url, about_project, featured_image, brochure_pdf, site_plan_image, plot_size_from, plot_size_to, total_units, price_range, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$title, $label, $project_type, $legitimate, $location, $google_map_url, $about_project, $featured_image, $brochure_pdf, $site_plan_image, $plot_size_from, $plot_size_to, $total_units, $price_range, $status]);
         
         $project_id = $conn->lastInsertId();
 
         // Handle Project Slides (Multiple)
         if (!empty($_FILES['project_slides']['name'][0])) {
             foreach ($_FILES['project_slides']['tmp_name'] as $key => $tmp_name) {
-                $ext = pathinfo($_FILES['project_slides']['name'][$key], PATHINFO_EXTENSION);
-                $slide_path = "uploads/projects/slides/" . time() . "_slide_$key." . $ext;
-                if (move_uploaded_file($tmp_name, "../../" . $slide_path)) {
-                    $conn->prepare("INSERT INTO project_slides (project_id, image_path, order_index) VALUES (?, ?, ?)")->execute([$project_id, $slide_path, $key]);
+                if (!empty($tmp_name)) {
+                    $ext = pathinfo($_FILES['project_slides']['name'][$key], PATHINFO_EXTENSION);
+                    $slide_path = "uploads/projects/slides/" . time() . "_slide_$key." . $ext;
+                    if (move_uploaded_file($tmp_name, "../../" . $slide_path)) {
+                        $conn->prepare("INSERT INTO project_slides (project_id, image_path, order_index) VALUES (?, ?, ?)")->execute([$project_id, $slide_path, $key]);
+                    }
                 }
             }
         }
@@ -76,10 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_project'])) {
         if (isset($_POST['amenity_name'])) {
             foreach ($_POST['amenity_name'] as $key => $name) {
                 if (!empty($name)) {
-                    $icon_type = 'icon_class';
-                    $icon_path = $_POST['amenity_icon'][$key] ?? '';
-                    
-                    $conn->prepare("INSERT INTO project_amenities (project_id, name, icon_path, icon_type) VALUES (?, ?, ?, ?)")->execute([$project_id, $name, $icon_path, $icon_type]);
+                    $conn->prepare("INSERT INTO project_amenities (project_id, name, icon_path, icon_type) VALUES (?, ?, ?, ?)")->execute([$project_id, $name, '', 'icon_class']);
                 }
             }
         }
@@ -97,7 +97,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_project'])) {
         $conn->commit();
         $success_msg = "Project added successfully!";
     } catch (Exception $e) {
-        $conn->rollBack();
+        if ($conn->inTransaction()) {
+            $conn->rollBack();
+        }
         $error_msg = "Error: " . $e->getMessage();
     }
 }
@@ -132,7 +134,7 @@ include '../includes/header.php';
             .form-group.full { grid-column: span 3; }
             label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #4a5568; }
             .input-box { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 5px; outline: none; }
-            .dynamic-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-bottom: 10px; align-items: end; }
+            .dynamic-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-bottom: 10px; align-items: end; }
             .add-btn { background: #edf2f7; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; margin-top: 10px; }
             .save-btn { background: var(--primary-gold); color: #fff; border: none; padding: 15px 40px; border-radius: 4px; font-size: 16px; font-weight: 700; cursor: pointer; float: right; margin-top: 20px; }
         </style>
@@ -160,6 +162,13 @@ include '../includes/header.php';
                 <div class="form-group">
                     <label>Location</label>
                     <input type="text" name="location" class="input-box" placeholder="e.g., Dholera, Gujarat">
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select name="status" class="input-box">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
                 </div>
                 <div class="form-group full">
                     <label>Google Map URL</label>
@@ -228,10 +237,6 @@ include '../includes/header.php';
                             <label>Amenity Name</label>
                             <input type="text" name="amenity_name[]" class="input-box" placeholder="Club House">
                         </div>
-                        <div style="flex:1">
-                            <label>Amenity Icon (Icon Class)</label>
-                            <input type="text" name="amenity_icon[]" class="input-box" placeholder="fas fa-home">
-                        </div>
                         <button type="button" class="btn-delete" style="border:none; background:none; padding-bottom:12px;"><i class="fas fa-times-circle"></i></button>
                     </div>
                 </div>
@@ -283,9 +288,6 @@ include '../includes/header.php';
         $('#amenity-container').append(`
             <div class="dynamic-row">
                 <div style="flex:1"><input type="text" name="amenity_name[]" class="input-box" placeholder="Name"></div>
-                <div style="flex:1">
-                    <input type="text" name="amenity_icon[]" class="input-box" placeholder="fas fa-home">
-                </div>
                 <button type="button" class="btn-delete" onclick="$(this).parent().remove()" style="border:none; background:none; padding-bottom:12px;"><i class="fas fa-times-circle"></i></button>
             </div>
         `);
