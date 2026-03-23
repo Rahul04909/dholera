@@ -264,9 +264,14 @@
             <span class="nav-link">Enquiries <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
             <ul class="dropdown-menu">
                 <li><a href="<?php echo BASE_URL; ?>admin/enquiries/manage-enquiries.php"><i class="fas fa-envelope-open-text"></i> Contact Requests</a></li>
-                <!-- <li><a href="#"><i class="fas fa-file-download"></i> Brochure Requests</a></li> (No Longer Needed Now) -->
                 <li><a href="<?php echo BASE_URL; ?>admin/enquiries/manage-callbacks.php"><i class="fas fa-phone-square-alt"></i> Callback Requests</a></li>
                 <li><a href="<?php echo BASE_URL; ?>admin/site-requests/index.php"><i class="fas fa-calendar-alt"></i> Site Visit Requests</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link">Settings <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
+            <ul class="dropdown-menu">
+                <li><a href="<?php echo BASE_URL; ?>admin/settings/razorpay-config.php"><i class="fas fa-credit-card"></i> Razorpay Config</a></li>
             </ul>
         </li>
         <li class="nav-item">
@@ -309,6 +314,9 @@
         </li>
         <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'site-requests') !== false ? 'active' : ''; ?>">
             <a href="<?php echo BASE_URL; ?>admin/site-requests/index.php"><i class="fas fa-calendar-check"></i> Site Visit Requests</a>
+        </li>
+        <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'razorpay-config.php') !== false ? 'active' : ''; ?>">
+            <a href="<?php echo BASE_URL; ?>admin/settings/razorpay-config.php"><i class="fas fa-cogs"></i> Razorpay Settings</a>
         </li>
         <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'profile.php') !== false ? 'active' : ''; ?>">
             <a href="<?php echo BASE_URL; ?>admin/profile.php"><i class="fas fa-user-cog"></i> Admin Profile</a>
