@@ -272,6 +272,7 @@
             <span class="nav-link">Settings <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
             <ul class="dropdown-menu">
                 <li><a href="<?php echo BASE_URL; ?>admin/settings/razorpay-config.php"><i class="fas fa-credit-card"></i> Razorpay Config</a></li>
+                <li><a href="<?php echo BASE_URL; ?>admin/settings/smtp-config.php"><i class="fas fa-envelope-open-text"></i> SMTP Config</a></li>
             </ul>
         </li>
         <li class="nav-item">
@@ -317,6 +318,9 @@
         </li>
         <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'razorpay-config.php') !== false ? 'active' : ''; ?>">
             <a href="<?php echo BASE_URL; ?>admin/settings/razorpay-config.php"><i class="fas fa-cogs"></i> Razorpay Settings</a>
+        </li>
+        <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'smtp-config.php') !== false ? 'active' : ''; ?>">
+            <a href="<?php echo BASE_URL; ?>admin/settings/smtp-config.php"><i class="fas fa-envelope-square"></i> SMTP Settings</a>
         </li>
         <li class="sidebar-item <?php echo strpos($_SERVER['PHP_SELF'], 'profile.php') !== false ? 'active' : ''; ?>">
             <a href="<?php echo BASE_URL; ?>admin/profile.php"><i class="fas fa-user-cog"></i> Admin Profile</a>
