@@ -2,6 +2,7 @@
 <?php include 'components/hero.php'; ?>
 <?php include 'components/hero-info.php'; ?>
 <?php include 'components/overview.php'; ?>
+<?php include 'components/subscription-plans.php'; ?>
 <?php include 'components/highlights.php'; ?>
 <?php include 'components/floor-plan.php'; ?>
 <?php include 'components/projects.php'; ?>
