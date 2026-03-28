@@ -228,8 +228,8 @@
                 </div>
                 <div class="card-body-v2">
                     <div class="price-value-box">
-                        <span class="cur">$</span>
-                        <span class="amt">29</span>
+                        <span class="cur">₹</span>
+                        <span class="amt">2,499</span>
                         <span class="per">/ month</span>
                     </div>
                     <a href="register.php" class="action-btn-v2 filled-blue">Get Started</a>
@@ -253,8 +253,8 @@
                 </div>
                 <div class="card-body-v2">
                     <div class="price-value-box">
-                        <span class="cur">$</span>
-                        <span class="amt">59</span>
+                        <span class="cur">₹</span>
+                        <span class="amt">4,999</span>
                         <span class="per">/ month</span>
                     </div>
                     <a href="register.php" class="action-btn-v2 filled-orange">Go Pro Now</a>
@@ -278,8 +278,8 @@
                 </div>
                 <div class="card-body-v2">
                     <div class="price-value-box">
-                        <span class="cur">$</span>
-                        <span class="amt">99</span>
+                        <span class="cur">₹</span>
+                        <span class="amt">9,999</span>
                         <span class="per">/ month</span>
                     </div>
                     <a href="register.php" class="action-btn-v2 outline-purple">Scale Business</a>
@@ -303,8 +303,8 @@
                 </div>
                 <div class="card-body-v2">
                     <div class="price-value-box">
-                        <span class="cur">$</span>
-                        <span class="amt">199</span>
+                        <span class="cur">₹</span>
+                        <span class="amt">19,999</span>
                         <span class="per">/ month</span>
                     </div>
                     <a href="register.php" class="action-btn-v2 outline-green">Contact Sales</a>
