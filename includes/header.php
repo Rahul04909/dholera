@@ -244,6 +244,7 @@ try {
                     </ul>
                 </li>
                 <li><a href="about.php">About us</a></li>
+                <li><a href="pricing.php">Pricing</a></li>
                 <li><a href="contact.php">Contact us</a></li>
             </ul>
         </nav>
@@ -270,6 +271,7 @@ try {
                 <?php endforeach; ?>
             </ul>
         </li>
+        <li><a href="pricing.php">Pricing</a></li>
         <li><a href="index.php#highlights">Highlights</a></li>
         <li><a href="index.php#floor-plans">Floor Plans</a></li>
     </ul>
