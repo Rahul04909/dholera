@@ -1,268 +1,261 @@
 <style>
     :root {
-        --primary-gold: #b8860b;
-        --dark-bg: #111;
-        --card-bg: #fff;
-        --text-dark: #1a202c;
-        --text-muted: #718096;
-        --soft-gray: #f7fafc;
+        --primary-gold-v4: #b8860b;
+        --dark-bg-v4: #111;
+        --text-dark-v4: #1a202c;
+        --text-muted-v4: #718096;
+        --bg-white: #fff;
     }
 
-    .why-choose-section {
-        padding: 100px 20px;
-        background-color: var(--soft-gray);
+    .why-us-v4 {
+        padding: 120px 0;
+        background: #fff;
+        position: relative;
         overflow: hidden;
     }
 
-    .why-choose-container {
+    .container-v4 {
         max-width: 1280px;
         margin: 0 auto;
+        padding: 0 25px;
     }
 
-    .section-header-centered {
-        text-align: center;
-        margin-bottom: 70px;
+    .why-us-row {
+        display: flex;
+        align-items: center;
+        gap: 60px;
+        margin-bottom: 80px;
     }
 
-    .section-header-centered .badge-text {
-        display: inline-block;
-        background: rgba(184, 134, 11, 0.1);
-        color: var(--primary-gold);
-        padding: 8px 20px;
-        border-radius: 50px;
-        font-size: 13px;
-        font-weight: 800;
-        text-transform: uppercase;
-        margin-bottom: 20px;
-        letter-spacing: 1px;
+    .why-us-text {
+        flex: 1;
     }
 
-    .section-header-centered h2 {
-        font-size: 44px;
-        font-weight: 800;
-        color: var(--text-dark);
-        margin-bottom: 20px;
-        line-height: 1.2;
-    }
-
-    .section-header-centered p {
-        font-size: 18px;
-        color: var(--text-muted);
-        max-width: 700px;
-        margin: 0 auto;
-        line-height: 1.6;
-    }
-
-    .why-choose-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
-    }
-
-    .choose-card {
-        background: var(--card-bg);
-        padding: 50px 40px;
-        border-radius: 20px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.04);
-        border: 1px solid #f0f0f0;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    .why-us-image {
+        flex: 1;
         position: relative;
-        z-index: 1;
-        text-align: left;
     }
 
-    .choose-card::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(135deg, rgba(184, 134, 11, 0.1), rgba(184, 134, 11, 0));
-        border-radius: 20px;
-        opacity: 0;
-        transition: 0.4s ease;
-        z-index: -1;
+    .badge-v4 {
+        background: rgba(184, 134, 11, 0.1);
+        color: var(--primary-gold-v4);
+        padding: 8px 18px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 700;
+        display: inline-block;
+        margin-bottom: 25px;
     }
 
-    .choose-card:hover {
-        transform: translateY(-12px);
-        box-shadow: 0 35px 70px rgba(184, 134, 11, 0.08);
-        border-color: var(--primary-gold);
+    .why-us-text h2 {
+        font-size: 45px;
+        font-weight: 850;
+        color: var(--text-dark-v4);
+        margin-bottom: 30px;
+        line-height: 1.1;
     }
 
-    .choose-card:hover::before {
-        opacity: 1;
+    .primary-para {
+        font-size: 18px;
+        line-height: 1.8;
+        color: var(--text-muted-v4);
+        margin-bottom: 40px;
+        text-align: justify;
     }
 
-    .icon-box-v3 {
-        width: 70px;
-        height: 70px;
-        background: var(--soft-gray);
-        border-radius: 18px;
+    .feature-list-v4 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    .feature-item-v4 {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .feature-item-v4 .icon-v4 {
+        width: 45px;
+        height: 45px;
+        background: #fdfaf0;
+        border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 30px;
-        color: var(--primary-gold);
-        margin-bottom: 30px;
-        transition: 0.4s ease;
-    }
-
-    .choose-card:hover .icon-box-v3 {
-        background: var(--primary-gold);
-        color: #fff;
-        transform: rotateY(360deg);
-    }
-
-    .choose-card h3 {
-        font-size: 22px;
-        font-weight: 700;
-        color: var(--text-dark);
-        margin-bottom: 15px;
-    }
-
-    .choose-card p {
-        font-size: 15px;
-        color: var(--text-muted);
-        line-height: 1.7;
-    }
-
-    .visit-cta-bar {
-        margin-top: 80px;
-        background: var(--dark-bg);
-        border-radius: 25px;
-        padding: 50px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: #fff;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .visit-cta-bar::after {
-        content: '';
-        position: absolute;
-        top: -50px; right: -50px;
-        width: 200px; height: 200px;
-        background: rgba(184, 134, 11, 0.15);
-        filter: blur(50px);
-        border-radius: 50%;
-    }
-
-    .visit-content h4 {
-        font-size: 28px;
-        font-weight: 800;
-        margin-bottom: 10px;
-        color: var(--primary-gold);
-    }
-
-    .visit-content p {
-        font-size: 17px;
-        color: #a0aec0;
-        max-width: 500px;
-    }
-
-    .btn-gold-visit {
-        background: var(--primary-gold);
-        color: #fff;
-        padding: 18px 45px;
-        border-radius: 12px;
-        text-decoration: none;
-        font-weight: 700;
+        color: var(--primary-gold-v4);
         font-size: 18px;
-        transition: 0.3s;
-        box-shadow: 0 10px 20px rgba(184, 134, 11, 0.3);
+        flex-shrink: 0;
     }
 
-    .btn-gold-visit:hover {
-        background: #966d09;
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(184, 134, 11, 0.5);
+    .feature-item-v4 h4 {
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: var(--text-dark-v4);
+    }
+
+    .feature-item-v4 p {
+        font-size: 14px;
+        color: var(--text-muted-v4);
+        line-height: 1.5;
+    }
+
+    .img-wrapper-v4 {
+        border-radius: 30px;
+        overflow: hidden;
+        box-shadow: 0 30px 80px rgba(0,0,0,0.1);
+        transform: perspective(1000px) rotateY(-5deg);
+        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .img-wrapper-v4:hover {
+        transform: perspective(1000px) rotateY(0deg);
+    }
+
+    .img-wrapper-v4 img {
+        width: 100%;
+        display: block;
+    }
+
+    .floating-stats {
+        position: absolute;
+        bottom: -30px;
+        left: -30px;
+        background: #fff;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        z-index: 10;
+        border: 1px solid #f0f0f0;
+    }
+
+    .floating-stats h5 {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--primary-gold-v4);
+        margin: 0;
+    }
+
+    .floating-stats span {
+        font-size: 14px;
+        color: var(--text-muted-v4);
+    }
+
+    /* Lower Points Section */
+    .lower-points-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        border-top: 1px solid #f3f3f3;
+        padding-top: 60px;
+    }
+
+    .point-card-v4 {
+        padding: 35px;
+        background: #fdfaf0;
+        border-radius: 20px;
+        text-align: left;
+        transition: 0.3s;
+    }
+
+    .point-card-v4:hover {
+        background: var(--primary-gold-v4);
+        transform: translateY(-10px);
+    }
+
+    .point-card-v4:hover * {
+        color: #fff !important;
+    }
+
+    .point-card-v4 i {
+        font-size: 28px;
+        color: var(--primary-gold-v4);
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    .point-card-v4 h5 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 12px;
     }
 
     @media (max-width: 1024px) {
-        .why-choose-grid { grid-template-columns: repeat(2, 1fr); }
+        .why-us-row { flex-direction: column; text-align: center; }
+        .primary-para { text-align: center; }
+        .feature-list-v4 { text-align: left; }
+        .img-wrapper-v4 { transform: none !important; margin-top: 50px; }
+        .floating-stats { position: static; margin-top: 20px; display: inline-block; }
     }
 
     @media (max-width: 768px) {
-        .why-choose-section { padding: 60px 20px; }
-        .section-header-centered h2 { font-size: 32px; }
-        .why-choose-grid { grid-template-columns: 1fr; }
-        .visit-cta-bar { flex-direction: column; text-align: center; gap: 40px; padding: 40px 25px; }
-        .visit-content p { margin: 0 auto; }
+        .lower-points-grid { grid-template-columns: 1fr; }
+        .why-us-text h2 { font-size: 32px; }
+        .primary-para { font-size: 16px; }
+        .why-us-v4 { padding: 80px 0; }
     }
 </style>
 
-<section id="why-choose-us" class="why-choose-section">
-    <div class="why-choose-container">
-        <div class="section-header-centered">
-            <span class="badge-text">Why Choose Us</span>
-            <h2>Top Reasons to Partner with Dholera's Growth Experts</h2>
-            <p>Our unique blend of Real Estate expertise and Modern IT solutions makes us the undisputed choice for developers, agents, and investors in Dholera Smart City.</p>
-        </div>
+<section id="why-choose-us-detailed" class="why-us-v4">
+    <div class="container-v4">
+        <div class="why-us-row">
+            <!-- Left Side: Paragraph & Content -->
+            <div class="why-us-text">
+                <span class="badge-v4">Trusted Partner</span>
+                <h2>Why Leading Real Estate Agents Choose Our Marketing Ecosystem</h2>
+                
+                <p class="primary-para">
+                    In the rapidly evolving landscape of Dholera Smart City, standing out requires more than just standard advertising. We offer a comprehensive Digital Marketing and IT ecosystem specifically engineered for the real estate sector. Our platform leverages cutting-edge AI-driven lead filtering and automated CRM workflows to ensure that your sales team only focuses on high-converting prospects. Whether it's managing property listings or executing multi-channel ad campaigns across Meta and Google, we provide the technical superiority and market-specific intelligence needed to dominate the Dholera property market.
+                </p>
 
-        <div class="why-choose-grid">
-            <!-- 1. Dholera Expertise -->
-            <div class="choose-card">
-                <div class="icon-box-v3">
-                    <i class="fas fa-city"></i>
+                <div class="feature-list-v4">
+                    <div class="feature-item-v4">
+                        <div class="icon-v4"><i class="fas fa-microchip"></i></div>
+                        <div>
+                            <h4>Smart IT Infrastructure</h4>
+                            <p>Automated API integrations for instant lead tracking.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item-v4">
+                        <div class="icon-v4"><i class="fas fa-funnel-dollar"></i></div>
+                        <div>
+                            <h4>Verified Lead Flow</h4>
+                            <p>Proprietary filtering for organic, high-intent leads.</p>
+                        </div>
+                    </div>
                 </div>
-                <h3>Dholera Specialist</h3>
-                <p>We hyper-focus on Dholera Smart City projects, offering insider knowledge that generalized agencies simply don't have.</p>
             </div>
 
-            <!-- 2. Verified Leads -->
-            <div class="choose-card">
-                <div class="icon-box-v3">
-                    <i class="fas fa-bullseye"></i>
+            <!-- Right Side: Interactive Image -->
+            <div class="why-us-image">
+                <div class="img-wrapper-v4">
+                    <img src="assets/images/why-choose-us.png" alt="Dholera Smart City Digital Marketing Dashboard">
                 </div>
-                <h3>Targeted Lead Gen</h3>
-                <p>Stop wasting money on junk leads. Our data-driven digital marketing ensures you get only high-intent, verified organic leads.</p>
-            </div>
-
-            <!-- 3. IT & CRM Solutions -->
-            <div class="choose-card">
-                <div class="icon-box-v3">
-                    <i class="fas fa-laptop-code"></i>
+                <div class="floating-stats">
+                    <h5>98%</h5>
+                    <span>Customer ROI Success</span>
                 </div>
-                <h3>Advanced IT Services</h3>
-                <p>From automated CRM integrations to custom agent portals, we provide the tech infrastructure that scales your business.</p>
-            </div>
-
-            <!-- 4. Site Visit Master -->
-            <div class="choose-card">
-                <div class="icon-box-v3">
-                    <i class="fas fa-route"></i>
-                </div>
-                <h3>Seamless Site Visits</h3>
-                <p>We don't just generate leads; we help close them. Our planned site visit management ensures a premium experience for every potential buyer.</p>
-            </div>
-
-            <!-- 5. Marketing Dominance -->
-            <div class="choose-card">
-                <div class="icon-box-v3">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h3>Digital Dominance</h3>
-                <p>Leverage our expertise in Meta Ads, Google PPC, and SEO to keep your properties at the top of every investor's search list.</p>
-            </div>
-
-            <!-- 6. 24/7 Premium Support -->
-            <div class="choose-card">
-                <div class="icon-box-v3">
-                    <i class="fas fa-headset"></i>
-                </div>
-                <h3>Dedicated Concierge</h3>
-                <p>Our account managers work around the clock to provide technical support and marketing optimizations for your specific projects.</p>
             </div>
         </div>
 
-        <!-- Site Visit CTA -->
-        <div class="visit-cta-bar">
-            <div class="visit-content">
-                <h4>Experience Dholera in Person</h4>
-                <p>Request a professional site visit plan today and witness the future of India's first smart city with our expert guides.</p>
+        <!-- Lower Grid: Core pillars -->
+        <div class="lower-points-grid">
+            <div class="point-card-v4">
+                <i class="fas fa-building"></i>
+                <h5>Dholera Property Experts</h5>
+                <p>We specialized in residential and commercial plots across all activation areas of Dholera SIR.</p>
             </div>
-            <a href="contact.php" class="btn-gold-visit">Book A Site Visit <i class="fas fa-calendar-alt" style="margin-left: 10px;"></i></a>
+            <div class="point-card-v4">
+                <i class="fas fa-users-cog"></i>
+                <h5>Scale Your Team</h5>
+                <p>Our automation tools allow your sales team to handle 10x more leads without any manual data entry.</p>
+            </div>
+            <div class="point-card-v4">
+                <i class="fas fa-plane-arrival"></i>
+                <h5>Managed Site Visits</h5>
+                <p>From pick-up to expert site guidance, we plan the perfect physical tour for your potential investors.</p>
+            </div>
         </div>
     </div>
 </section>
