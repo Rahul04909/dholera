@@ -15,6 +15,7 @@ try {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -108,7 +109,7 @@ try {
             left: 0;
             background: #ffffff;
             min-width: 280px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             border-radius: 4px;
             padding: 10px 0;
             opacity: 0;
@@ -116,7 +117,8 @@ try {
             transform: translateY(10px);
             transition: all 0.3s ease;
             z-index: 100;
-            display: block !important; /* Force block to override nav ul flex */
+            display: block !important;
+            /* Force block to override nav ul flex */
             margin: 0;
             list-style: none;
         }
@@ -168,7 +170,7 @@ try {
             z-index: 1001;
             padding: 60px 0;
             transition: 0.4s ease-in-out;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
         }
 
@@ -214,93 +216,103 @@ try {
         }
 
         @media (max-width: 992px) {
-            nav ul { display: none; }
-            .mobile-toggle { display: block; }
+            nav ul {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<header>
-    <div class="container">
-        <a href="index.php" class="logo">
-            <img src="assets/logo.webp" alt="Dholera Logo">
-        </a>
+    <header>
+        <div class="container">
+            <a href="index.php" class="logo">
+                <img src="assets/logo.webp" alt="Dholera Logo">
+            </a>
 
-        <nav>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <!-- <li><a href="index.php#overview">Overview</a></li> -->
-                <li class="has-dropdown">
-                    <a href="#">Projects <i class="fas fa-chevron-down" style="font-size: 12px;"></i></a>
-                    <ul class="dropdown-menu">
-                        <?php if (empty($header_projects)): ?>
-                            <li><a href="#">No Projects Found</a></li>
-                        <?php else: ?>
-                            <?php foreach ($header_projects as $proj): ?>
-                                <li><a href="project-details.php?id=<?php echo $proj['id']; ?>"><?php echo htmlspecialchars($proj['title']); ?></a></li>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </ul>
-                </li>
-                <li><a href="about.php">About us</a></li>
-                <li><a href="pricing.php">Pricing</a></li>
-                <li><a href="contact.php">Contact us</a></li>
-            </ul>
-        </nav>
+            <nav>
+                <ul>
+                    <li><a href="index.php">Home</a></li>
+                    <!-- <li><a href="index.php#overview">Overview</a></li> -->
+                    <li class="has-dropdown">
+                        <a href="#">Projects <i class="fas fa-chevron-down" style="font-size: 12px;"></i></a>
+                        <ul class="dropdown-menu">
+                                <?php if (empty($header_projects)): ?>
+                                <li><a href="#">No Projects Found</a></li>
+                                <?php else: ?>
+                                    <?php foreach ($header_projects as $proj): ?>
+                                    <li><a
+                                            href="project-details.php?id=<?php echo $proj['id']; ?>"><?php echo htmlspecialchars($proj['title']); ?></a>
+                                    </li>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                        </ul>
+                    </li>
+                    <li><a href="about.php">About us</a></li>
+                    <!-- <li><a href="pricing.php">Pricing</a></li> -->
+                    <li><a href="contact.php">Contact us</a></li>
+                </ul>
+            </nav>
 
-        <div class="mobile-toggle" id="menuToggle">
-            <i class="fas fa-bars"></i>
+            <div class="mobile-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
+    </header>
+
+    <!-- Mobile Overlay -->
+    <div class="nav-overlay" id="navOverlay">
+        <div class="close-menu" id="menuClose">
+            <i class="fas fa-times"></i>
+        </div>
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="index.php#overview">Overview</a></li>
+            <li>
+                <a href="#" class="mobile-dropdown-toggle">Projects <i class="fas fa-plus"></i></a>
+                <ul class="mobile-dropdown">
+                        <?php foreach ($header_projects as $proj): ?>
+                        <li><a
+                                href="project-details.php?id=<?php echo $proj['id']; ?>"><?php echo htmlspecialchars($proj['title']); ?></a>
+                        </li>
+                        <?php endforeach; ?>
+                </ul>
+            </li>
+            <li><a href="pricing.php">Pricing</a></li>
+            <li><a href="index.php#highlights">Highlights</a></li>
+            <li><a href="index.php#floor-plans">Floor Plans</a></li>
+        </ul>
     </div>
-</header>
 
-<!-- Mobile Overlay -->
-<div class="nav-overlay" id="navOverlay">
-    <div class="close-menu" id="menuClose">
-        <i class="fas fa-times"></i>
-    </div>
-    <ul>
-        <li><a href="index.php">Home</a></li>
-        <li><a href="index.php#overview">Overview</a></li>
-        <li>
-            <a href="#" class="mobile-dropdown-toggle">Projects <i class="fas fa-plus"></i></a>
-            <ul class="mobile-dropdown">
-                <?php foreach ($header_projects as $proj): ?>
-                    <li><a href="project-details.php?id=<?php echo $proj['id']; ?>"><?php echo htmlspecialchars($proj['title']); ?></a></li>
-                <?php endforeach; ?>
-            </ul>
-        </li>
-        <li><a href="pricing.php">Pricing</a></li>
-        <li><a href="index.php#highlights">Highlights</a></li>
-        <li><a href="index.php#floor-plans">Floor Plans</a></li>
-    </ul>
-</div>
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navOverlay = document.getElementById('navOverlay');
+        const menuClose = document.getElementById('menuClose');
+        const mobileDropdownToggle = document.querySelector('.mobile-dropdown-toggle');
+        const mobileDropdown = document.querySelector('.mobile-dropdown');
 
-<script>
-    const menuToggle = document.getElementById('menuToggle');
-    const navOverlay = document.getElementById('navOverlay');
-    const menuClose = document.getElementById('menuClose');
-    const mobileDropdownToggle = document.querySelector('.mobile-dropdown-toggle');
-    const mobileDropdown = document.querySelector('.mobile-dropdown');
-
-    menuToggle.addEventListener('click', () => {
-        navOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-
-    menuClose.addEventListener('click', () => {
-        navOverlay.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    });
-
-    if (mobileDropdownToggle) {
-        mobileDropdownToggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            const isVisible = mobileDropdown.style.display === 'block';
-            mobileDropdown.style.display = isVisible ? 'none' : 'block';
-            mobileDropdownToggle.querySelector('i').classList.toggle('fa-plus');
-            mobileDropdownToggle.querySelector('i').classList.toggle('fa-minus');
+        menuToggle.addEventListener('click', () => {
+            navOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
-    }
-</script>
+
+        menuClose.addEventListener('click', () => {
+            navOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        if (mobileDropdownToggle) {
+            mobileDropdownToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                const isVisible = mobileDropdown.style.display === 'block';
+                mobileDropdown.style.display = isVisible ? 'none' : 'block';
+                mobileDropdownToggle.querySelector('i').classList.toggle('fa-plus');
+                mobileDropdownToggle.querySelector('i').classList.toggle('fa-minus');
+            });
+        }
+    </script>
