@@ -1,12 +1,14 @@
 <?php
-/**
- * Database Migration: Add Project Slugs
- * Dholera Smart City
- */
-require_once 'database/db_config.php';
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-function createSlug($str) {
-    if(!$str) return "";
+require_once dirname(__DIR__) . '/database/db_config.php';
+
+function createSlug($str)
+{
+    if (!$str)
+        return "";
     $str = strtolower(trim($str));
     $str = preg_replace('/[^a-z0-9-]/', '-', $str);
     $str = preg_replace('/-+/', "-", $str);
@@ -14,11 +16,26 @@ function createSlug($str) {
 }
 
 try {
-    // 1. Add slug column if it doesn't exist
-    $conn->exec("ALTER TABLE projects ADD COLUMN IF NOT EXISTS slug VARCHAR(255) AFTER title");
-    $conn->exec("ALTER TABLE projects ADD INDEX IF NOT EXISTS (slug)");
-    
-    echo "Slug column checked/added.<br>";
+    // 1. Check if slug column exists
+    $check_col = $conn->query("SHOW COLUMNS FROM `projects` LIKE 'slug'");
+    if ($check_col->rowCount() == 0) {
+        $conn->exec("ALTER TABLE `projects` ADD `slug` VARCHAR(255) NULL AFTER `title` ");
+        echo "Slug column added successfully.<br>";
+    } else {
+        echo "Slug column already exists.<br>";
+    }
+
+    // 2. Check if index exists
+    $check_idx = $conn->query("SHOW INDEX FROM `projects` WHERE Key_name = 'projects_slug_idx'");
+    if ($check_idx->rowCount() == 0) {
+        // Try simple index add if possible
+        try {
+            $conn->exec("ALTER TABLE `projects` ADD INDEX `projects_slug_idx` (`slug`)");
+            echo "Index added successfully.<br>";
+        } catch (Exception $e) {
+            echo "Note: Could not add index (it may already exist or have a different name). Continuing...<br>";
+        }
+    }
 
     // 2. Fetch projects without slugs or with empty slugs
     $stmt = $conn->query("SELECT id, title FROM projects WHERE slug IS NULL OR slug = ''");
@@ -26,7 +43,7 @@ try {
 
     foreach ($projects as $proj) {
         $slug = createSlug($proj['title']);
-        
+
         // Ensure slug is unique
         $check = $conn->prepare("SELECT id FROM projects WHERE slug = ? AND id != ?");
         $check->execute([$slug, $proj['id']]);
