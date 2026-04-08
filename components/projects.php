@@ -255,7 +255,7 @@ try {
                                     <span class="price-label">Starting From</span>
                                     <span class="price-value">₹ <?php echo htmlspecialchars($project['price_range'] ?: 'On Request'); ?>*</span>
                                 </div>
-                                <a href="project-details.php?id=<?php echo $project['id']; ?>" class="btn-project">View Project</a>
+                                <a href="<?php echo BASE_URL; ?>project/<?php echo $project['slug'] ? $project['slug'] : $project['id']; ?>" class="btn-project">View Project</a>
                             </div>
                         </div>
                     </div>

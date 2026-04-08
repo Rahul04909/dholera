@@ -5,24 +5,39 @@
  */
 require_once 'database/db_config.php';
 
-// Get Project ID from URL
+// Get Project ID or Slug from URL
 $project_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$project_slug = isset($_GET['slug']) ? $_GET['slug'] : '';
 
-if ($project_id <= 0) {
-    header("Location: index.php");
+if ($project_id <= 0 && empty($project_slug)) {
+    header("Location: " . BASE_URL . "index.php");
     exit();
 }
 
 try {
     // 1. Fetch Main Project Details
-    $stmt = $conn->prepare("SELECT * FROM projects WHERE id = :id AND status = 'active'");
-    $stmt->execute(['id' => $project_id]);
+    if (!empty($project_slug)) {
+        $stmt = $conn->prepare("SELECT * FROM projects WHERE slug = :slug AND status = 'active'");
+        $stmt->execute(['slug' => $project_slug]);
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM projects WHERE id = :id AND status = 'active'");
+        $stmt->execute(['id' => $project_id]);
+    }
+    
     $project = $stmt->fetch();
 
     if (!$project) {
-        header("Location: index.php");
+        header("Location: " . BASE_URL . "index.php");
         exit();
     }
+
+    $project_id = $project['id']; // Ensure we have the ID for related queries
+
+    // SEO Overrides for this page
+    $seo_title = htmlspecialchars($project['title']) . " | Dholera Smart City Project";
+    $seo_desc = substr(strip_tags($project['about_project']), 0, 160);
+    $seo_keywords = htmlspecialchars($project['title']) . ", Dholera Real Estate, Smart City Projects, Investment in Dholera";
+    $seo_image = BASE_URL . $project['featured_image'];
 
     // 2. Fetch Project Slides
     $slide_stmt = $conn->prepare("SELECT * FROM project_slides WHERE project_id = :id ORDER BY order_index ASC");
@@ -452,7 +467,7 @@ include 'includes/header.php';
                 <div class="gallery-container">
                     <?php foreach($slides as $slide): ?>
                         <div class="gallery-item" onclick="openLightbox('<?php echo BASE_URL . $slide['image_path']; ?>')">
-                            <img src="<?php echo BASE_URL . $slide['image_path']; ?>" class="gallery-img">
+                            <img src="<?php echo BASE_URL . $slide['image_path']; ?>" class="gallery-img" alt="<?php echo htmlspecialchars($project['title']); ?> Project Gallery Image">
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -504,7 +519,7 @@ include 'includes/header.php';
                     <i class="fas fa-draw-polygon"></i> Site / Floor Plan
                 </div>
                 <div class="site-plan-wrapper">
-                    <img src="<?php echo BASE_URL . $project['site_plan_image']; ?>" class="site-plan-img" alt="Site Plan">
+                    <img src="<?php echo BASE_URL . $project['site_plan_image']; ?>" class="site-plan-img" alt="<?php echo htmlspecialchars($project['title']); ?> Floor and Site Plan">
                 </div>
             </div>
             <?php endif; ?>

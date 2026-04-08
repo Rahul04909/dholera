@@ -1,0 +1,45 @@
+# SEO & Security Configuration
+# Dholera Smart City Project
+
+# Disable Directory Listing
+Options -Indexes
+
+# Setup Default Index
+DirectoryIndex index.php
+
+# Redirect www to non-www (Canonicalization)
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Global 404 Header
+ErrorDocument 404 /404.php
+
+# SEO Friendly URLs for Projects
+# project/some-slug -> project-details.php?slug=some-slug
+RewriteRule ^project/([^/]+)/?$ project-details.php?slug=$1 [L,QSA]
+
+# Sitemap XML to PHP
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# Prevent access to sensitive files
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Caching for Static Assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>

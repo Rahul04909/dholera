@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /uploads/
+Disallow: /admin/
+Disallow: /agent/
+Disallow: /ajax/
+Disallow: /includes/
+Disallow: /database/
+Disallow: /vendor/
+
+Sitemap: https://dholerabyus.in/sitemap.xml

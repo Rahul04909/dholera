@@ -168,8 +168,8 @@ try {
 
 <section class="overview-section" id="overview">
     <?php if ($overview_data): ?>
-        <img src="<?php echo BASE_URL . $overview_data['image_path']; ?>" class="blueprint-overlay blueprint-left" alt="">
-        <img src="<?php echo BASE_URL . $overview_data['image_path']; ?>" class="blueprint-overlay blueprint-right" alt="">
+        <img src="<?php echo BASE_URL . $overview_data['image_path']; ?>" class="blueprint-overlay blueprint-left" alt="Dholera Smart City Architecture Blueprint Left">
+        <img src="<?php echo BASE_URL . $overview_data['image_path']; ?>" class="blueprint-overlay blueprint-right" alt="Dholera Smart City Architecture Blueprint Right">
 
         <div class="overview-container">
             <div class="overview-content">

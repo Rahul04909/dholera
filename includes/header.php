@@ -12,6 +12,22 @@ try {
 } catch (PDOException $e) {
     $header_projects = [];
 }
+
+// Fetch projects with slugs for header
+try {
+    $stmt_projects = $conn->prepare("SELECT id, title, slug FROM projects WHERE status = 'active' ORDER BY created_at DESC");
+    $stmt_projects->execute();
+    $header_projects = $stmt_projects->fetchAll();
+} catch (PDOException $e) {
+    $header_projects = [];
+}
+
+// SEO Defaults
+$seo_title = isset($seo_title) ? $seo_title : "Dholera Smart City | Portfolio, Real Estate Digital Marketing & IT Services";
+$seo_desc = isset($seo_desc) ? $seo_desc : "Dholera Greenfield Smart City - India's First Platinum-rated Greenfield Smart City. We provide real estate digital marketing, IT services, verified lead generation, and planned site visits.";
+$seo_keywords = isset($seo_keywords) ? $seo_keywords : "Dholera Smart City, Real Estate Digital Marketing, IT Services, Plot for Sale in Dholera, Dholera SIR, Smart City Gujarat, Real Estate Leads";
+$seo_image = isset($seo_image) ? $seo_image : BASE_URL . "assets/logo.webp";
+$current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +35,54 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dholera Greenfield Smart City</title>
+    <title><?php echo $seo_title; ?></title>
+    <meta name="description" content="<?php echo $seo_desc; ?>">
+    <meta name="keywords" content="<?php echo $seo_keywords; ?>">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="<?php echo BASE_URL; ?>assets/logo.webp">
+    <link rel="apple-touch-icon" href="<?php echo BASE_URL; ?>assets/logo.webp">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?php echo $current_url; ?>">
+    <meta property="og:title" content="<?php echo $seo_title; ?>">
+    <meta property="og:description" content="<?php echo $seo_desc; ?>">
+    <meta property="og:image" content="<?php echo $seo_image; ?>">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="<?php echo $current_url; ?>">
+    <meta property="twitter:title" content="<?php echo $seo_title; ?>">
+    <meta property="twitter:description" content="<?php echo $seo_desc; ?>">
+    <meta property="twitter:image" content="<?php echo $seo_image; ?>">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="<?php echo $current_url; ?>">
+
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Dholera By Us",
+      "url": "<?php echo BASE_URL; ?>",
+      "logo": "<?php echo BASE_URL; ?>assets/logo.webp",
+      "sameAs": [
+        "https://www.facebook.com/dholerabyus",
+        "https://www.instagram.com/dholerabyus",
+        "https://twitter.com/dholerabyus"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-9990000000",
+        "contactType": "customer service",
+        "areaServed": "IN",
+        "availableLanguage": "en"
+      }
+    }
+    </script>
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
@@ -247,7 +310,7 @@ try {
                                 <?php else: ?>
                                     <?php foreach ($header_projects as $proj): ?>
                                     <li><a
-                                            href="project-details.php?id=<?php echo $proj['id']; ?>"><?php echo htmlspecialchars($proj['title']); ?></a>
+                                            href="<?php echo BASE_URL; ?>project/<?php echo $proj['slug'] ? $proj['slug'] : $proj['id']; ?>"><?php echo htmlspecialchars($proj['title']); ?></a>
                                     </li>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
@@ -278,7 +341,7 @@ try {
                 <ul class="mobile-dropdown">
                         <?php foreach ($header_projects as $proj): ?>
                         <li><a
-                                href="project-details.php?id=<?php echo $proj['id']; ?>"><?php echo htmlspecialchars($proj['title']); ?></a>
+                                href="<?php echo BASE_URL; ?>project/<?php echo $proj['slug'] ? $proj['slug'] : $proj['id']; ?>"><?php echo htmlspecialchars($proj['title']); ?></a>
                         </li>
                         <?php endforeach; ?>
                 </ul>

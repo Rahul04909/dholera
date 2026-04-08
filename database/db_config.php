@@ -50,6 +50,6 @@ try {
 } catch(PDOException $e) {
     // Handle connection errors
     error_log("Connection failed: " . $e->getMessage());
-    die("A technical error occurred. Please try again later.");
+    die("Connection failed: " . $e->getMessage());
 }
 ?>

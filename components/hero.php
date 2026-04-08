@@ -343,7 +343,7 @@ $total_slides_count = count($active_slides);
     <div class="hero-enquiry-col">
         <div class="info-header">
             <div class="logo-small">
-                <img src="assets/logo.webp" alt="Dholera Logo">
+                <img src="assets/logo.webp" alt="Dholera Smart City Branding Logo">
             </div>
             <div class="location-badge">
                 <i class="fas fa-map-marker-alt"></i> At Gujarat
