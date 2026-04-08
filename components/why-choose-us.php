@@ -230,7 +230,7 @@
             <!-- Right Side: Interactive Image -->
             <div class="why-us-image">
                 <div class="img-wrapper-v4">
-                    <img src="assets/images/why-choose-us.png" alt="Dholera Smart City Digital Marketing Dashboard">
+                    <img src="<?php echo BASE_URL; ?>assets/images/why-choose-us.png" alt="Dholera Smart City Digital Marketing Dashboard">
                 </div>
                 <div class="floating-stats">
                     <h5>98%</h5>

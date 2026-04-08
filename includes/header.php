@@ -24,8 +24,10 @@ try {
 
 // SEO Defaults
 $seo_title = isset($seo_title) ? $seo_title : "Dholera Smart City | Portfolio, Real Estate Digital Marketing & IT Services";
-$seo_desc = isset($seo_desc) ? $seo_desc : "Dholera Greenfield Smart City - India's First Platinum-rated Greenfield Smart City. We provide real estate digital marketing, IT services, verified lead generation, and planned site visits.";
-$seo_keywords = isset($seo_keywords) ? $seo_keywords : "Dholera Smart City, Real Estate Digital Marketing, IT Services, Plot for Sale in Dholera, Dholera SIR, Smart City Gujarat, Real Estate Leads";
+$seo_desc = isset($seo_desc) ? $seo_desc : "Dholera Greenfield Smart City - India's First Platinum-rated Greenfield Smart City. 
+We provide real estate digital marketing, IT services, verified lead generation, and planned site visits.";
+$seo_keywords = isset($seo_keywords) ? $seo_keywords : "Dholera Smart City, Real Estate Digital Marketing, IT Services, 
+Plot for Sale in Dholera, Dholera SIR, Smart City Gujarat, Real Estate Leads";
 $seo_image = isset($seo_image) ? $seo_image : BASE_URL . "assets/logo.webp";
 $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 ?>
@@ -294,13 +296,13 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
 
     <header>
         <div class="container">
-            <a href="index.php" class="logo">
-                <img src="assets/logo.webp" alt="Dholera Logo">
+            <a href="<?php echo BASE_URL; ?>index.php" class="logo">
+                <img src="<?php echo BASE_URL; ?>assets/logo.webp" alt="Dholera Smart City Branding Logo">
             </a>
 
             <nav>
                 <ul>
-                    <li><a href="index.php">Home</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>index.php">Home</a></li>
                     <!-- <li><a href="index.php#overview">Overview</a></li> -->
                     <li class="has-dropdown">
                         <a href="#">Projects <i class="fas fa-chevron-down" style="font-size: 12px;"></i></a>
@@ -316,9 +318,9 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
                                 <?php endif; ?>
                         </ul>
                     </li>
-                    <li><a href="about.php">About us</a></li>
-                    <!-- <li><a href="pricing.php">Pricing</a></li> -->
-                    <li><a href="contact.php">Contact us</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>about.php">About us</a></li>
+                    <!-- <li><a href="<?php echo BASE_URL; ?>pricing.php">Pricing</a></li> -->
+                    <li><a href="<?php echo BASE_URL; ?>contact.php">Contact us</a></li>
                 </ul>
             </nav>
 
@@ -334,8 +336,8 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             <i class="fas fa-times"></i>
         </div>
         <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="index.php#overview">Overview</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php">Home</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php#overview">Overview</a></li>
             <li>
                 <a href="#" class="mobile-dropdown-toggle">Projects <i class="fas fa-plus"></i></a>
                 <ul class="mobile-dropdown">
@@ -346,9 +348,9 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
                         <?php endforeach; ?>
                 </ul>
             </li>
-            <li><a href="pricing.php">Pricing</a></li>
-            <li><a href="index.php#highlights">Highlights</a></li>
-            <li><a href="index.php#floor-plans">Floor Plans</a></li>
+            <li><a href="<?php echo BASE_URL; ?>pricing.php">Pricing</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php#highlights">Highlights</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php#floor-plans">Floor Plans</a></li>
         </ul>
     </div>
 

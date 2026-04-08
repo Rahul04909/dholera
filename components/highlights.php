@@ -107,7 +107,7 @@ try {
 
     .highlights-image-side {
         flex: 1;
-        background: url('<?php echo $highlights_settings['side_image'] ?? ''; ?>') no-repeat center center;
+        background: url('<?php echo BASE_URL . ($highlights_settings['side_image'] ?? ''); ?>') no-repeat center center;
         background-size: cover;
         min-height: 400px;
     }
