@@ -15,19 +15,31 @@ if ($project_id <= 0 && empty($project_slug)) {
 }
 
 try {
+    $project = null;
+
     // 1. Fetch Main Project Details
     if (!empty($project_slug)) {
+        // Try searching by Slug
         $stmt = $conn->prepare("SELECT * FROM projects WHERE slug = :slug AND status = 'active'");
         $stmt->execute(['slug' => $project_slug]);
-    } else {
+        $project = $stmt->fetch();
+
+        // Fallback: If not found by slug, and slug is numeric, try searching by ID
+        if (!$project && is_numeric($project_slug)) {
+            $stmt = $conn->prepare("SELECT * FROM projects WHERE id = :id AND status = 'active'");
+            $stmt->execute(['id' => (int)$project_slug]);
+            $project = $stmt->fetch();
+        }
+    } elseif ($project_id > 0) {
+        // Searching by ID directly
         $stmt = $conn->prepare("SELECT * FROM projects WHERE id = :id AND status = 'active'");
         $stmt->execute(['id' => $project_id]);
+        $project = $stmt->fetch();
     }
-    
-    $project = $stmt->fetch();
 
     if (!$project) {
-        header("Location: " . BASE_URL . "index.php");
+        // Log or debug if needed: error_log("Project not found. Slug: $project_slug, ID: $project_id");
+        header("Location: " . BASE_URL . "index.php?error=not_found");
         exit();
     }
 
