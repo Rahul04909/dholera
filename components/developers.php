@@ -8,10 +8,11 @@
 
 <style>
     .developers-section {
-        padding: 40px 20px 0;
-        margin: 40px 1% 60px;
+        padding: 30px 25px 0;
+        margin: 40px 2% 60px;
         position: relative;
         overflow: visible;
+        z-index: 1;
     }
 
     /* Stylized Background Overlay */
@@ -161,7 +162,7 @@
     /* Mobile View */
     @media (max-width: 1024px) {
         .developer-card {
-            min-width: calc(25% - 22.5px); /* 4 items on tablet */
+            min-width: calc(25% - 22.5px);
         }
     }
 
@@ -176,7 +177,7 @@
         }
 
         .developer-card {
-            min-width: calc(33.333% - 20px); /* 3 items on mobile side-by-side */
+            min-width: calc(33.333% - 20px);
         }
 
         .developer-circle {
@@ -185,18 +186,6 @@
 
         .developers-title-text h2 {
             font-size: 24px;
-        }
-
-        .developer-card h3 {
-            font-size: 12px;
-        }
-        
-        .developer-card .designation {
-            font-size: 9px;
-        }
-
-        .developer-card p.project {
-            font-size: 10px;
         }
     }
 </style>
@@ -254,16 +243,16 @@
         let devIndex = 0;
 
         function getVisibleDevItems() {
-            if (window.innerWidth <= 768) return 3; // FORCED 3 ON MOBILE
+            if (window.innerWidth <= 768) return 3;
             if (window.innerWidth <= 1024) return 4;
-            return 6; // 6 ON DESKTOP
+            return 6;
         }
 
         function updateDevSlider() {
             const items = devWrapper.querySelectorAll('.developer-card');
             if (items.length === 0) return;
             
-            const gap = 30; // matching CSS gap
+            const gap = 30;
             const itemWidth = items[0].offsetWidth + gap;
             devWrapper.style.transform = `translateX(-${devIndex * itemWidth}px)`;
         }
@@ -306,7 +295,6 @@
             updateDevSlider();
         });
 
-        // Initial update
         setTimeout(updateDevSlider, 100);
     })();
 </script>

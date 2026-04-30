@@ -25,6 +25,11 @@ class ComposerStaticInit6da27fd9d28d3bd10e8dca5b99a4f230
         array (
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'I' => 
+        array (
+            'Intervention\\Image\\' => 19,
+            'Intervention\\Gif\\' => 17,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -43,6 +48,14 @@ class ComposerStaticInit6da27fd9d28d3bd10e8dca5b99a4f230
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Intervention\\Image\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/intervention/image/src',
+        ),
+        'Intervention\\Gif\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/intervention/gif/src',
         ),
     );
 
