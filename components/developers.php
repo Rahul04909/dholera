@@ -1,249 +1,313 @@
 <?php
 /**
- * Dholera Developers Component - Optimized & Side-by-Side Layout
- * Fixed 3-column layout for mobile as requested.
+ * Dholera Developers Component - Premium Slider Version
+ * Adapted from user sample code with forced 3-column mobile layout.
  */
 ?>
 
 <style>
     .developers-section {
-        padding: 80px 0;
-        background-color: #fff;
-        overflow: hidden;
-    }
-
-    .developers-container {
-        display: flex;
-        align-items: center;
-        gap: 40px;
-        background: #f0fdfa;
-        border-radius: 40px;
-        padding: 50px;
+        padding: 40px 20px 0;
+        margin: 40px 2% 60px;
         position: relative;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+        overflow: visible;
     }
 
-    .developers-text {
-        flex: 0 0 30%;
-        text-align: left;
-        z-index: 2;
-    }
-
-    .developers-text h2 {
-        font-size: 42px;
-        color: #1e3a8a;
-        font-weight: 800;
-        margin-bottom: 20px;
-        line-height: 1.1;
-    }
-
-    .developers-text p {
-        font-size: 17px;
-        color: #4b5563;
-        line-height: 1.6;
-        opacity: 0.9;
-    }
-
-    .developers-grid {
-        flex: 1;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 25px;
-        z-index: 2;
-    }
-
-    .developer-card {
-        text-align: center;
-        background: transparent;
-        padding: 10px;
-        border-radius: 20px;
-        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .developer-card:hover {
-        transform: translateY(-10px) scale(1.05);
-    }
-
-    .developer-image-wrapper {
-        width: 160px;
-        height: 160px;
-        margin: 0 auto 20px;
-        position: relative;
-        border-radius: 50%;
-        padding: 6px;
-        background: #fff;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        border: 1px solid rgba(0,0,0,0.05);
-    }
-
-    .developer-image-wrapper img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-        display: block;
-    }
-
-    .developer-info h3 {
-        font-size: 20px;
-        color: #1e3a8a;
-        margin-bottom: 4px;
-        font-weight: 700;
-    }
-
-    .developer-info .designation {
-        font-size: 12px;
-        color: #d97706;
-        font-weight: 800;
-        text-transform: uppercase;
-        display: block;
-        margin-bottom: 6px;
-        letter-spacing: 0.5px;
-    }
-
-    .developer-info .project-name {
-        font-size: 14px;
-        color: #6b7280;
-        font-style: italic;
-        line-height: 1.4;
-    }
-
-    /* Decorative Background Elements */
-    .developers-container::after {
+    /* Stylized Background Overlay */
+    .developers-section::after {
         content: '';
         position: absolute;
-        width: 300px;
-        height: 300px;
-        border: 1px dashed rgba(30, 58, 138, 0.1);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 240px;
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); /* Light Green Gradient */
+        border-radius: 30px;
+        z-index: -1;
+    }
+
+    /* Decorative Dashed Lines */
+    .developers-section::before {
+        content: '';
+        position: absolute;
+        top: -40px;
+        right: 5%;
+        width: 250px;
+        height: 250px;
+        border: 2px dashed rgba(22, 163, 74, 0.1);
         border-radius: 50%;
-        top: -100px;
-        right: -50px;
+        z-index: 0;
+    }
+
+    .developers-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 30px;
+        position: relative;
         z-index: 1;
     }
 
-    /* MOBILE RESPONSIVE: Fixed 3 Columns */
-    @media (max-width: 992px) {
-        .developers-text {
-            flex: 0 0 35%;
-        }
-        .developers-text h2 {
-            font-size: 32px;
-        }
+    .developers-title-text h2 {
+        font-family: 'Outfit', sans-serif;
+        font-size: 36px;
+        color: #064e3b;
+        font-weight: 800;
+        margin-bottom: 5px;
     }
 
+    .developers-title-text p {
+        font-size: 16px;
+        color: #374151;
+        font-weight: 500;
+    }
+
+    /* Slider Layout */
+    .developers-slider-container {
+        position: relative;
+        overflow: hidden;
+        padding: 20px 0;
+        z-index: 1;
+    }
+
+    .developers-slider-wrapper {
+        display: flex;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        gap: 30px;
+    }
+
+    /* Developer Card */
+    .developer-card {
+        min-width: calc(33.333% - 20px); /* Default 3 items */
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .developer-card:hover {
+        transform: translateY(-8px);
+    }
+
+    .developer-circle {
+        width: 100%;
+        max-width: 180px;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        background: radial-gradient(circle, #f0fdf4 0%, #bbf7d0 100%);
+        padding: 8px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    .developer-circle img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #fff;
+    }
+
+    .developer-card h3 {
+        font-family: 'Outfit', sans-serif;
+        font-size: 18px;
+        color: #064e3b;
+        font-weight: 700;
+        margin-bottom: 2px;
+    }
+
+    .developer-card .designation {
+        font-size: 12px;
+        color: #b8860b;
+        font-weight: 700;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    .developer-card .project {
+        font-size: 13px;
+        color: #6b7280;
+        font-style: italic;
+    }
+
+    /* Navigation Buttons */
+    .dev-nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: #fff;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        color: #064e3b;
+        transition: all 0.2s;
+    }
+
+    .dev-nav-btn:hover {
+        background: #064e3b;
+        color: #fff;
+    }
+
+    .dev-nav-btn.prev { left: 0px; }
+    .dev-nav-btn.next { right: 0px; }
+
+    /* Mobile View - Forced 3 Columns */
     @media (max-width: 768px) {
-        .developers-container {
-            flex-direction: column;
-            padding: 40px 20px;
-            border-radius: 30px;
-            gap: 30px;
+        .developers-section {
+            padding: 20px 10px 0;
+            margin: 20px 1.5% 40px;
         }
 
-        .developers-text {
-            flex: none;
-            width: 100%;
-            text-align: center;
+        .developers-section::after {
+            height: 160px;
         }
 
-        .developers-text h2 {
-            font-size: 30px;
-            margin-bottom: 10px;
+        .developers-title-text h2 {
+            font-size: 26px;
         }
 
-        .developers-text p {
-            font-size: 15px;
+        .developers-slider-wrapper {
+            gap: 10px;
         }
 
-        .developers-grid {
-            width: 100%;
-            grid-template-columns: repeat(3, 1fr); /* 3 COLUMNS ON MOBILE */
-            gap: 12px;
+        .developer-card {
+            min-width: calc(33.333% - 7px); /* 3 items on mobile as requested */
         }
 
-        .developer-image-wrapper {
-            width: 100px; /* Reduced for 3-col mobile */
-            height: 100px;
+        .developer-circle {
             padding: 4px;
-            margin-bottom: 12px;
+            max-width: 100px;
         }
 
-        .developer-info h3 {
-            font-size: 14px;
-            line-height: 1.2;
-        }
-
-        .developer-info .designation {
-            font-size: 9px;
-            margin-bottom: 2px;
-        }
-
-        .developer-info .project-name {
-            font-size: 10px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .developers-container {
-            padding: 30px 10px;
-        }
-        .developer-image-wrapper {
-            width: 85px;
-            height: 85px;
-        }
-        .developer-info h3 {
+        .developer-card h3 {
             font-size: 12px;
         }
-        .developer-grid {
-            gap: 8px;
+
+        .developer-card .designation {
+            font-size: 9px;
+        }
+
+        .developer-card .project {
+            font-size: 10px;
+        }
+
+        .dev-nav-btn {
+            width: 30px;
+            height: 30px;
         }
     }
 </style>
 
 <section class="developers-section">
-    <div class="container">
-        <div class="developers-container">
-            <div class="developers-text">
-                <h2>Dholera Top Developers</h2>
-                <p>Connect with the visionaries shaping the future of India's first smart city</p>
-            </div>
-
-            <div class="developers-grid">
-                <!-- Developer 1 -->
-                <div class="developer-card">
-                    <div class="developer-image-wrapper">
-                        <img src="<?php echo BASE_URL; ?>assets/images/developers/dev1.png" alt="Rajesh Mehta" loading="lazy">
-                    </div>
-                    <div class="developer-info">
-                        <h3>Rajesh Mehta</h3>
-                        <span class="designation">CHIEF ARCHITECT</span>
-                        <p class="project-name">Dholera Heights</p>
-                    </div>
-                </div>
-
-                <!-- Developer 2 -->
-                <div class="developer-card">
-                    <div class="developer-image-wrapper">
-                        <img src="<?php echo BASE_URL; ?>assets/images/developers/dev2.png" alt="Priya Sharma" loading="lazy">
-                    </div>
-                    <div class="developer-info">
-                        <h3>Priya Sharma</h3>
-                        <span class="designation">PROJECT DIRECTOR</span>
-                        <p class="project-name">Greenfield Res.</p>
-                    </div>
-                </div>
-
-                <!-- Developer 3 -->
-                <div class="developer-card">
-                    <div class="developer-image-wrapper">
-                        <img src="<?php echo BASE_URL; ?>assets/images/developers/dev3.png" alt="Amit Patel" loading="lazy">
-                    </div>
-                    <div class="developer-info">
-                        <h3>Amit Patel</h3>
-                        <span class="designation">SR. DEVELOPER</span>
-                        <p class="project-name">Smart City Villas</p>
-                    </div>
-                </div>
-            </div>
+    <div class="developers-header">
+        <div class="developers-title-text">
+            <h2>Dholera Top Developers</h2>
+            <p>Connect with the visionaries of India's Smart City</p>
         </div>
     </div>
+
+    <div class="developers-slider-container">
+        <div class="developers-slider-wrapper" id="dev-slider-wrapper">
+            <?php
+            $devs = [
+                ['name' => 'Rajesh Mehta', 'img' => 'dev1.png', 'role' => 'CHIEF ARCHITECT', 'project' => 'Dholera Heights'],
+                ['name' => 'Priya Sharma', 'img' => 'dev2.png', 'role' => 'PROJECT DIRECTOR', 'project' => 'Greenfield Res.'],
+                ['name' => 'Amit Patel', 'img' => 'dev3.png', 'role' => 'SR. DEVELOPER', 'project' => 'Smart City Villas'],
+                // Adding more to demonstrate slider (using existing images for now)
+                ['name' => 'Sanjay Singh', 'img' => 'dev1.png', 'role' => 'SITE ENGINEER', 'project' => 'Dholera Phase II'],
+                ['name' => 'Anjali Gupta', 'img' => 'dev2.png', 'role' => 'PLANNING HEAD', 'project' => 'Metro Residency'],
+                ['name' => 'Vikram Rao', 'img' => 'dev3.png', 'role' => 'LEAD DESIGNER', 'project' => 'Smart Hub'],
+            ];
+
+            foreach ($devs as $dev) {
+                ?>
+                <div class="developer-card">
+                    <div class="developer-circle">
+                        <img src="<?php echo BASE_URL; ?>assets/images/developers/<?php echo $dev['img']; ?>" alt="<?php echo $dev['name']; ?>" loading="lazy">
+                    </div>
+                    <span class="designation"><?php echo $dev['role']; ?></span>
+                    <h3><?php echo $dev['name']; ?></h3>
+                    <p class="project"><?php echo $dev['project']; ?></p>
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+
+        <button class="dev-nav-btn prev" id="dev-prev"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="dev-nav-btn next" id="dev-next"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
 </section>
+
+<script>
+    const devWrapper = document.getElementById('dev-slider-wrapper');
+    const devPrev = document.getElementById('dev-prev');
+    const devNext = document.getElementById('dev-next');
+    
+    let devIndex = 0;
+
+    function getVisibleDevItems() {
+        if (window.innerWidth <= 768) return 3; // FORCED 3 ON MOBILE
+        if (window.innerWidth <= 1024) return 3;
+        return 3; // Keep 3 for developers as requested
+    }
+
+    function updateDevSlider() {
+        const items = devWrapper.querySelectorAll('.developer-card');
+        if (items.length === 0) return;
+        
+        const gap = parseInt(window.getComputedStyle(devWrapper).gap) || 30;
+        const itemWidth = items[0].offsetWidth + gap;
+        devWrapper.style.transform = `translateX(-${devIndex * itemWidth}px)`;
+    }
+
+    devNext.addEventListener('click', () => {
+        const visible = getVisibleDevItems();
+        const total = devWrapper.querySelectorAll('.developer-card').length;
+        if (devIndex < total - visible) {
+            devIndex++;
+        } else {
+            devIndex = 0;
+        }
+        updateDevSlider();
+    });
+
+    devPrev.addEventListener('click', () => {
+        if (devIndex > 0) {
+            devIndex--;
+        } else {
+            const visible = getVisibleDevItems();
+            const total = devWrapper.querySelectorAll('.developer-card').length;
+            devIndex = total - visible;
+        }
+        updateDevSlider();
+    });
+
+    let devAutoSlide = setInterval(() => {
+        devNext.click();
+    }, 4000);
+
+    devWrapper.addEventListener('mouseenter', () => clearInterval(devAutoSlide));
+    devWrapper.addEventListener('mouseleave', () => {
+        devAutoSlide = setInterval(() => {
+            devNext.click();
+        }, 4000);
+    });
+
+    window.addEventListener('resize', () => {
+        devIndex = 0; // Reset index on resize to prevent layout breaking
+        updateDevSlider();
+    });
+</script>
