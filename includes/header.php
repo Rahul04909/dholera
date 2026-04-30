@@ -1,19 +1,11 @@
 <?php
 /**
- * Frontend Header
- * Dholera Smart City
+ * Professional Frontend Header
+ * Dholera By Us - Smart City
  */
 require_once 'database/db_config.php';
 
-try {
-    $stmt_projects = $conn->prepare("SELECT id, title FROM projects WHERE status = 'active' ORDER BY created_at DESC");
-    $stmt_projects->execute();
-    $header_projects = $stmt_projects->fetchAll();
-} catch (PDOException $e) {
-    $header_projects = [];
-}
-
-// Fetch projects with slugs for header
+// Fetch projects for header
 try {
     $stmt_projects = $conn->prepare("SELECT id, title, slug FROM projects WHERE status = 'active' ORDER BY created_at DESC");
     $stmt_projects->execute();
@@ -24,16 +16,13 @@ try {
 
 // SEO Defaults
 $seo_title = isset($seo_title) ? $seo_title : "Dholera Smart City | Portfolio, Real Estate Digital Marketing & IT Services";
-$seo_desc = isset($seo_desc) ? $seo_desc : "Dholera Greenfield Smart City - India's First Platinum-rated Greenfield Smart City. 
-We provide real estate digital marketing, IT services, verified lead generation, and planned site visits.";
-$seo_keywords = isset($seo_keywords) ? $seo_keywords : "Dholera Smart City, Real Estate Digital Marketing, IT Services, 
-Plot for Sale in Dholera, Dholera SIR, Smart City Gujarat, Real Estate Leads";
+$seo_desc = isset($seo_desc) ? $seo_desc : "Dholera Greenfield Smart City - India's First Platinum-rated Greenfield Smart City. We provide real estate digital marketing, IT services, verified lead generation, and planned site visits.";
+$seo_keywords = isset($seo_keywords) ? $seo_keywords : "Dholera Smart City, Real Estate Digital Marketing, IT Services, Plot for Sale in Dholera, Dholera SIR, Smart City Gujarat, Real Estate Leads";
 $seo_image = isset($seo_image) ? $seo_image : BASE_URL . "assets/logo.webp";
 $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,332 +41,577 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
     <meta property="og:description" content="<?php echo $seo_desc; ?>">
     <meta property="og:image" content="<?php echo $seo_image; ?>">
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="<?php echo $current_url; ?>">
-    <meta property="twitter:title" content="<?php echo $seo_title; ?>">
-    <meta property="twitter:description" content="<?php echo $seo_desc; ?>">
-    <meta property="twitter:image" content="<?php echo $seo_image; ?>">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="<?php echo $current_url; ?>">
-
-    <!-- JSON-LD Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Dholera By Us",
-      "url": "<?php echo BASE_URL; ?>",
-      "logo": "<?php echo BASE_URL; ?>assets/logo.webp",
-      "sameAs": [
-        "https://www.facebook.com/dholerabyus",
-        "https://www.instagram.com/dholerabyus",
-        "https://twitter.com/dholerabyus"
-      ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+91-9990000000",
-        "contactType": "customer service",
-        "areaServed": "IN",
-        "availableLanguage": "en"
-      }
-    }
-    </script>
-
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         :root {
-            --primary-gold: #b8860b;
-            --dark-gold: #916a09;
+            --primary-color: #b8860b; /* Gold */
+            --secondary-color: #1c335a; /* Navy Blue */
+            --text-color: #333;
+            --light-grey: #f8f9fa;
+            --border-color: #dee2e6;
             --white: #ffffff;
-            --black: #000000;
-            --translucent-white: rgba(255, 255, 255, 0.1);
+            --font-main: 'Outfit', sans-serif;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
         }
 
         body {
+            font-family: var(--font-main);
             background-color: #f4f4f4;
         }
 
-        header {
-            background-color: var(--primary-gold);
-            padding: 10px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* Top Bar */
+        .top-bar {
+            background-color: var(--secondary-color);
+            color: var(--white);
+            padding: 8px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 13px;
+            position: relative;
+            z-index: 1001;
         }
 
-        .logo {
+        .top-bar-left, .top-bar-right {
             display: flex;
             align-items: center;
+            gap: 15px;
+        }
+
+        .top-bar a {
+            color: var(--white);
             text-decoration: none;
+        }
+
+        .top-bar-right .offer-tag {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .grab-now {
+            text-decoration: underline !important;
+            font-weight: bold;
+        }
+
+        /* Main Header */
+        .main-header {
+            padding: 15px 5%;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .logo img {
-            height: 60px;
+            height: 50px;
             width: auto;
         }
 
-        /* Desktop Navigation */
-        nav ul {
+        .header-search-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-grow: 1;
+        }
+
+        .location-picker-btn {
+            border: 1px solid var(--border-color);
+            color: #555;
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .location-picker-btn:hover {
+            background: #fff;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .location-picker-btn i:first-child {
+            color: var(--primary-color);
+        }
+
+        .search-bar {
+            position: relative;
+            flex-grow: 1;
+            max-width: 400px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            background: #f1f3f5;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .search-bar .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .header-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .header-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .header-links .highlight-link {
+            background: #fff9e6;
+            padding: 8px 15px;
+            border-radius: 4px;
+            color: var(--primary-color);
+            border: 1px solid rgba(184, 134, 11, 0.2);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-auth {
+            padding: 8px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1.5px solid var(--primary-color);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-signup {
+            background: var(--primary-color);
+            color: #fff;
+        }
+
+        .btn-signup:hover {
+            background: #916a09;
+            border-color: #916a09;
+            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-login {
+            background: transparent;
+            color: var(--primary-color);
+        }
+
+        .btn-login:hover {
+            background: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            padding: 10px 5%;
+            background: var(--white);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+        }
+
+        .nav-menu {
             display: flex;
             list-style: none;
-            gap: 25px;
+            flex-wrap: nowrap;
             align-items: center;
         }
 
-        nav ul li {
+        .nav-menu li:not(:last-child) {
+            border-right: 1.5px solid #ddd;
+        }
+
+        .nav-menu li a {
+            text-decoration: none;
+            color: #444;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 0 18px;
+            transition: color 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-menu li a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Projects Dropdown */
+        .nav-menu li.has-dropdown {
             position: relative;
         }
 
-        nav ul li a {
-            text-decoration: none;
-            color: var(--white);
-            font-weight: 600;
-            font-size: 17px;
-            text-transform: capitalize;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 10px 0;
-        }
-
-        nav ul li a:hover {
-            color: #f0c040;
-        }
-
-        /* Dropdown Styling - Simple Professional List */
-        .dropdown-menu {
+        .nav-dropdown {
             position: absolute;
             top: 100%;
             left: 0;
-            background: #ffffff;
-            min-width: 280px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            border-radius: 4px;
+            background: #fff;
+            min-width: 250px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 8px;
             padding: 10px 0;
             opacity: 0;
             visibility: hidden;
             transform: translateY(10px);
-            transition: all 0.3s ease;
-            z-index: 100;
-            display: block !important;
-            /* Force block to override nav ul flex */
-            margin: 0;
+            transition: all 0.3s;
+            z-index: 1002;
             list-style: none;
         }
 
-        nav ul li:hover .dropdown-menu {
+        .nav-menu li:hover .nav-dropdown {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
         }
 
-        .dropdown-menu li {
-            width: 100% !important;
-            display: block !important;
-            margin: 0 !important;
+        .nav-dropdown li {
+            border-right: none !important;
+            width: 100%;
         }
 
-        .dropdown-menu li a {
-            color: #333 !important;
-            padding: 12px 25px !important;
-            font-size: 16px !important;
+        .nav-dropdown li a {
+            padding: 10px 20px !important;
+            display: block !important;
             font-weight: 500 !important;
-            display: block !important;
-            transition: all 0.2s ease;
-            text-transform: none !important;
+            font-size: 14px !important;
         }
 
-        .dropdown-menu li a:hover {
-            background: #f8f9fa;
-            color: var(--primary-gold) !important;
-            padding-left: 30px !important;
+        .browse-categories {
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--secondary-color);
+            font-size: 15px;
         }
 
-        /* Mobile Toggle */
         .mobile-toggle {
             display: none;
-            color: var(--white);
             font-size: 24px;
             cursor: pointer;
+            color: var(--secondary-color);
         }
 
-        /* Mobile Sidebar */
-        .nav-overlay {
+        /* Sidebar */
+        .sidebar-overlay {
             position: fixed;
             top: 0;
-            right: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
             width: 300px;
-            height: 100vh;
-            background: #fff;
-            z-index: 1001;
-            padding: 60px 0;
-            transition: 0.4s ease-in-out;
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-            overflow-y: auto;
+            height: 100%;
+            background: var(--white);
+            z-index: 2001;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 5px 0 25px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
         }
 
-        .nav-overlay.active {
-            right: 0;
+        .mobile-sidebar.open {
+            left: 0;
         }
 
-        .nav-overlay ul {
-            list-style: none;
-        }
-
-        .nav-overlay ul li a {
-            color: #333;
-            text-decoration: none;
-            font-size: 17px;
-            font-weight: 600;
+        .sidebar-header {
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 25px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .mobile-dropdown {
-            background: #f9f9f9;
-            display: none;
-            list-style: none;
-        }
-
-        .mobile-dropdown li a {
-            padding-left: 40px !important;
-            font-size: 15px !important;
-            font-weight: 400 !important;
-        }
-
-        .close-menu {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: #333;
-            font-size: 28px;
+        .close-sidebar {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--text-color);
             cursor: pointer;
         }
 
-        @media (max-width: 992px) {
-            nav ul {
+        .sidebar-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+
+        .sidebar-section h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-section ul {
+            list-style: none;
+        }
+
+        .sidebar-section ul li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 15px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .sidebar-section ul li a i {
+            width: 20px;
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .header-links, .auth-buttons, .top-bar-right {
                 display: none;
             }
-
             .mobile-toggle {
                 display: block;
+            }
+            .main-header {
+                justify-content: space-between;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar {
+                justify-content: center;
+                padding: 5px;
+            }
+            .top-bar-left span {
+                display: none;
+            }
+            .header-search-container, .nav-bar {
+                display: none;
+            }
+            .logo img {
+                height: 35px;
             }
         }
     </style>
 </head>
-
 <body>
 
-    <header>
-        <div class="container">
-            <a href="<?php echo BASE_URL; ?>index.php" class="logo">
-                <img src="<?php echo BASE_URL; ?>assets/logo.webp" alt="Dholera Smart City Branding Logo">
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <span><i class="fa-solid fa-phone"></i> Contact for Site Visit :</span>
+            <a href="tel:+918059982049"><img src="https://flagcdn.com/w20/in.png" alt="IN" width="16"> +91 80599 82049</a>
+        </div>
+        <div class="top-bar-right">
+            <span><i class="fa-solid fa-bullhorn"></i> <span class="offer-tag">Live Update</span> - Greenfield Smart City Development | Ends in : <span id="timer">09h 08m 01s</span></span>
+            <a href="<?php echo BASE_URL; ?>contact.php" class="grab-now">BOOK VISIT</a>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="logo">
+            <a href="<?php echo BASE_URL; ?>index.php">
+                <img src="<?php echo BASE_URL; ?>assets/logo.webp" alt="Dholera By Us Logo">
             </a>
+        </div>
 
-            <nav>
-                <ul>
-                    <li><a href="<?php echo BASE_URL; ?>index.php">Home</a></li>
-                    <!-- <li><a href="index.php#overview">Overview</a></li> -->
-                    <li class="has-dropdown">
-                        <a href="#">Projects <i class="fas fa-chevron-down" style="font-size: 12px;"></i></a>
-                        <ul class="dropdown-menu">
-                                <?php if (empty($header_projects)): ?>
-                                <li><a href="#">No Projects Found</a></li>
-                                <?php else: ?>
-                                    <?php foreach ($header_projects as $proj): ?>
-                                    <li><a
-                                            href="<?php echo BASE_URL; ?>project/<?php echo $proj['slug'] ? $proj['slug'] : $proj['id']; ?>"><?php echo htmlspecialchars($proj['title']); ?></a>
-                                    </li>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                        </ul>
-                    </li>
-                    <li><a href="<?php echo BASE_URL; ?>about.php">About us</a></li>
-                    <!-- <li><a href="<?php echo BASE_URL; ?>pricing.php">Pricing</a></li> -->
-                    <li><a href="<?php echo BASE_URL; ?>contact.php">Contact us</a></li>
-                </ul>
-            </nav>
-
-            <div class="mobile-toggle" id="menuToggle">
-                <i class="fas fa-bars"></i>
+        <div class="header-search-container">
+            <button class="location-picker-btn">
+                <i class="fa-solid fa-location-dot"></i> <span>Dholera SIR</span> <i class="fa-solid fa-caret-down"></i>
+            </button>
+            
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" placeholder="Search projects, plots, amenities...">
             </div>
+        </div>
+
+        <div class="header-links">
+            <a href="<?php echo BASE_URL; ?>about.php">About Us</a>
+            <a href="<?php echo BASE_URL; ?>index.php#projects" class="highlight-link">Our Projects</a>
+            <a href="<?php echo BASE_URL; ?>contact.php">Contact</a>
+        </div>
+
+        <div class="auth-buttons">
+            <a href="<?php echo BASE_URL; ?>register.php" class="btn-auth btn-signup">Register</a>
+            <a href="<?php echo BASE_URL; ?>admin/login.php" class="btn-auth btn-login">Login</a>
+        </div>
+
+        <div class="mobile-toggle" id="mobile-menu-btn">
+            <i class="fa-solid fa-bars"></i>
         </div>
     </header>
 
-    <!-- Mobile Overlay -->
-    <div class="nav-overlay" id="navOverlay">
-        <div class="close-menu" id="menuClose">
-            <i class="fas fa-times"></i>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <div class="browse-categories">
+            <i class="fa-solid fa-layer-group"></i> <span>Smart City Categories</span> <i class="fa-solid fa-caret-down"></i>
         </div>
-        <ul>
+        
+        <ul class="nav-menu">
             <li><a href="<?php echo BASE_URL; ?>index.php">Home</a></li>
-            <li><a href="<?php echo BASE_URL; ?>index.php#overview">Overview</a></li>
-            <li>
-                <a href="#" class="mobile-dropdown-toggle">Projects <i class="fas fa-plus"></i></a>
-                <ul class="mobile-dropdown">
+            <li class="has-dropdown">
+                <a href="#">Exclusive Projects <i class="fa-solid fa-caret-down"></i></a>
+                <ul class="nav-dropdown">
+                    <?php if (empty($header_projects)): ?>
+                        <li><a href="#">No Active Projects</a></li>
+                    <?php else: ?>
                         <?php foreach ($header_projects as $proj): ?>
-                        <li><a
-                                href="<?php echo BASE_URL; ?>project/<?php echo $proj['slug'] ? $proj['slug'] : $proj['id']; ?>"><?php echo htmlspecialchars($proj['title']); ?></a>
-                        </li>
+                            <li><a href="<?php echo BASE_URL; ?>project/<?php echo $proj['slug'] ? $proj['slug'] : $proj['id']; ?>"><?php echo htmlspecialchars($proj['title']); ?></a></li>
                         <?php endforeach; ?>
+                    <?php endif; ?>
                 </ul>
             </li>
-            <li><a href="<?php echo BASE_URL; ?>pricing.php">Pricing</a></li>
-            <li><a href="<?php echo BASE_URL; ?>index.php#highlights">Highlights</a></li>
+            <li><a href="<?php echo BASE_URL; ?>about.php">Market Insights</a></li>
+            <li><a href="<?php echo BASE_URL; ?>contact.php">Site Visit</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php#developers">Developers</a></li>
             <li><a href="<?php echo BASE_URL; ?>index.php#floor-plans">Floor Plans</a></li>
         </ul>
-    </div>
+
+        <div></div>
+    </nav>
+
+    <!-- Mobile Sidebar -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <aside class="mobile-sidebar" id="mobile-sidebar">
+        <div class="sidebar-header">
+            <img src="<?php echo BASE_URL; ?>assets/logo.webp" alt="Dholera Logo" height="35">
+            <button class="close-sidebar" id="close-sidebar"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="sidebar-content">
+            <div class="sidebar-section">
+                <h4>Main Menu</h4>
+                <ul>
+                    <li><a href="<?php echo BASE_URL; ?>index.php"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>index.php#projects"><i class="fa-solid fa-building"></i> Projects</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>about.php"><i class="fa-solid fa-info-circle"></i> About Us</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>contact.php"><i class="fa-solid fa-envelope"></i> Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <h4>Smart City Info</h4>
+                <ul>
+                    <li><a href="#"><i class="fa-solid fa-map"></i> Location Map</a></li>
+                    <li><a href="#"><i class="fa-solid fa-file-pdf"></i> Download Brochure</a></li>
+                    <li><a href="#"><i class="fa-solid fa-video"></i> Drone View</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="<?php echo BASE_URL; ?>register.php" class="btn-auth btn-signup">Register Now</a>
+                <a href="<?php echo BASE_URL; ?>admin/login.php" class="btn-auth btn-login">Admin Login</a>
+            </div>
+        </div>
+    </aside>
 
     <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const navOverlay = document.getElementById('navOverlay');
-        const menuClose = document.getElementById('menuClose');
-        const mobileDropdownToggle = document.querySelector('.mobile-dropdown-toggle');
-        const mobileDropdown = document.querySelector('.mobile-dropdown');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeSidebar = document.getElementById('close-sidebar');
+        const sidebar = document.getElementById('mobile-sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
 
-        menuToggle.addEventListener('click', () => {
-            navOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-
-        menuClose.addEventListener('click', () => {
-            navOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-
-        if (mobileDropdownToggle) {
-            mobileDropdownToggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                const isVisible = mobileDropdown.style.display === 'block';
-                mobileDropdown.style.display = isVisible ? 'none' : 'block';
-                mobileDropdownToggle.querySelector('i').classList.toggle('fa-plus');
-                mobileDropdownToggle.querySelector('i').classList.toggle('fa-minus');
-            });
+        function toggleSidebar() {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
         }
+
+        if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleSidebar);
+        if (closeSidebar) closeSidebar.addEventListener('click', toggleSidebar);
+        if (overlay) overlay.addEventListener('click', toggleSidebar);
+
+        // Timer Logic
+        let hours = 9, minutes = 8, seconds = 1;
+        setInterval(() => {
+            seconds--;
+            if (seconds < 0) {
+                seconds = 59;
+                minutes--;
+            }
+            if (minutes < 0) {
+                minutes = 59;
+                hours--;
+            }
+            const timerEl = document.getElementById('timer');
+            if (timerEl) {
+                timerEl.innerText = `${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
+            }
+        }, 1000);
     </script>
