@@ -152,10 +152,11 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             color: #888;
         }
 
+        /* Upper Header Links - Centered with | dividers */
         .header-links {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 0; /* Managed by dividers */
         }
 
         .header-links a {
@@ -164,13 +165,21 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             font-weight: 600;
             font-size: 15px;
             transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-links a:not(:last-child)::after {
+            content: '|';
+            color: #ddd;
+            margin: 0 12px;
+            font-weight: 300;
+            font-size: 14px;
         }
 
         .header-links a:hover {
             color: var(--primary-color);
         }
-
-        /* Removed highlight-link styling to match requested uniform look */
 
         .auth-buttons {
             display: flex;
@@ -233,21 +242,12 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             justify-content: center;
         }
 
-        /* vertical divider | style */
-        .nav-menu li:not(:last-child)::after {
-            content: '|';
-            color: #ddd;
-            margin: 0 10px;
-            font-size: 12px;
-            font-weight: 300;
-        }
-
         .nav-menu li a {
             text-decoration: none;
             color: #444;
             font-size: 14px;
             font-weight: 600;
-            padding: 0 15px; /* Adjusted since we have pseudo-divider */
+            padding: 0 25px;
             transition: color 0.3s;
             white-space: nowrap;
         }
@@ -282,10 +282,6 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
-        }
-
-        .nav-dropdown li::after {
-            content: none !important; /* No divider in dropdown */
         }
 
         .nav-dropdown li {
