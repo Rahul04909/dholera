@@ -1,5 +1,5 @@
 <?php
-// Our Projects Component - Redesigned to match Browse Stores layout
+// Our Projects Component - Redesigned & Size Optimized
 require_once 'database/db_config.php';
 
 try {
@@ -13,7 +13,7 @@ try {
 <style>
     .projects-section {
         padding: 40px 20px 0;
-        margin: 40px 2% 60px;
+        margin: 40px 1% 60px;
         position: relative;
         overflow: visible;
         font-family: 'Outfit', sans-serif;
@@ -23,7 +23,7 @@ try {
     .projects-banner {
         background: linear-gradient(135deg, #a7ffeb 0%, #e0f2f1 100%);
         border-radius: 20px;
-        padding: 40px 50px 100px;
+        padding: 40px 50px 80px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -36,14 +36,14 @@ try {
     }
 
     .projects-title-group h2 {
-        font-size: 38px;
+        font-size: 30px;
         color: #1c335a;
         font-weight: 800;
         margin-bottom: 5px;
     }
 
     .projects-title-group p {
-        font-size: 16px;
+        font-size: 15px;
         color: #555;
         font-weight: 500;
     }
@@ -51,11 +51,11 @@ try {
     .btn-see-all {
         background: #fff;
         color: #1c335a;
-        padding: 10px 25px;
+        padding: 8px 20px;
         border-radius: 30px;
         text-decoration: none;
         font-weight: 700;
-        font-size: 14px;
+        font-size: 13px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         transition: all 0.3s;
     }
@@ -70,7 +70,7 @@ try {
     .projects-slider-container {
         position: relative;
         overflow: hidden;
-        margin-top: -80px; /* Overlap with banner */
+        margin-top: -60px; /* Overlap with banner */
         padding: 20px 0;
         z-index: 1;
     }
@@ -78,16 +78,16 @@ try {
     .projects-slider-wrapper {
         display: flex;
         transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        gap: 25px;
+        gap: 20px;
     }
 
-    /* Project Card - Professional Design */
+    /* Project Card - Smaller Size */
     .project-card {
-        min-width: calc(33.333% - 17px); /* 3 items on desktop */
+        min-width: calc(25% - 15px); /* 4 items on desktop */
         background: #fff;
-        border-radius: 25px;
+        border-radius: 20px;
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.05);
         transition: all 0.4s ease;
         border: 1px solid rgba(0,0,0,0.03);
         display: flex;
@@ -95,16 +95,16 @@ try {
     }
 
     .project-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 45px rgba(0,0,0,0.12);
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
     }
 
     .project-img-wrapper {
         position: relative;
-        height: 250px;
+        height: 180px; /* Reduced height */
         overflow: hidden;
-        margin: 12px;
-        border-radius: 20px;
+        margin: 10px;
+        border-radius: 15px;
     }
 
     .project-img {
@@ -114,24 +114,19 @@ try {
         transition: transform 0.8s ease;
     }
 
-    .project-card:hover .project-img {
-        transform: scale(1.1);
-    }
-
-    /* Circular Logo Badge */
     .project-badge-logo {
         position: absolute;
-        bottom: 15px;
-        left: 15px;
-        width: 50px;
-        height: 50px;
+        bottom: 10px;
+        left: 10px;
+        width: 40px;
+        height: 40px;
         background: #fff;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 8px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        padding: 6px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
         z-index: 2;
     }
 
@@ -142,28 +137,28 @@ try {
 
     .project-badge-status {
         position: absolute;
-        top: 15px;
-        right: 15px;
+        top: 10px;
+        right: 10px;
         background: rgba(255, 255, 255, 0.9);
         color: #1c335a;
-        padding: 5px 15px;
+        padding: 4px 12px;
         border-radius: 20px;
-        font-size: 11px;
+        font-size: 10px;
         font-weight: 800;
         text-transform: uppercase;
         backdrop-filter: blur(5px);
     }
 
     .project-content {
-        padding: 0 25px 25px;
+        padding: 0 18px 18px;
         text-align: left;
     }
 
     .project-title {
-        font-size: 20px;
+        font-size: 17px;
         font-weight: 800;
         color: #1c335a;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -172,10 +167,10 @@ try {
     .project-location {
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 5px;
         color: #777;
-        font-size: 13px;
-        margin-bottom: 15px;
+        font-size: 12px;
+        margin-bottom: 12px;
     }
 
     .project-location i {
@@ -192,8 +187,8 @@ try {
     .project-rating {
         display: flex;
         align-items: center;
-        gap: 4px;
-        font-size: 13px;
+        gap: 3px;
+        font-size: 12px;
         font-weight: 700;
         color: #1c335a;
     }
@@ -202,17 +197,11 @@ try {
         color: #ffb400;
     }
 
-    .project-rating span {
-        color: #888;
-        font-weight: 500;
-        margin-left: 2px;
-    }
-
     .project-price-tag {
         background: #f3f4f6;
-        padding: 5px 12px;
-        border-radius: 8px;
-        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 11px;
         font-weight: 700;
         color: #4b5563;
     }
@@ -220,10 +209,10 @@ try {
     /* Navigation Buttons */
     .proj-nav-btn {
         position: absolute;
-        top: 55%;
+        top: 60%;
         transform: translateY(-50%);
-        width: 44px;
-        height: 44px;
+        width: 38px;
+        height: 38px;
         background: #fff;
         border: none;
         border-radius: 50%;
@@ -232,87 +221,44 @@ try {
         justify-content: center;
         cursor: pointer;
         z-index: 10;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         color: #1c335a;
-        transition: all 0.3s;
     }
 
-    .proj-nav-btn:hover {
-        background: #1c335a;
-        color: #fff;
-    }
-
-    .proj-nav-btn.prev { left: -10px; }
-    .proj-nav-btn.next { right: -10px; }
-
-    /* Decorative Elements */
-    .projects-banner::before {
-        content: '';
-        position: absolute;
-        top: -30px;
-        right: 15%;
-        width: 200px;
-        height: 200px;
-        border: 2px dashed rgba(28, 51, 90, 0.05);
-        border-radius: 50%;
-        z-index: 0;
-    }
+    .proj-nav-btn.prev { left: -5px; }
+    .proj-nav-btn.next { right: -5px; }
 
     /* Mobile View */
-    @media (max-width: 992px) {
+    @media (max-width: 1100px) {
         .project-card {
-            min-width: calc(50% - 13px);
+            min-width: calc(33.333% - 15px);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .project-card {
+            min-width: calc(50% - 12px);
         }
     }
 
     @media (max-width: 600px) {
         .projects-section {
             padding: 20px 10px 0;
-            margin: 20px 0 40px;
         }
-
         .projects-banner {
-            padding: 30px 20px 80px;
-            border-radius: 0;
+            padding: 30px 20px 60px;
         }
-
         .projects-title-group h2 {
-            font-size: 26px;
+            font-size: 24px;
         }
-
-        .projects-title-group p {
-            font-size: 13px;
-        }
-
-        .btn-see-all {
-            padding: 8px 15px;
-            font-size: 12px;
-        }
-
-        .projects-slider-wrapper {
-            gap: 15px;
-            padding: 0 10px;
-        }
-
         .project-card {
-            min-width: calc(85% - 15px); /* Peek at next card */
+            min-width: calc(80% - 10px);
         }
-
         .project-img-wrapper {
-            height: 180px;
-            margin: 8px;
+            height: 150px;
         }
-
-        .project-content {
-            padding: 0 15px 20px;
-        }
-
-        .project-title {
-            font-size: 17px;
-        }
-
         .proj-nav-btn {
-            display: none; /* Hide on mobile for better touch experience */
+            display: none;
         }
     }
 </style>
@@ -320,8 +266,8 @@ try {
 <section class="projects-section" id="projects">
     <div class="projects-banner">
         <div class="projects-title-group">
-            <h2>Browse Projects</h2>
-            <p>Explore premium real estate opportunities in Dholera</p>
+            <h2>Our Projects</h2>
+            <p>Explore premium real estate in Dholera</p>
         </div>
         <a href="#all-projects" class="btn-see-all">See All</a>
     </div>
@@ -330,7 +276,6 @@ try {
         <div class="projects-slider-wrapper" id="proj-slider-wrapper">
             <?php if (!empty($all_projects)): ?>
                 <?php foreach ($all_projects as $index => $project): 
-                    // Random rating for professional look
                     $rating = 4 . "." . rand(5, 9);
                     $reviews = rand(10, 50);
                 ?>
@@ -352,30 +297,29 @@ try {
                         <div class="project-content">
                             <h3 class="project-title"><?php echo htmlspecialchars($project['title']); ?></h3>
                             <div class="project-location">
-                                <i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($project['location']); ?>
+                                <i class="fas fa-map-marker-alt" style="font-size: 10px;"></i> <?php echo htmlspecialchars($project['location']); ?>
                             </div>
                             
                             <div class="project-stats">
                                 <div class="project-rating">
-                                    <i class="fas fa-star"></i> <?php echo $rating; ?> <span>(<?php echo $reviews; ?>)</span>
+                                    <i class="fas fa-star" style="font-size: 10px;"></i> <?php echo $rating; ?>
                                 </div>
                                 <div class="project-price-tag">
                                     ₹ <?php echo htmlspecialchars($project['price_range'] ?: 'On Request'); ?>
                                 </div>
                             </div>
                             
-                            <a href="<?php echo BASE_URL; ?>project/<?php echo $project['slug'] ? $project['slug'] : $project['id']; ?>" style="text-decoration: none; display: block; margin-top: 15px;">
-                                <div style="color: #1c335a; font-weight: 700; font-size: 14px; text-align: center; border: 1px solid #eee; padding: 8px; border-radius: 10px; transition: 0.3s;" onmouseover="this.style.background='#1c335a'; this.style.color='#fff'" onmouseout="this.style.background='transparent'; this.style.color='#1c335a'">
-                                    Details <i class="fas fa-arrow-right" style="font-size: 12px; margin-left: 5px;"></i>
+                            <a href="<?php echo BASE_URL; ?>project/<?php echo $project['slug'] ? $project['slug'] : $project['id']; ?>" style="text-decoration: none; display: block; margin-top: 12px;">
+                                <div style="color: #1c335a; font-weight: 700; font-size: 13px; text-align: center; border: 1px solid #eee; padding: 6px; border-radius: 8px; transition: 0.3s;" onmouseover="this.style.background='#1c335a'; this.style.color='#fff'" onmouseout="this.style.background='transparent'; this.style.color='#1c335a'">
+                                    Details <i class="fas fa-arrow-right" style="font-size: 10px; margin-left: 4px;"></i>
                                 </div>
                             </a>
                         </div>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <div style="width: 100%; text-align: center; padding: 60px; background: #fff; border-radius: 20px;">
-                    <i class="fas fa-city" style="font-size: 50px; color: #eee; margin-bottom: 20px;"></i>
-                    <p style="color: #666;">New premium projects arriving soon!</p>
+                <div style="width: 100%; text-align: center; padding: 40px; background: #fff; border-radius: 20px;">
+                    <p style="color: #666;">New projects arriving soon!</p>
                 </div>
             <?php endif; ?>
         </div>
@@ -394,16 +338,17 @@ try {
         let projIndex = 0;
 
         function getVisibleProjItems() {
-            if (window.innerWidth <= 600) return 1.2; // Show one and a bit of next
-            if (window.innerWidth <= 992) return 2;
-            return 3;
+            if (window.innerWidth <= 600) return 1.25;
+            if (window.innerWidth <= 768) return 2;
+            if (window.innerWidth <= 1100) return 3;
+            return 4; // 4 ON DESKTOP
         }
 
         function updateProjSlider() {
             const items = projWrapper.querySelectorAll('.project-card');
             if (items.length === 0) return;
             
-            const gap = 25; // CSS gap
+            const gap = 20; // Updated gap
             const itemWidth = items[0].offsetWidth + gap;
             projWrapper.style.transform = `translateX(-${projIndex * itemWidth}px)`;
         }
