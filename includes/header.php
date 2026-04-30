@@ -128,35 +128,10 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             flex-grow: 1;
         }
 
-        .location-picker-btn {
-            border: 1px solid var(--border-color);
-            color: #555;
-            background: #f8f9fa;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
-            transition: all 0.3s;
-        }
-
-        .location-picker-btn:hover {
-            background: #fff;
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        .location-picker-btn i:first-child {
-            color: var(--primary-color);
-        }
-
         .search-bar {
             position: relative;
             flex-grow: 1;
-            max-width: 400px;
+            max-width: 500px; /* Increased since location picker is removed */
         }
 
         .search-bar input {
@@ -245,14 +220,14 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             transform: translateY(-2px);
         }
 
-        /* Navigation Bar */
+        /* Navigation Bar - Centered Menu */
         .nav-bar {
             padding: 10px 5%;
             background: var(--white);
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center; /* Centered as requested */
             flex-wrap: nowrap;
         }
 
@@ -261,6 +236,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             list-style: none;
             flex-wrap: nowrap;
             align-items: center;
+            justify-content: center;
         }
 
         .nav-menu li:not(:last-child) {
@@ -272,7 +248,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             color: #444;
             font-size: 14px;
             font-weight: 600;
-            padding: 0 18px;
+            padding: 0 25px; /* Increased padding for better spacing */
             transition: color 0.3s;
             white-space: nowrap;
         }
@@ -319,16 +295,6 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             display: block !important;
             font-weight: 500 !important;
             font-size: 14px !important;
-        }
-
-        .browse-categories {
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            color: var(--secondary-color);
-            font-size: 15px;
         }
 
         .mobile-toggle {
@@ -494,10 +460,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
         </div>
 
         <div class="header-search-container">
-            <button class="location-picker-btn">
-                <i class="fa-solid fa-location-dot"></i> <span>Dholera SIR</span> <i class="fa-solid fa-caret-down"></i>
-            </button>
-            
+            <!-- Location Picker Removed as requested -->
             <div class="search-bar">
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
                 <input type="text" placeholder="Search projects, plots, amenities...">
@@ -520,12 +483,9 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
         </div>
     </header>
 
-    <!-- Navigation Bar -->
+    <!-- Navigation Bar - Centered Menus -->
     <nav class="nav-bar">
-        <div class="browse-categories">
-            <i class="fa-solid fa-layer-group"></i> <span>Smart City Categories</span> <i class="fa-solid fa-caret-down"></i>
-        </div>
-        
+        <!-- Browse Categories Removed as requested -->
         <ul class="nav-menu">
             <li><a href="<?php echo BASE_URL; ?>index.php">Home</a></li>
             <li class="has-dropdown">
@@ -545,8 +505,6 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             <li><a href="<?php echo BASE_URL; ?>index.php#developers">Developers</a></li>
             <li><a href="<?php echo BASE_URL; ?>index.php#floor-plans">Floor Plans</a></li>
         </ul>
-
-        <div></div>
     </nav>
 
     <!-- Mobile Sidebar -->
