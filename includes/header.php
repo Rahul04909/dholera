@@ -131,7 +131,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
         .search-bar {
             position: relative;
             flex-grow: 1;
-            max-width: 500px; /* Increased since location picker is removed */
+            max-width: 500px;
         }
 
         .search-bar input {
@@ -170,13 +170,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             color: var(--primary-color);
         }
 
-        .header-links .highlight-link {
-            background: #fff9e6;
-            padding: 8px 15px;
-            border-radius: 4px;
-            color: var(--primary-color);
-            border: 1px solid rgba(184, 134, 11, 0.2);
-        }
+        /* Removed highlight-link styling to match requested uniform look */
 
         .auth-buttons {
             display: flex;
@@ -227,7 +221,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             display: flex;
             align-items: center;
-            justify-content: center; /* Centered as requested */
+            justify-content: center;
             flex-wrap: nowrap;
         }
 
@@ -239,8 +233,13 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             justify-content: center;
         }
 
-        .nav-menu li:not(:last-child) {
-            border-right: 1.5px solid #ddd;
+        /* vertical divider | style */
+        .nav-menu li:not(:last-child)::after {
+            content: '|';
+            color: #ddd;
+            margin: 0 10px;
+            font-size: 12px;
+            font-weight: 300;
         }
 
         .nav-menu li a {
@@ -248,7 +247,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             color: #444;
             font-size: 14px;
             font-weight: 600;
-            padding: 0 25px; /* Increased padding for better spacing */
+            padding: 0 15px; /* Adjusted since we have pseudo-divider */
             transition: color 0.3s;
             white-space: nowrap;
         }
@@ -285,8 +284,11 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             transform: translateY(0);
         }
 
+        .nav-dropdown li::after {
+            content: none !important; /* No divider in dropdown */
+        }
+
         .nav-dropdown li {
-            border-right: none !important;
             width: 100%;
         }
 
@@ -460,7 +462,6 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
         </div>
 
         <div class="header-search-container">
-            <!-- Location Picker Removed as requested -->
             <div class="search-bar">
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
                 <input type="text" placeholder="Search projects, plots, amenities...">
@@ -469,7 +470,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
 
         <div class="header-links">
             <a href="<?php echo BASE_URL; ?>about.php">About Us</a>
-            <a href="<?php echo BASE_URL; ?>index.php#projects" class="highlight-link">Our Projects</a>
+            <a href="<?php echo BASE_URL; ?>index.php#projects">Our Projects</a>
             <a href="<?php echo BASE_URL; ?>contact.php">Contact</a>
         </div>
 
@@ -485,7 +486,6 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
 
     <!-- Navigation Bar - Centered Menus -->
     <nav class="nav-bar">
-        <!-- Browse Categories Removed as requested -->
         <ul class="nav-menu">
             <li><a href="<?php echo BASE_URL; ?>index.php">Home</a></li>
             <li class="has-dropdown">
