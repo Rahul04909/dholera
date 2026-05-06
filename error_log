@@ -1,0 +1,9 @@
+[17-Apr-2026 05:02:06 UTC] Connection failed: SQLSTATE[HY000] [1040] Too many connections
+[17-Apr-2026 05:02:06 UTC] Connection failed: SQLSTATE[HY000] [1040] Too many connections
+[20-Apr-2026 04:21:10 UTC] Connection failed: SQLSTATE[HY000] [1040] Too many connections
+[20-Apr-2026 09:11:33 UTC] Connection failed: SQLSTATE[08004] [1040] Too many connections
+[20-Apr-2026 18:08:16 UTC] Connection failed: could not find driver
+[20-Apr-2026 18:08:16 UTC] Connection failed: could not find driver
+[20-Apr-2026 18:08:24 UTC] Connection failed: could not find driver
+[21-Apr-2026 10:22:21 UTC] Connection failed: SQLSTATE[HY000] [1040] Too many connections
+[29-Apr-2026 12:28:33 UTC] PHP Warning:  Undefined array key "id" in /home/jhdindus/dholerabyus.in/sitemap.php on line 35
