@@ -26,6 +26,8 @@ $total_slides_count = count($active_slides);
         flex-wrap: wrap;
         background: #fff;
         min-height: 500px;
+        position: relative;
+        z-index: 1;
     }
 
     /* Left Column: Slider */
@@ -56,7 +58,7 @@ $total_slides_count = count($active_slides);
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: center;
+        object-position: top center; /* Prioritize the top part of the image */
         display: block;
     }
 
