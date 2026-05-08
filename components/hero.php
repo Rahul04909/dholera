@@ -53,27 +53,20 @@ $total_slides_count = count($active_slides);
         overflow: hidden;
     }
 
-    /* Autofit logic: Premium Blurred Background + Contained Foreground */
+    /* Autofit logic: Full Width Cover */
     .slide img.foreground-img {
         width: 100%;
         height: 100%;
-        object-fit: contain; /* Show the full image */
+        object-fit: cover; /* Fill width and height */
+        object-position: center;
         position: relative;
         z-index: 2;
         display: block;
     }
 
+    /* Remove blur as we are going full width */
     .slide .background-blur {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        filter: blur(20px) brightness(0.7);
-        transform: scale(1.1); /* Prevent white edges from blur */
-        z-index: 1;
+        display: none;
     }
 
     /* Responsive Aspect Ratio */
