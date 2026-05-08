@@ -152,11 +152,10 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             color: #888;
         }
 
-        /* Upper Header Links - Centered with | dividers */
         .header-links {
             display: flex;
             align-items: center;
-            gap: 0; /* Managed by dividers */
+            gap: 0;
         }
 
         .header-links a {
@@ -256,7 +255,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             color: var(--primary-color);
         }
 
-        /* Projects Dropdown */
+        /* Dropdown Base Styling */
         .nav-menu li.has-dropdown {
             position: relative;
         }
@@ -496,7 +495,16 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
                     <?php endif; ?>
                 </ul>
             </li>
-            <li><a href="<?php echo BASE_URL; ?>about.php">Market Insights</a></li>
+            <li class="has-dropdown">
+                <a href="<?php echo BASE_URL; ?>dholera-sir/">Dholera SIR <i class="fa-solid fa-caret-down"></i></a>
+                <ul class="nav-dropdown">
+                    <li><a href="<?php echo BASE_URL; ?>dholera-sir/#overview">SIR Overview</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>dholera-sir/#connectivity">Connectivity</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>dholera-sir/#salient-features">Salient Features</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>dholera-sir/#development">Development Plan</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>dholera-sir/#why-dholera">Why Invest in Dholera?</a></li>
+                </ul>
+            </li>
             <li><a href="<?php echo BASE_URL; ?>contact.php">Site Visit</a></li>
             <li><a href="<?php echo BASE_URL; ?>index.php#developers">Developers</a></li>
             <li><a href="<?php echo BASE_URL; ?>index.php#floor-plans">Floor Plans</a></li>
@@ -516,6 +524,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
                 <ul>
                     <li><a href="<?php echo BASE_URL; ?>index.php"><i class="fa-solid fa-house"></i> Home</a></li>
                     <li><a href="<?php echo BASE_URL; ?>index.php#projects"><i class="fa-solid fa-building"></i> Projects</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>dholera-sir/"><i class="fa-solid fa-city"></i> Dholera SIR</a></li>
                     <li><a href="<?php echo BASE_URL; ?>about.php"><i class="fa-solid fa-info-circle"></i> About Us</a></li>
                     <li><a href="<?php echo BASE_URL; ?>contact.php"><i class="fa-solid fa-envelope"></i> Contact Us</a></li>
                 </ul>
@@ -553,19 +562,19 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
 
         // Timer Logic
         let hours = 9, minutes = 8, seconds = 1;
-        setInterval(() => {
-            seconds--;
-            if (seconds < 0) {
-                seconds = 59;
-                minutes--;
-            }
-            if (minutes < 0) {
-                minutes = 59;
-                hours--;
-            }
-            const timerEl = document.getElementById('timer');
-            if (timerEl) {
+        const timerEl = document.getElementById('timer');
+        if (timerEl) {
+            setInterval(() => {
+                seconds--;
+                if (seconds < 0) {
+                    seconds = 59;
+                    minutes--;
+                }
+                if (minutes < 0) {
+                    minutes = 59;
+                    hours--;
+                }
                 timerEl.innerText = `${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
-            }
-        }, 1000);
+            }, 1000);
+        }
     </script>
