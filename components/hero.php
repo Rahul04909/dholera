@@ -34,47 +34,44 @@ $total_slides_count = count($active_slides);
         position: relative;
         overflow: hidden;
         background-color: #000;
-        display: flex;
-        flex-direction: column;
     }
 
-    /* Autofit logic: Ensure the slider maintains a healthy aspect ratio */
     .slider-container {
         display: flex;
         width: <?php echo $total_slides_count * 100; ?>%;
         height: 100%;
-        min-height: 500px; /* Desktop default */
         transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
     }
 
     .slide {
         width: 100%;
         height: 100%;
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
-        flex-shrink: 0;
-        transition: transform 0.3s ease;
         position: relative;
+        flex-shrink: 0;
+        overflow: hidden;
     }
 
-    /* Responsive Aspect Ratio & Autofit */
+    /* Autofit logic: Use object-fit for perfect image scaling */
+    .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    /* Responsive Aspect Ratio */
     @media (min-width: 993px) {
         .hero-slider-col {
             aspect-ratio: 16 / 9;
-        }
-        .slider-container {
-            min-height: 100%;
+            min-height: 550px;
         }
     }
 
     @media (max-width: 992px) {
         .hero-slider-col {
-            aspect-ratio: 16 / 10; /* Better fit for mobile landscape/portrait mix */
+            aspect-ratio: 16 / 11;
             min-height: 300px;
-        }
-        .slider-container {
-            min-height: auto;
         }
     }
 
@@ -326,7 +323,8 @@ $total_slides_count = count($active_slides);
     <div class="hero-slider-col">
         <div class="slider-container" id="slider">
             <?php foreach ($active_slides as $slide): ?>
-                <div class="slide" style="background-image: url('<?php echo htmlspecialchars($slide['image_path']); ?>');">
+                <div class="slide">
+                    <img src="<?php echo htmlspecialchars($slide['image_path']); ?>" alt="<?php echo isset($slide['title']) ? htmlspecialchars($slide['title']) : 'Dholera Hero Slide'; ?>">
                     <?php if (isset($slide['title']) && $slide['title']): ?>
                         <div class="slide-content">
                             <h2><?php echo htmlspecialchars($slide['title']); ?></h2>
