@@ -33,14 +33,17 @@ $total_slides_count = count($active_slides);
         flex: 1 1 65%;
         position: relative;
         overflow: hidden;
-        min-height: 400px;
-        background-color: #000; /* Backdrop for loading/gaps */
+        background-color: #000;
+        display: flex;
+        flex-direction: column;
     }
 
+    /* Autofit logic: Ensure the slider maintains a healthy aspect ratio */
     .slider-container {
         display: flex;
-        width: <?php echo $total_slides_count * 100; ?>%; /* Dynamic width based on slides */
+        width: <?php echo $total_slides_count * 100; ?>%;
         height: 100%;
+        min-height: 500px; /* Desktop default */
         transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
     }
 
@@ -52,13 +55,26 @@ $total_slides_count = count($active_slides);
         background-repeat: no-repeat;
         flex-shrink: 0;
         transition: transform 0.3s ease;
+        position: relative;
     }
 
-    /* Ensure images look good on all screens by controlling aspect ratio */
+    /* Responsive Aspect Ratio & Autofit */
     @media (min-width: 993px) {
         .hero-slider-col {
             aspect-ratio: 16 / 9;
-            min-height: 500px;
+        }
+        .slider-container {
+            min-height: 100%;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .hero-slider-col {
+            aspect-ratio: 16 / 10; /* Better fit for mobile landscape/portrait mix */
+            min-height: 300px;
+        }
+        .slider-container {
+            min-height: auto;
         }
     }
 

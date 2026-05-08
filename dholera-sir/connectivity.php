@@ -32,11 +32,14 @@ $distances = [
     .conn-hero {
         background: url('<?php echo $img_hero; ?>') no-repeat center center;
         background-size: cover;
-        height: 350px;
+        width: 100%;
+        aspect-ratio: 21 / 6; /* Responsive aspect ratio */
+        min-height: 250px;
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
+        overflow: hidden;
     }
 
     .conn-hero::after {

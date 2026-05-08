@@ -116,7 +116,14 @@ $projects = [
     .proj-hero {
         background: linear-gradient(rgba(28, 51, 90, 0.9), rgba(28, 51, 90, 0.9)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920');
         background-size: cover;
-        padding: 80px 5%;
+        background-position: center;
+        width: 100%;
+        min-height: 300px;
+        padding: 60px 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         text-align: center;
         color: #fff;
     }
