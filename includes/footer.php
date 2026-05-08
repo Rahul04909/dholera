@@ -300,7 +300,7 @@
     </div>
 
     <!-- Main footer called here -->
-    <?php include 'main-footer.php'; ?>
+    <?php include __DIR__ . '/main-footer.php'; ?>
     
     <!-- Disclaimer Section -->
     <div class="footer-bottom">
@@ -339,7 +339,7 @@
         submitBtn.disabled = true;
         submitBtn.innerText = 'Requesting...';
 
-        fetch('ajax/submit-callback.php', {
+        fetch('<?php echo BASE_URL; ?>ajax/submit-callback.php', {
             method: 'POST',
             body: formData
         })

@@ -5,8 +5,8 @@
  */
 $seo_title = "Dholera SIR - India's First Greenfield Smart City | Dholera By Us";
 $seo_desc = "Discover Dholera SIR, India's first platinum-rated greenfield smart city. Explore connectivity, development plans, and investment opportunities in the largest industrial hub.";
-require_once '../database/db_config.php';
-require_once '../includes/header.php';
+require_once __DIR__ . '/../database/db_config.php';
+require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <style>
@@ -384,4 +384,4 @@ require_once '../includes/header.php';
     </div>
 </section>
 
-<?php require_once '../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

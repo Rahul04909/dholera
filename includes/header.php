@@ -3,7 +3,7 @@
  * Professional Frontend Header
  * Dholera By Us - Smart City
  */
-require_once 'database/db_config.php';
+require_once __DIR__ . '/../database/db_config.php';
 
 // Fetch projects for header
 try {
