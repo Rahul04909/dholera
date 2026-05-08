@@ -1,387 +1,372 @@
 <?php
 /**
- * Dholera SIR Information Page
- * High-end SEO Optimized & Well Designed
+ * Dholera SIR - Official Information Portal
+ * Structured, Humanized, and SEO Optimized
  */
-$seo_title = "Dholera SIR - India's First Greenfield Smart City | Dholera By Us";
-$seo_desc = "Discover Dholera SIR, India's first platinum-rated greenfield smart city. Explore connectivity, development plans, and investment opportunities in the largest industrial hub.";
+$seo_title = "Dholera SIR | Detailed Overview, Connectivity & Investment Plan";
+$seo_desc = "Complete guide to Dholera Special Investment Region (SIR). Explore Town Planning schemes, multi-modal connectivity (Airport, Expressway), and salient features of India's first smart city.";
+
 require_once __DIR__ . '/../database/db_config.php';
 require_once __DIR__ . '/../includes/header.php';
+
+// Data for the page (Humanized Content)
+$tp_schemes = [
+    ['scheme' => 'TP 1', 'area' => '51 sq km', 'focus' => 'Residential & Commercial'],
+    ['scheme' => 'TP 2', 'area' => '102 sq km', 'focus' => 'Industrial & Logistics'],
+    ['scheme' => 'TP 3', 'area' => '66 sq km', 'focus' => 'Knowledge & IT Hub'],
+    ['scheme' => 'TP 4', 'area' => '60 sq km', 'focus' => 'Solar Park & Recreation'],
+];
+
+$connectivity_data = [
+    ['mode' => 'Road', 'project' => 'Ahmedabad-Dholera Expressway', 'status' => 'Under Construction (110 km)'],
+    ['mode' => 'Rail', 'project' => 'Ahmedabad-Dholera Metro Rail', 'status' => 'Proposed with Dedicated Terminal'],
+    ['mode' => 'Air', 'project' => 'Dholera International Airport', 'status' => 'Work in Progress (Navagam Village)'],
+    ['mode' => 'Sea', 'project' => 'Bhavnagar Port', 'status' => 'Operational (Proximity 40 km)'],
+];
 ?>
 
 <style>
-    :root {
-        --sir-gold: #b8860b;
-        --sir-navy: #1c335a;
-        --sir-light: #f8f9fa;
-    }
-
-    .sir-hero {
+    /* Hero Style Consistent with other SIR pages */
+    .sir-hero-simple {
         background: linear-gradient(rgba(28, 51, 90, 0.8), rgba(28, 51, 90, 0.8)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
         background-size: cover;
         background-position: center;
-        padding: 100px 5%;
-        text-align: center;
-        color: #fff;
-    }
-
-    .sir-hero h1 {
-        font-size: 48px;
-        font-weight: 800;
-        margin-bottom: 20px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-    }
-
-    .sir-hero p {
-        font-size: 20px;
-        max-width: 800px;
-        margin: 0 auto 30px;
-        line-height: 1.6;
-        opacity: 0.9;
-    }
-
-    .sir-quick-nav {
-        background: var(--sir-navy);
-        padding: 15px 5%;
-        position: sticky;
-        top: 80px;
-        z-index: 999;
+        width: 100%;
+        aspect-ratio: 21 / 5;
+        min-height: 250px;
         display: flex;
-        justify-content: center;
-        gap: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-
-    .sir-quick-nav a {
-        color: #fff;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 14px;
-        text-transform: uppercase;
-        padding: 10px 15px;
-        border-radius: 4px;
-        transition: 0.3s;
-    }
-
-    .sir-quick-nav a:hover {
-        background: var(--sir-gold);
-    }
-
-    .sir-section {
-        padding: 80px 10%;
-    }
-
-    .sir-section:nth-child(even) {
-        background: #fff;
-    }
-
-    .sir-section:nth-child(odd) {
-        background: var(--sir-light);
-    }
-
-    .section-title {
-        text-align: center;
-        margin-bottom: 50px;
-    }
-
-    .section-title h2 {
-        font-size: 36px;
-        color: var(--sir-navy);
-        font-weight: 800;
-        margin-bottom: 15px;
-        position: relative;
-        display: inline-block;
-    }
-
-    .section-title h2::after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80px;
-        height: 4px;
-        background: var(--sir-gold);
-        border-radius: 2px;
-    }
-
-    .sir-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 50px;
+        flex-direction: column;
         align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #fff;
     }
 
-    .sir-content h3 {
-        font-size: 28px;
-        color: var(--sir-navy);
-        margin-bottom: 20px;
+    .sir-hero-simple h1 {
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+
+    .sir-container {
+        max-width: 1200px;
+        margin: 50px auto;
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 40px;
+        padding: 0 20px;
+    }
+
+    /* Sidebar Navigation */
+    .sir-sidebar {
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+    }
+
+    .sir-nav-box {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .sir-nav-title {
+        background: var(--secondary-color);
+        color: #fff;
+        padding: 15px 20px;
         font-weight: 700;
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 1px;
     }
 
-    .sir-content p {
-        font-size: 16px;
-        color: #555;
-        line-height: 1.8;
-        margin-bottom: 20px;
-    }
-
-    .sir-list {
+    .sir-nav-list {
         list-style: none;
     }
 
-    .sir-list li {
-        margin-bottom: 12px;
-        position: relative;
-        padding-left: 30px;
-        font-size: 15px;
-        color: #444;
-    }
-
-    .sir-list li i {
-        position: absolute;
-        left: 0;
-        top: 4px;
-        color: var(--sir-gold);
-        font-size: 18px;
-    }
-
-    .sir-image-box {
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-    }
-
-    .sir-image-box img {
-        width: 100%;
+    .sir-nav-list li a {
         display: block;
-        transition: 0.5s;
+        padding: 12px 20px;
+        color: #444;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 15px;
+        border-bottom: 1px solid #f0f0f0;
+        transition: all 0.3s;
     }
 
-    .sir-image-box:hover img {
-        transform: scale(1.05);
+    .sir-nav-list li a:hover {
+        background: #f9f9f9;
+        color: var(--primary-color);
+        padding-left: 25px;
     }
 
-    /* Connectivity Grid */
-    .connectivity-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-        margin-top: 40px;
-    }
-
-    .conn-card {
+    /* Main Content Area */
+    .sir-main-content {
         background: #fff;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        border-top: 5px solid var(--sir-gold);
-        transition: 0.3s;
+        padding: 40px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
-    .conn-card:hover {
-        transform: translateY(-10px);
+    .sir-page-header {
+        border-bottom: 3px solid var(--primary-color);
+        margin-bottom: 30px;
+        padding-bottom: 15px;
     }
 
-    .conn-card i {
-        font-size: 40px;
-        color: var(--sir-navy);
+    .sir-page-header h1 {
+        font-size: 32px;
+        color: var(--secondary-color);
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .sir-breadcrumb {
+        font-size: 13px;
+        color: #888;
+        margin-bottom: 5px;
+    }
+
+    .sir-article-section {
+        margin-bottom: 50px;
+    }
+
+    .sir-article-section h2 {
+        font-size: 24px;
+        color: var(--secondary-color);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .sir-article-section h2 i {
+        color: var(--primary-color);
+    }
+
+    .sir-article-section p {
+        font-size: 16px;
+        line-height: 1.8;
+        color: #444;
         margin-bottom: 20px;
     }
 
-    .conn-card h4 {
-        font-size: 20px;
-        margin-bottom: 15px;
-        color: var(--sir-navy);
+    /* Content Lists */
+    .content-list {
+        list-style: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 25px;
     }
 
-    /* Responsive */
+    .content-list li {
+        position: relative;
+        padding-left: 25px;
+        font-size: 15px;
+        color: #555;
+    }
+
+    .content-list li::before {
+        content: "\f058";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 0;
+        color: var(--primary-color);
+    }
+
+    /* Professional Tables */
+    .sir-table-container {
+        overflow-x: auto;
+        margin: 25px 0;
+    }
+
+    .sir-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 15px;
+    }
+
+    .sir-table th {
+        background: #f8f9fa;
+        text-align: left;
+        padding: 12px 15px;
+        border: 1px solid #eee;
+        color: var(--secondary-color);
+        font-weight: 700;
+    }
+
+    .sir-table td {
+        padding: 12px 15px;
+        border: 1px solid #eee;
+        color: #444;
+    }
+
+    .sir-table tr:hover {
+        background: #fffcf5;
+    }
+
+    /* Info Blocks */
+    .info-block {
+        background: #f8f9fa;
+        border-left: 5px solid var(--secondary-color);
+        padding: 25px;
+        border-radius: 4px;
+        margin: 30px 0;
+    }
+
+    .info-block h4 {
+        margin-bottom: 10px;
+        color: var(--secondary-color);
+        font-weight: 700;
+    }
+
     @media (max-width: 992px) {
-        .sir-grid {
+        .sir-container {
             grid-template-columns: 1fr;
         }
-        .sir-quick-nav {
+        .sir-sidebar {
             display: none;
         }
-        .sir-hero h1 {
-            font-size: 32px;
-        }
-        .connectivity-grid {
+        .content-list {
             grid-template-columns: 1fr;
+        }
+        .sir-hero-simple h1 {
+            font-size: 26px;
         }
     }
 </style>
 
-<!-- Hero Section -->
-<section class="sir-hero">
-    <h1>Dholera SIR - Smart City of India</h1>
-    <p>Developing India's First Platinum-Rated Greenfield Smart City & Largest Industrial Hub of the Future.</p>
-    <div style="display: flex; justify-content: center; gap: 15px;">
-        <a href="#overview" class="btn-auth btn-signup">Explore More</a>
-        <a href="#connectivity" class="btn-auth btn-login" style="border-color: #fff; color: #fff;">View Connectivity</a>
-    </div>
+<section class="sir-hero-simple">
+    <h1>Dholera Special Investment Region</h1>
+    <p>Official Overview of India's First Platinum-Rated Smart City</p>
 </section>
 
-<!-- Quick Navigation -->
-<div class="sir-quick-nav">
-    <a href="#overview">Overview</a>
-    <a href="#salient-features">Salient Features</a>
-    <a href="#connectivity">Connectivity</a>
-    <a href="#development">Development Plan</a>
-    <a href="#why-dholera">Why Invest?</a>
+<div class="sir-container">
+    <!-- Sidebar -->
+    <aside class="sir-sidebar">
+        <div class="sir-nav-box">
+            <div class="sir-nav-title">Quick Navigation</div>
+            <ul class="sir-nav-list">
+                <li><a href="#overview">SIR Overview</a></li>
+                <li><a href="#salient-features">Salient Features</a></li>
+                <li><a href="#connectivity">Connectivity Map</a></li>
+                <li><a href="#town-planning">Town Planning</a></li>
+                <li><a href="#why-invest">Why Invest?</a></li>
+            </ul>
+        </div>
+
+        <div class="info-block" style="margin-top: 30px; border-left-color: var(--primary-color);">
+            <h4>Download Center</h4>
+            <p style="font-size: 13px; color: #666;">Get official brochures and master plans of Dholera SIR.</p>
+            <a href="#" class="btn-auth btn-signup" style="width: 100%; font-size: 13px; text-align: center; display: block; margin-top: 15px;">Download Brochure</a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="sir-main-content">
+        <header class="sir-page-header">
+            <div class="sir-breadcrumb">Home > Dholera SIR > Official Overview</div>
+            <h1>The Largest Greenfield Industrial Hub</h1>
+            <p style="color: #666; font-style: italic;">A Flagship Project of the Delhi-Mumbai Industrial Corridor (DMIC)</p>
+        </header>
+
+        <section class="sir-article-section" id="overview">
+            <h2><i class="fa-solid fa-circle-info"></i> Project Overview</h2>
+            <p>Dholera Special Investment Region (SIR) is being developed as a global manufacturing and trading hub, strategically located 100 km south of Ahmedabad. Spread over 920 sq km, it is the first platinum-rated greenfield smart city in India, designed to rival global business centers like Singapore and Dubai.</p>
+            <p>The project is part of the Delhi-Mumbai Industrial Corridor (DMIC) and aims to provide high-end infrastructure, sustainable living, and world-class logistics for industries across the globe.</p>
+        </section>
+
+        <section class="sir-article-section" id="salient-features">
+            <h2><i class="fa-solid fa-star"></i> Salient Features</h2>
+            <ul class="content-list">
+                <li>Linear Mega-City Planning</li>
+                <li>24x7 Smart Water Management</li>
+                <li>Uninterrupted Power Supply</li>
+                <li>ICT Enabled Governance</li>
+                <li>Zero Waste Discharge Policy</li>
+                <li>Integrated Transit System</li>
+                <li>40% Open Green Spaces</li>
+                <li>Single Window Clearances</li>
+            </ul>
+        </section>
+
+        <section class="sir-article-section" id="connectivity">
+            <h2><i class="fa-solid fa-truck-fast"></i> Multi-Modal Connectivity</h2>
+            <p>Dholera SIR is designed for global accessibility. The infrastructure integrates road, rail, air, and sea connectivity to ensure seamless movement of industrial cargo and passengers.</p>
+            
+            <div class="sir-table-container">
+                <table class="sir-table">
+                    <thead>
+                        <tr>
+                            <th>Connectivity Mode</th>
+                            <th>Project Name</th>
+                            <th>Current Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($connectivity_data as $conn): ?>
+                        <tr>
+                            <td><strong><?php echo $conn['mode']; ?></strong></td>
+                            <td><?php echo $conn['project']; ?></td>
+                            <td><?php echo $conn['status']; ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="sir-article-section" id="town-planning">
+            <h2><i class="fa-solid fa-map"></i> Town Planning Schemes</h2>
+            <p>The entire region is divided into 6 Town Planning (TP) schemes. This structured approach ensures that basic infrastructure is completed before actual construction begins.</p>
+            
+            <div class="sir-table-container">
+                <table class="sir-table">
+                    <thead>
+                        <tr>
+                            <th>TP Scheme</th>
+                            <th>Total Area</th>
+                            <th>Primary Focus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($tp_schemes as $tp): ?>
+                        <tr>
+                            <td><?php echo $tp['scheme']; ?></td>
+                            <td><?php echo $tp['area']; ?></td>
+                            <td><?php echo $tp['focus']; ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="info-block">
+            <h4>Activation Area (22.5 Sq Km)</h4>
+            <p>The Activation Area is the core of Dholera SIR where infrastructure development is in the most advanced stage. It includes the administrative ABCD Building, solar parks, and premium industrial clusters.</p>
+        </div>
+
+        <section class="sir-article-section" id="why-invest">
+            <h2><i class="fa-solid fa-chart-line"></i> Why Invest in Dholera?</h2>
+            <p>Investing in Dholera SIR is considered a generational opportunity due to the massive government backing and strategic importance for India's industrial growth.</p>
+            <ul class="content-list">
+                <li>High ROI potential in early stages</li>
+                <li>Strategic location for manufacturing</li>
+                <li>Presence of major anchor industries</li>
+                <li>Proximity to world-class ports</li>
+                <li>100% transparent land ownership</li>
+                <li>Planned residential zones for 2M people</li>
+            </ul>
+        </section>
+    </main>
 </div>
-
-<!-- Overview Section -->
-<section class="sir-section" id="overview">
-    <div class="sir-grid">
-        <div class="sir-content">
-            <div class="section-title" style="text-align: left;">
-                <h2>Dholera SIR Overview</h2>
-            </div>
-            <p>Dholera Special Investment Region (SIR) is a major project under the Delhi-Mumbai Industrial Corridor (DMIC). It is being developed as a global manufacturing and trading hub over 920 sq km.</p>
-            <ul class="sir-list">
-                <li><i class="fa-solid fa-check-circle"></i> India's First Platinum-rated Greenfield Smart City.</li>
-                <li><i class="fa-solid fa-check-circle"></i> Strategic location between Ahmedabad, Vadodara, and Bhavnagar.</li>
-                <li><i class="fa-solid fa-check-circle"></i> Total Project Area: 920 Sq. Km with Activation Area of 22.5 Sq. Km.</li>
-                <li><i class="fa-solid fa-check-circle"></i> Integrated with dedicated Freight Corridor and Smart Infrastructure.</li>
-            </ul>
-        </div>
-        <div class="sir-image-box">
-            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dholera Overview">
-        </div>
-    </div>
-</section>
-
-<!-- Video Placeholders -->
-<section class="sir-section" style="background: #fff;">
-    <div class="section-title">
-        <h2>Visual Tour</h2>
-    </div>
-    <div class="sir-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-        <div class="sir-image-box" style="position: relative;">
-            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Video 1">
-            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50px; color: #fff; cursor: pointer;"><i class="fa-solid fa-play-circle"></i></div>
-        </div>
-        <div class="sir-image-box" style="position: relative;">
-            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Video 2">
-            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50px; color: #fff; cursor: pointer;"><i class="fa-solid fa-play-circle"></i></div>
-        </div>
-        <div class="sir-image-box" style="position: relative;">
-            <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Video 3">
-            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50px; color: #fff; cursor: pointer;"><i class="fa-solid fa-play-circle"></i></div>
-        </div>
-    </div>
-</section>
-
-<!-- Salient Features -->
-<section class="sir-section" id="salient-features">
-    <div class="section-title">
-        <h2>Salient Features</h2>
-    </div>
-    <div class="sir-grid">
-        <div class="sir-image-box">
-            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Salient Features">
-        </div>
-        <div class="sir-content">
-            <ul class="sir-list">
-                <li><i class="fa-solid fa-bolt"></i> 24x7 Uninterrupted Power & Water Supply.</li>
-                <li><i class="fa-solid fa-network-wired"></i> World-class ICT Infrastructure (Internet of Things).</li>
-                <li><i class="fa-solid fa-recycle"></i> 100% Waste Recycling & Management.</li>
-                <li><i class="fa-solid fa-road"></i> Linear Mega-City with Smart Transportation.</li>
-                <li><i class="fa-solid fa-leaf"></i> 40% Open Green Space for Sustainable Living.</li>
-                <li><i class="fa-solid fa-shield-halved"></i> High-level Security with Command & Control Center.</li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-<!-- Connectivity Section -->
-<section class="sir-section" id="connectivity">
-    <div class="section-title">
-        <h2>Multi-Modal Connectivity</h2>
-    </div>
-    <div class="sir-grid">
-        <div class="sir-content">
-            <h3>Connecting Dholera to the World</h3>
-            <p>Dholera SIR is designed with superior connectivity, ensuring seamless transport for people and goods via road, rail, air, and sea.</p>
-            <div class="connectivity-grid">
-                <div class="conn-card">
-                    <i class="fa-solid fa-plane-up"></i>
-                    <h4>Dholera Intl. Airport</h4>
-                    <p>Strategically located to serve the SIR and surrounding regions as a global aviation hub.</p>
-                </div>
-                <div class="conn-card">
-                    <i class="fa-solid fa-train"></i>
-                    <h4>Metro & High-Speed Rail</h4>
-                    <p>Direct metro link from Ahmedabad to Dholera SIR with a dedicated terminal.</p>
-                </div>
-                <div class="conn-card">
-                    <i class="fa-solid fa-road"></i>
-                    <h4>6-Lane Expressway</h4>
-                    <p>Direct connectivity to Ahmedabad via a state-of-the-art 110km expressway.</p>
-                </div>
-                <div class="conn-card">
-                    <i class="fa-solid fa-anchor"></i>
-                    <h4>Sea Port Connectivity</h4>
-                    <p>Proximity to world-class ports like Pipavav and Bhavnagar for global trade.</p>
-                </div>
-            </div>
-        </div>
-        <div class="sir-image-box">
-            <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Connectivity">
-        </div>
-    </div>
-</section>
-
-<!-- Development Plan Section -->
-<section class="sir-section" id="development">
-    <div class="sir-grid">
-        <div class="sir-image-box">
-            <img src="https://images.unsplash.com/photo-1503387762-592dea58ef23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Development Plan">
-        </div>
-        <div class="sir-content">
-            <div class="section-title" style="text-align: left;">
-                <h2>Development Plan</h2>
-            </div>
-            <p>The Dholera SIR development plan is divided into distinct Town Planning (TP) schemes, ensuring organized growth and world-class infrastructure in every phase.</p>
-            <ul class="sir-list">
-                <li><i class="fa-solid fa-map-location-dot"></i> TP1 & TP2: Initial phases focusing on residential and industrial clusters.</li>
-                <li><i class="fa-solid fa-city"></i> Activation Area: 22.5 sq. km area being developed with core infrastructure.</li>
-                <li><i class="fa-solid fa-industry"></i> Industrial Clusters: Dedicated zones for Electronics, Aviation, and Auto industries.</li>
-                <li><i class="fa-solid fa-tree"></i> Green Belts: Extensive green zones integrated into the urban design.</li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-<!-- Why Dholera? -->
-<section class="sir-section" id="why-dholera" style="background: var(--sir-navy); color: #fff;">
-    <div class="section-title">
-        <h2 style="color: #fff;">Why Invest in Dholera SIR?</h2>
-    </div>
-    <div class="sir-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
-        <div style="text-align: center; padding: 20px;">
-            <i class="fa-solid fa-arrow-trend-up" style="font-size: 50px; color: var(--sir-gold); margin-bottom: 20px;"></i>
-            <h4>High ROI</h4>
-            <p style="color: #ccc; font-size: 14px;">Early investment in a global city ensures maximum appreciation.</p>
-        </div>
-        <div style="text-align: center; padding: 20px;">
-            <i class="fa-solid fa-industry" style="font-size: 50px; color: var(--sir-gold); margin-bottom: 20px;"></i>
-            <h4>Industrial Hub</h4>
-            <p style="color: #ccc; font-size: 14px;">Home to Fortune 500 companies and global manufacturing units.</p>
-        </div>
-        <div style="text-align: center; padding: 20px;">
-            <i class="fa-solid fa-users-gear" style="font-size: 50px; color: var(--sir-gold); margin-bottom: 20px;"></i>
-            <h4>Smart Governance</h4>
-            <p style="color: #ccc; font-size: 14px;">Single-window clearance and ease of doing business.</p>
-        </div>
-        <div style="text-align: center; padding: 20px;">
-            <i class="fa-solid fa-earth-asia" style="font-size: 50px; color: var(--sir-gold); margin-bottom: 20px;"></i>
-            <h4>Future Ready</h4>
-            <p style="color: #ccc; font-size: 14px;">Designed to sustain for generations with futuristic infra.</p>
-        </div>
-    </div>
-</section>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
