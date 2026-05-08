@@ -500,7 +500,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
                 <ul class="nav-dropdown">
                     <li><a href="<?php echo BASE_URL; ?>dholera-sir/index.php">SIR Overview</a></li>
                     <li><a href="<?php echo BASE_URL; ?>dholera-sir/connectivity.php">Connectivity</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>dholera-sir/#salient-features">Salient Features</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>dholera-sir/projects-status.php">Projects Status</a></li>
                     <li><a href="<?php echo BASE_URL; ?>dholera-sir/#development">Development Plan</a></li>
                     <li><a href="<?php echo BASE_URL; ?>dholera-sir/#why-dholera">Why Invest in Dholera?</a></li>
                 </ul>
