@@ -53,13 +53,27 @@ $total_slides_count = count($active_slides);
         overflow: hidden;
     }
 
-    /* Autofit logic: Use object-fit for perfect image scaling */
-    .slide img {
+    /* Autofit logic: Premium Blurred Background + Contained Foreground */
+    .slide img.foreground-img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        object-position: top center; /* Prioritize the top part of the image */
+        object-fit: contain; /* Show the full image */
+        position: relative;
+        z-index: 2;
         display: block;
+    }
+
+    .slide .background-blur {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        filter: blur(20px) brightness(0.7);
+        transform: scale(1.1); /* Prevent white edges from blur */
+        z-index: 1;
     }
 
     /* Responsive Aspect Ratio */
@@ -326,7 +340,12 @@ $total_slides_count = count($active_slides);
         <div class="slider-container" id="slider">
             <?php foreach ($active_slides as $slide): ?>
                 <div class="slide">
-                    <img src="<?php echo htmlspecialchars($slide['image_path']); ?>" alt="<?php echo isset($slide['title']) ? htmlspecialchars($slide['title']) : 'Dholera Hero Slide'; ?>">
+                    <!-- Blurred background for gaps -->
+                    <div class="background-blur" style="background-image: url('<?php echo htmlspecialchars($slide['image_path']); ?>');"></div>
+                    
+                    <!-- Main foreground image (Full view) -->
+                    <img src="<?php echo htmlspecialchars($slide['image_path']); ?>" class="foreground-img" alt="<?php echo isset($slide['title']) ? htmlspecialchars($slide['title']) : 'Dholera Hero Slide'; ?>">
+                    
                     <?php if (isset($slide['title']) && $slide['title']): ?>
                         <div class="slide-content">
                             <h2><?php echo htmlspecialchars($slide['title']); ?></h2>
