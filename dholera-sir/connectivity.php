@@ -211,14 +211,15 @@ $distances = [
 </style>
 
 <!-- Hero Section -->
-<section class="conn-hero">
-    <div class="conn-hero-text">
-        <h1>Connectivity - Dholera SIR</h1>
-        <p>Connecting the Future of Industrial Growth to the World</p>
-    </div>
-</section>
+<section class="conn-hero"></section>
 
 <div class="conn-container">
+    <!-- Page Header (Moved from Hero) -->
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="font-size: 36px; color: var(--secondary-color); font-weight: 800; text-transform: uppercase; margin-bottom: 5px;">Connectivity - Dholera SIR</h1>
+        <p style="font-size: 18px; color: var(--primary-color); font-weight: 600;">Connecting the Future of Industrial Growth to the World</p>
+    </div>
+
     <!-- Intro -->
     <div class="conn-intro">
         <h2>Multi-Modal Connectivity Hub</h2>
