@@ -65,15 +65,15 @@ $total_slides_count = count($active_slides);
     /* Responsive Aspect Ratio */
     @media (min-width: 993px) {
         .hero-slider-col {
-            aspect-ratio: 16 / 9;
-            min-height: 550px;
+            aspect-ratio: 16 / 10; /* Taller ratio to show more of the image */
+            min-height: 650px;
         }
     }
 
     @media (max-width: 992px) {
         .hero-slider-col {
-            aspect-ratio: 16 / 11;
-            min-height: 300px;
+            aspect-ratio: 1 / 1; /* Square-ish for mobile to show top & bottom */
+            min-height: 400px;
         }
     }
 
