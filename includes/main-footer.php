@@ -289,7 +289,7 @@
         <!-- Brand Section -->
         <div class="footer-col footer-col-brand">
             <div class="footer-logo">
-                <i class="fas fa-city"></i> DHOLERA SMART
+                <img src="<?php echo BASE_URL; ?>assets/dholera-logo.png" alt="Dholera Smart Logo" style="max-height: 55px; width: auto; object-fit: contain;">
             </div>
             <p>
                 Developing sustainable and modern residential, commercial, and industrial projects in India's first
