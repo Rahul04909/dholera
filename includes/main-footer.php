@@ -134,8 +134,17 @@
     }
 
     @keyframes menu-blink {
-        0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(184, 134, 11, 0.5); }
-        50% { opacity: 0.6; text-shadow: none; }
+
+        0%,
+        100% {
+            opacity: 1;
+            text-shadow: 0 0 10px rgba(184, 134, 11, 0.5);
+        }
+
+        50% {
+            opacity: 0.6;
+            text-shadow: none;
+        }
     }
 
     /* Mineib Specific Blinking */
@@ -155,8 +164,18 @@
     }
 
     @keyframes mineib-blink {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.7; transform: scale(1.05); color: #fff !important; }
+
+        0%,
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        50% {
+            opacity: 0.7;
+            transform: scale(1.05);
+            color: #fff !important;
+        }
     }
 
     /* Contact Info */
@@ -231,25 +250,33 @@
     }
 
     @media (max-width: 768px) {
-        .main-footer { padding: 60px 0 0; }
+        .main-footer {
+            padding: 60px 0 0;
+        }
+
         .footer-container {
             grid-template-columns: 1fr;
             text-align: center;
         }
+
         .footer-col h3::after {
             left: 50%;
             transform: translateX(-50%);
         }
+
         .footer-menu a {
             justify-content: center;
         }
+
         .footer-social-links {
             justify-content: center;
         }
+
         .footer-contact-item {
             flex-direction: column;
             align-items: center;
         }
+
         .footer-bottom-container {
             flex-direction: column;
             text-align: center;
@@ -265,7 +292,8 @@
                 <i class="fas fa-city"></i> DHOLERA SMART
             </div>
             <p>
-                Developing sustainable and modern residential, commercial, and industrial projects in India's first greenfield smart city. Building the future of urban living.
+                Developing sustainable and modern residential, commercial, and industrial projects in India's first
+                greenfield smart city. Building the future of urban living.
             </p>
             <div class="footer-social-links">
                 <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
@@ -279,11 +307,15 @@
         <div class="footer-col">
             <h3>Quick Links</h3>
             <ul class="footer-menu">
-                <li><a href="<?php echo BASE_URL; ?>about.php"><i class="fas fa-chevron-right"></i> About Dholera</a></li>
-                <li><a href="<?php echo BASE_URL; ?>#siteVisitForm" class="blink-menu"><i class="fas fa-chevron-right"></i> Book a Site Visit</a></li>
-                <li><a href="<?php echo BASE_URL; ?>contact.php"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                <li><a href="<?php echo BASE_URL; ?>about.php"><i class="fas fa-chevron-right"></i> About Dholera</a>
+                </li>
+                <li><a href="<?php echo BASE_URL; ?>#siteVisitForm" class="blink-menu"><i
+                            class="fas fa-chevron-right"></i> Book a Site Visit</a></li>
+                <li><a href="<?php echo BASE_URL; ?>contact.php"><i class="fas fa-chevron-right"></i> Contact Us</a>
+                </li>
                 <!-- <li><a href="#"><i class="fas fa-chevron-right"></i> Floor Plans</a></li> -->
-                <li><a href="<?php echo BASE_URL; ?>pricing.php" class="blink-menu"><i class="fas fa-chevron-right"></i> Download Brochure</a></li>
+                <li><a href="<?php echo BASE_URL; ?>pricing.php" class="blink-menu"><i class="fas fa-chevron-right"></i>
+                        Download Brochure</a></li>
             </ul>
         </div>
 
@@ -313,20 +345,20 @@
                 <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
                 <div class="contact-text">
                     <strong>Call Experts</strong>
-                    +91 999 000 0000
+                    +91 129 431 1519
                 </div>
             </div>
             <div class="footer-contact-item">
                 <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                 <div class="contact-text">
                     <strong>Email Support</strong>
-                    info@dholerabyus.in
+                    support@dholerabyus.in
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bottom Bar -->
+    <!-- Bottom Bar
     <div class="footer-bottom-bar">
         <div class="footer-bottom-container">
             <div class="copyright-text">
@@ -338,5 +370,5 @@
                 <a href="#">Disclaimer</a>
             </div>
         </div>
-    </div>
+    </div> -->
 </footer>
