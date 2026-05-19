@@ -36,7 +36,7 @@
         right: 5%;
         width: 250px;
         height: 250px;
-        border: 2px dashed rgba(0,0,0,0.05);
+        border: 2px dashed rgba(0, 0, 0, 0.05);
         border-radius: 50%;
         z-index: 0;
     }
@@ -82,7 +82,8 @@
 
     /* Developer Card */
     .developer-card {
-        min-width: calc(16.666% - 25px); /* 6 items on desktop */
+        min-width: calc(16.666% - 25px);
+        /* 6 items on desktop */
         text-align: center;
         cursor: pointer;
         transition: all 0.3s;
@@ -103,7 +104,7 @@
         align-items: center;
         justify-content: center;
         margin-bottom: 12px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     }
 
     .developer-circle img {
@@ -152,12 +153,17 @@
         justify-content: center;
         cursor: pointer;
         z-index: 10;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         color: #1c335a;
     }
 
-    .dev-nav-btn.prev { left: 5px; }
-    .dev-nav-btn.next { right: 5px; }
+    .dev-nav-btn.prev {
+        left: 5px;
+    }
+
+    .dev-nav-btn.next {
+        right: 5px;
+    }
 
     /* Mobile View */
     @media (max-width: 1024px) {
@@ -202,7 +208,7 @@
         <div class="developers-slider-wrapper" id="dev-slider-wrapper">
             <?php
             $devs = [
-                ['name' => 'Rajesh Mehta', 'img' => 'dev1.png', 'role' => 'Architect', 'project' => 'Dholera Heights'],
+                ['name' => 'Rajesh Mehta', 'img' => 'https://dholeracitysmart.com/wp-content/uploads/2026/01/rajdeepsinh.png', 'role' => 'Architect', 'project' => 'Dholera Heights'],
                 ['name' => 'Priya Sharma', 'img' => 'dev2.png', 'role' => 'Director', 'project' => 'Greenfield Res.'],
                 ['name' => 'Amit Patel', 'img' => 'dev3.png', 'role' => 'Developer', 'project' => 'Smart City Villas'],
                 ['name' => 'Sanjay Singh', 'img' => 'dev1.png', 'role' => 'Engineer', 'project' => 'Dholera Phase II'],
@@ -218,7 +224,8 @@
                 ?>
                 <div class="developer-card">
                     <div class="developer-circle">
-                        <img src="<?php echo BASE_URL; ?>assets/images/developers/<?php echo $dev['img']; ?>" alt="<?php echo $dev['name']; ?>" loading="lazy">
+                        <img src="<?php echo BASE_URL; ?>assets/images/developers/<?php echo $dev['img']; ?>"
+                            alt="<?php echo $dev['name']; ?>" loading="lazy">
                     </div>
                     <span class="designation"><?php echo $dev['role']; ?></span>
                     <h3><?php echo $dev['name']; ?></h3>
@@ -235,11 +242,11 @@
 </section>
 
 <script>
-    (function() {
+    (function () {
         const devWrapper = document.getElementById('dev-slider-wrapper');
         const devPrev = document.getElementById('dev-prev');
         const devNext = document.getElementById('dev-next');
-        
+
         let devIndex = 0;
 
         function getVisibleDevItems() {
@@ -251,7 +258,7 @@
         function updateDevSlider() {
             const items = devWrapper.querySelectorAll('.developer-card');
             if (items.length === 0) return;
-            
+
             const gap = 30;
             const itemWidth = items[0].offsetWidth + gap;
             devWrapper.style.transform = `translateX(-${devIndex * itemWidth}px)`;
