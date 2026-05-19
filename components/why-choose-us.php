@@ -1,261 +1,383 @@
+<?php
+/**
+ * Professional Why Choose Us Component
+ * Staggered Connecting Process Timeline with Responsive Falling Stack
+ * Replicates the visual aesthetics of user's reference process flow
+ */
+?>
 <style>
     :root {
         --primary-gold-v4: #b8860b;
-        --dark-bg-v4: #111;
-        --text-dark-v4: #1a202c;
+        --text-dark-v4: #1c335a;
         --text-muted-v4: #718096;
-        --bg-white: #fff;
     }
 
-    .why-us-v4 {
-        padding: 120px 0;
+    .why-us-section {
+        padding: 100px 0;
         background: #fff;
         position: relative;
         overflow: hidden;
+        text-align: center;
+        font-family: 'Outfit', sans-serif;
     }
 
     .container-v4 {
-        max-width: 1280px;
+        max-width: 1200px;
         margin: 0 auto;
-        padding: 0 25px;
+        padding: 0 20px;
     }
 
-    .why-us-row {
+    /* Subtitle and Title Headers */
+    .why-us-header {
+        max-width: 800px;
+        margin: 0 auto 50px;
+    }
+
+    .why-us-header span {
+        color: #2e7d32;
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        display: block;
+        margin-bottom: 12px;
+    }
+
+    .why-us-header h2 {
+        font-size: 38px;
+        font-weight: 900;
+        color: var(--text-dark-v4);
+        line-height: 1.2;
+        margin: 0;
+        letter-spacing: -0.5px;
+    }
+
+    /* Staggered Horizontal Process Timeline */
+    .process-timeline {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1100px;
+        margin: 80px auto;
+        padding: 0;
+    }
+
+    /* Connecting Dotted Line for desktop staggered nodes */
+    .process-timeline::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 80px;
+        right: 80px;
+        height: 2px;
+        border-top: 2px dashed #cbd5e1;
+        z-index: 1;
+        transform: translateY(-50px);
+    }
+
+    .process-node {
+        position: relative;
+        z-index: 2;
+        width: 22%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Offset positioning to stagger nodes high-low on desktop */
+    .process-node.node-high {
+        transform: translateY(-30px);
+    }
+
+    .process-node.node-low {
+        transform: translateY(30px);
+    }
+
+    .node-circle {
+        width: 90px;
+        height: 90px;
+        background: #fff;
+        border: 2px solid #edf2f7;
+        border-radius: 50%;
         display: flex;
         align-items: center;
-        gap: 60px;
-        margin-bottom: 80px;
-    }
-
-    .why-us-text {
-        flex: 1;
-    }
-
-    .why-us-image {
-        flex: 1;
+        justify-content: center;
+        box-shadow: 0 10px 25px rgba(28, 51, 90, 0.05);
+        font-size: 28px;
+        color: var(--text-dark-v4);
+        margin-bottom: 20px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
     }
 
-    .badge-v4 {
-        background: rgba(184, 134, 11, 0.1);
+    .node-circle::after {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border: 2px solid transparent;
+        border-radius: 50%;
+        transition: all 0.4s ease;
+        opacity: 0;
+    }
+
+    .process-node:hover .node-circle {
+        transform: scale(1.1);
+        border-color: var(--primary-gold-v4);
+        box-shadow: 0 15px 30px rgba(184, 134, 11, 0.2);
         color: var(--primary-gold-v4);
-        padding: 8px 18px;
-        border-radius: 50px;
-        font-size: 14px;
-        font-weight: 700;
-        display: inline-block;
-        margin-bottom: 25px;
     }
 
-    .why-us-text h2 {
-        font-size: 45px;
-        font-weight: 850;
+    .process-node:hover .node-circle::after {
+        border-color: var(--primary-gold-v4);
+        transform: scale(1.05);
+        opacity: 0.3;
+    }
+
+    .node-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .node-title {
+        font-size: 15px;
+        font-weight: 800;
         color: var(--text-dark-v4);
-        margin-bottom: 30px;
-        line-height: 1.1;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 
-    .primary-para {
-        font-size: 18px;
-        line-height: 1.8;
+    .node-desc {
+        font-size: 13.5px;
         color: var(--text-muted-v4);
-        margin-bottom: 40px;
-        text-align: justify;
+        line-height: 1.5;
+        font-family: 'Inter', sans-serif;
     }
 
-    .feature-list-v4 {
+    /* Bottom Bullets Grid Section */
+    .bullets-section {
+        border-top: 1px solid #f1f5f9;
+        margin-top: 80px;
+        padding-top: 60px;
+        text-align: left;
+    }
+
+    .bullets-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 25px;
     }
 
-    .feature-item-v4 {
+    .bullet-item {
         display: flex;
         align-items: flex-start;
-        gap: 15px;
+        gap: 12px;
     }
 
-    .feature-item-v4 .icon-v4 {
-        width: 45px;
-        height: 45px;
-        background: #fdfaf0;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--primary-gold-v4);
-        font-size: 18px;
+    .bullet-icon {
+        color: #2e7d32;
+        font-size: 15px;
+        margin-top: 4px;
         flex-shrink: 0;
     }
 
-    .feature-item-v4 h4 {
-        font-size: 17px;
-        font-weight: 700;
-        margin-bottom: 5px;
+    .bullet-text {
+        font-size: 14.5px;
+        color: #4a5568;
+        line-height: 1.6;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .bullet-text strong {
         color: var(--text-dark-v4);
-    }
-
-    .feature-item-v4 p {
-        font-size: 14px;
-        color: var(--text-muted-v4);
-        line-height: 1.5;
-    }
-
-    .img-wrapper-v4 {
-        border-radius: 30px;
-        overflow: hidden;
-        box-shadow: 0 30px 80px rgba(0,0,0,0.1);
-        transform: perspective(1000px) rotateY(-5deg);
-        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-
-    .img-wrapper-v4:hover {
-        transform: perspective(1000px) rotateY(0deg);
-    }
-
-    .img-wrapper-v4 img {
-        width: 100%;
-        display: block;
-    }
-
-    .floating-stats {
-        position: absolute;
-        bottom: -30px;
-        left: -30px;
-        background: #fff;
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        z-index: 10;
-        border: 1px solid #f0f0f0;
-    }
-
-    .floating-stats h5 {
-        font-size: 32px;
-        font-weight: 800;
-        color: var(--primary-gold-v4);
-        margin: 0;
-    }
-
-    .floating-stats span {
-        font-size: 14px;
-        color: var(--text-muted-v4);
-    }
-
-    /* Lower Points Section */
-    .lower-points-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
-        border-top: 1px solid #f3f3f3;
-        padding-top: 60px;
-    }
-
-    .point-card-v4 {
-        padding: 35px;
-        background: #fdfaf0;
-        border-radius: 20px;
-        text-align: left;
-        transition: 0.3s;
-    }
-
-    .point-card-v4:hover {
-        background: var(--primary-gold-v4);
-        transform: translateY(-10px);
-    }
-
-    .point-card-v4:hover * {
-        color: #fff !important;
-    }
-
-    .point-card-v4 i {
-        font-size: 28px;
-        color: var(--primary-gold-v4);
-        margin-bottom: 20px;
-        display: block;
-    }
-
-    .point-card-v4 h5 {
-        font-size: 20px;
         font-weight: 700;
-        margin-bottom: 12px;
+        font-family: 'Outfit', sans-serif;
     }
 
-    @media (max-width: 1024px) {
-        .why-us-row { flex-direction: column; text-align: center; }
-        .primary-para { text-align: center; }
-        .feature-list-v4 { text-align: left; }
-        .img-wrapper-v4 { transform: none !important; margin-top: 50px; }
-        .floating-stats { position: static; margin-top: 20px; display: inline-block; }
+    /* Responsive Adaptabilities */
+    @media (max-width: 991px) {
+        .why-us-section {
+            padding: 70px 0;
+        }
+
+        .why-us-header h2 {
+            font-size: 30px;
+        }
+
+        .process-timeline {
+            flex-direction: column;
+            gap: 25px;
+            margin: 40px auto;
+        }
+
+        .process-timeline::before {
+            display: none;
+        }
+
+        .process-node {
+            width: 100%;
+            transform: none !important;
+            flex-direction: row;
+            text-align: left;
+            gap: 20px;
+            align-items: flex-start;
+            background: #fff;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid #edf2f7;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
+        }
+
+        .process-node:hover {
+            transform: translateY(-3px);
+            border-color: rgba(184, 134, 11, 0.2);
+            box-shadow: 0 10px 25px rgba(28, 51, 90, 0.05);
+        }
+
+        .node-circle {
+            width: 65px;
+            height: 65px;
+            font-size: 22px;
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+
+        .node-info {
+            align-items: flex-start;
+        }
+
+        .node-title {
+            font-size: 14.5px;
+            margin-bottom: 5px;
+        }
     }
 
     @media (max-width: 768px) {
-        .lower-points-grid { grid-template-columns: 1fr; }
-        .why-us-text h2 { font-size: 32px; }
-        .primary-para { font-size: 16px; }
-        .why-us-v4 { padding: 80px 0; }
+        .bullets-section {
+            margin-top: 40px;
+            padding-top: 40px;
+        }
+
+        .bullets-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
     }
 </style>
 
-<section id="why-choose-us-detailed" class="why-us-v4">
+<section class="why-us-section">
     <div class="container-v4">
-        <div class="why-us-row">
-            <!-- Left Side: Paragraph & Content -->
-            <div class="why-us-text">
-                <span class="badge-v4">Trusted Partner</span>
-                <h2>Why Leading Real Estate Agents Choose Our Marketing Ecosystem</h2>
+        
+        <!-- Header Text -->
+        <div class="why-us-header">
+            <span>Our Core Process & Features</span>
+            <h2>Why Choose Dholera By Us</h2>
+        </div>
+
+        <!-- Staggered Connecting Process Timeline -->
+        <div class="process-timeline">
+            
+            <!-- Step 1: High -->
+            <div class="process-node node-high">
+                <div class="node-circle">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="node-info">
+                    <h4 class="node-title">Safe Guarantee</h4>
+                    <p class="node-desc">We offer a 100% safety guarantee because every plot is government & RERA approved.</p>
+                </div>
+            </div>
+
+            <!-- Step 2: Low -->
+            <div class="process-node node-low">
+                <div class="node-circle">
+                    <i class="fa-solid fa-car-side"></i>
+                </div>
+                <div class="node-info">
+                    <h4 class="node-title">Free Site Visits</h4>
+                    <p class="node-desc">Complimentary luxury transit pick-ups from Ahmedabad or Dholera for hassle-free physical tours.</p>
+                </div>
+            </div>
+
+            <!-- Step 3: High -->
+            <div class="process-node node-high">
+                <div class="node-circle" style="font-weight: 700;">
+                    ₹
+                </div>
+                <div class="node-info">
+                    <h4 class="node-title">Competitive Pricing</h4>
+                    <p class="node-desc">Direct developer rate listings, meaning zero high-commission agent brokerage fees.</p>
+                </div>
+            </div>
+
+            <!-- Step 4: Low -->
+            <div class="process-node node-low">
+                <div class="node-circle">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="node-info">
+                    <h4 class="node-title">Expert Support</h4>
+                    <p class="node-desc">24/7 dedicated support from verified smart city development experts.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Lower Detailed Bullets Section -->
+        <div class="bullets-section">
+            <div class="bullets-grid">
                 
-                <p class="primary-para">
-                    In the rapidly evolving landscape of Dholera Smart City, standing out requires more than just standard advertising. We offer a comprehensive Digital Marketing and IT ecosystem specifically engineered for the real estate sector. Our platform leverages cutting-edge AI-driven lead filtering and automated CRM workflows to ensure that your sales team only focuses on high-converting prospects. Whether it's managing property listings or executing multi-channel ad campaigns across Meta and Google, we provide the technical superiority and market-specific intelligence needed to dominate the Dholera property market.
-                </p>
-
-                <div class="feature-list-v4">
-                    <div class="feature-item-v4">
-                        <div class="icon-v4"><i class="fas fa-microchip"></i></div>
-                        <div>
-                            <h4>Smart IT Infrastructure</h4>
-                            <p>Automated API integrations for instant lead tracking.</p>
-                        </div>
-                    </div>
-                    <div class="feature-item-v4">
-                        <div class="icon-v4"><i class="fas fa-funnel-dollar"></i></div>
-                        <div>
-                            <h4>Verified Lead Flow</h4>
-                            <p>Proprietary filtering for organic, high-intent leads.</p>
-                        </div>
+                <div class="bullet-item">
+                    <i class="fa-solid fa-circle-check bullet-icon"></i>
+                    <div class="bullet-text">
+                        <strong>RERA Registered Properties:</strong> Rest assured that all sites cataloged on Dholera By Us are fully cleared, certified, and compliant with all state planning departments.
                     </div>
                 </div>
-            </div>
 
-            <!-- Right Side: Interactive Image -->
-            <div class="why-us-image">
-                <div class="img-wrapper-v4">
-                    <img src="<?php echo BASE_URL; ?>assets/images/why-choose-us.png" alt="Dholera Smart City Digital Marketing Dashboard">
+                <div class="bullet-item">
+                    <i class="fa-solid fa-circle-check bullet-icon"></i>
+                    <div class="bullet-text">
+                        <strong>Transparent Pricing Options:</strong> No hidden costs, paper fees, or surprises. The pricing shown is straight from primary developers, ensuring maximum value.
+                    </div>
                 </div>
-                <div class="floating-stats">
-                    <h5>98%</h5>
-                    <span>Customer ROI Success</span>
+
+                <div class="bullet-item">
+                    <i class="fa-solid fa-circle-check bullet-icon"></i>
+                    <div class="bullet-text">
+                        <strong>Ahmedabad-to-SIR Guided Tours:</strong> We plan and schedule a comfortable, guided site-seeing package to make your decision process smooth and clear.
+                    </div>
                 </div>
+
+                <div class="bullet-item">
+                    <i class="fa-solid fa-circle-check bullet-icon"></i>
+                    <div class="bullet-text">
+                        <strong>Zoning & Land Use Advisory:</strong> Get deep consulting on which corridors (residential, commercial, industrial, or logistics) offer the highest capital appreciation rates.
+                    </div>
+                </div>
+
+                <div class="bullet-item">
+                    <i class="fa-solid fa-circle-check bullet-icon"></i>
+                    <div class="bullet-text">
+                        <strong>24/7 Assistance Desk:</strong> Need immediate paperwork guidance or local developer updates? Our consultants are just a chat or phone call away, anytime.
+                    </div>
+                </div>
+
+                <div class="bullet-item">
+                    <i class="fa-solid fa-circle-check bullet-icon"></i>
+                    <div class="bullet-text">
+                        <strong>High-growth Infrastructure Mapping:</strong> Invest in prime hotspots positioned alongside the Ahmedabad-Dholera Expressway and international airport boundary zones.
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <!-- Lower Grid: Core pillars -->
-        <div class="lower-points-grid">
-            <div class="point-card-v4">
-                <i class="fas fa-building"></i>
-                <h5>Dholera Property Experts</h5>
-                <p>We specialized in residential and commercial plots across all activation areas of Dholera SIR.</p>
-            </div>
-            <div class="point-card-v4">
-                <i class="fas fa-users-cog"></i>
-                <h5>Scale Your Team</h5>
-                <p>Our automation tools allow your sales team to handle 10x more leads without any manual data entry.</p>
-            </div>
-            <div class="point-card-v4">
-                <i class="fas fa-plane-arrival"></i>
-                <h5>Managed Site Visits</h5>
-                <p>From pick-up to expert site guidance, we plan the perfect physical tour for your potential investors.</p>
-            </div>
-        </div>
     </div>
 </section>
