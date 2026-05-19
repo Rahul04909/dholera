@@ -101,53 +101,60 @@ try {
         gap: 20px;
     }
 
-    /* Project Card */
+    /* Enhanced Project Card - Housing & Square Yards style */
     .project-card {
         min-width: calc(25% - 15px); /* 4 items on desktop */
         background: #fff;
-        border-radius: 20px;
+        border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-        transition: all 0.4s ease;
-        border: 1px solid rgba(0,0,0,0.03);
+        box-shadow: 0 10px 30px rgba(28, 51, 90, 0.05);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid #edf2f7;
         display: flex;
         flex-direction: column;
+        position: relative;
     }
 
     .project-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        box-shadow: 0 20px 40px rgba(28, 51, 90, 0.12);
+        border-color: rgba(184, 134, 11, 0.3);
     }
 
     .project-img-wrapper {
         position: relative;
-        height: 180px;
+        height: 200px;
         overflow: hidden;
-        margin: 10px;
-        border-radius: 15px;
+        margin: 0;
+        border-radius: 0;
     }
 
     .project-img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.8s ease;
+        transition: transform 0.6s ease;
+    }
+
+    .project-card:hover .project-img {
+        transform: scale(1.08);
     }
 
     .project-badge-logo {
         position: absolute;
-        bottom: 10px;
-        left: 10px;
-        width: 40px;
-        height: 40px;
+        bottom: -15px;
+        right: 15px;
+        width: 42px;
+        height: 42px;
         background: #fff;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 6px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        padding: 5px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         z-index: 2;
+        border: 2px solid #fff;
     }
 
     .project-badge-logo img {
@@ -157,28 +164,43 @@ try {
 
     .project-badge-status {
         position: absolute;
-        top: 10px;
-        right: 10px;
-        background: rgba(255, 255, 255, 0.9);
-        color: #1c335a;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 10px;
-        font-weight: 800;
+        top: 15px;
+        left: 15px;
+        background: var(--primary-color);
+        color: #fff;
+        padding: 5px 12px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 700;
         text-transform: uppercase;
-        backdrop-filter: blur(5px);
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 10px rgba(184, 134, 11, 0.3);
     }
 
     .project-content {
-        padding: 0 18px 18px;
+        padding: 20px 18px;
         text-align: left;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .project-verified-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        color: #2e7d32;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 8px;
     }
 
     .project-title {
-        font-size: 17px;
+        font-size: 18px;
         font-weight: 800;
         color: #1c335a;
-        margin-bottom: 5px;
+        margin-bottom: 6px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -188,51 +210,112 @@ try {
         display: flex;
         align-items: center;
         gap: 5px;
-        color: #777;
-        font-size: 12px;
-        margin-bottom: 12px;
+        color: #718096;
+        font-size: 13px;
+        margin-bottom: 15px;
     }
 
     .project-location i {
+        color: var(--primary-color);
+    }
+
+    /* Price and Specs Row */
+    .project-price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-top: 1px solid #f1f5f9;
+        padding-top: 15px;
+        margin-bottom: 12px;
+    }
+
+    .price-value {
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--primary-color);
+    }
+
+    .price-sub {
+        font-size: 11px;
+        color: #a0aec0;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    .project-specs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+
+    .spec-item {
+        background: #f8fafc;
+        border-radius: 8px;
+        padding: 6px 10px;
+        font-size: 12px;
+        color: #4a5568;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .spec-item i {
         color: #1c335a;
     }
 
-    .project-stats {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    /* Dual CTA Buttons */
+    .project-cta-row {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 10px;
         margin-top: auto;
     }
 
-    .project-rating {
-        display: flex;
+    .cta-btn {
+        padding: 10px 12px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 13px;
+        text-align: center;
+        transition: all 0.3s ease;
+        display: inline-flex;
         align-items: center;
-        gap: 3px;
-        font-size: 12px;
-        font-weight: 700;
+        justify-content: center;
+    }
+
+    .cta-secondary {
+        background: transparent;
         color: #1c335a;
+        border: 1.5px solid #edf2f7;
     }
 
-    .project-rating i {
-        color: #ffb400;
+    .cta-secondary:hover {
+        background: #f8fafc;
+        border-color: #cbd5e1;
     }
 
-    .project-price-tag {
-        background: #f3f4f6;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 11px;
-        font-weight: 700;
-        color: #4b5563;
+    .cta-primary {
+        background: #1c335a;
+        color: #fff;
+        border: 1.5px solid #1c335a;
+    }
+
+    .cta-primary:hover {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+        box-shadow: 0 4px 12px rgba(184, 134, 11, 0.2);
     }
 
     /* Navigation Buttons */
     .proj-nav-btn {
         position: absolute;
-        top: 60%;
+        top: 50%;
         transform: translateY(-50%);
-        width: 38px;
-        height: 38px;
+        width: 44px;
+        height: 44px;
         background: #fff;
         border: none;
         border-radius: 50%;
@@ -243,10 +326,16 @@ try {
         z-index: 10;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         color: #1c335a;
+        transition: all 0.3s ease;
     }
 
-    .proj-nav-btn.prev { left: 5px; }
-    .proj-nav-btn.next { right: 5px; }
+    .proj-nav-btn:hover {
+        background: #1c335a;
+        color: #fff;
+    }
+
+    .proj-nav-btn.prev { left: -15px; }
+    .proj-nav-btn.next { right: -15px; }
 
     /* Mobile View */
     @media (max-width: 768px) {
@@ -260,7 +349,7 @@ try {
         }
 
         .project-card {
-            min-width: calc(80% - 10px);
+            min-width: calc(85% - 10px);
         }
 
         .projects-header {
@@ -306,25 +395,38 @@ try {
                         </div>
                         
                         <div class="project-content">
+                            <div class="project-verified-badge">
+                                <i class="fa-solid fa-circle-check"></i> RERA Approved
+                            </div>
+                            
                             <h3 class="project-title"><?php echo htmlspecialchars($project['title']); ?></h3>
+                            
                             <div class="project-location">
                                 <i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($project['location']); ?>
                             </div>
-                            
-                            <div class="project-stats">
-                                <div class="project-rating">
-                                    <i class="fas fa-star"></i> <?php echo $rating; ?>
+
+                            <div class="project-specs-grid">
+                                <div class="spec-item">
+                                    <i class="fa-solid fa-chart-area"></i> Plots & Land
                                 </div>
-                                <div class="project-price-tag">
-                                    ₹ <?php echo htmlspecialchars($project['price_range'] ?: 'On Request'); ?>
+                                <div class="spec-item">
+                                    <i class="fa-solid fa-shield-halved"></i> 100% Safe
                                 </div>
                             </div>
                             
-                            <a href="<?php echo BASE_URL; ?>project/<?php echo $project['slug'] ? $project['slug'] : $project['id']; ?>" style="text-decoration: none; display: block; margin-top: 12px;">
-                                <div style="color: #1c335a; font-weight: 700; font-size: 13px; text-align: center; border: 1px solid #eee; padding: 6px; border-radius: 8px; transition: 0.3s;" onmouseover="this.style.background='#1c335a'; this.style.color='#fff'" onmouseout="this.style.background='transparent'; this.style.color='#1c335a'">
-                                    Details <i class="fas fa-arrow-right" style="font-size: 10px; margin-left: 4px;"></i>
-                                </div>
-                            </a>
+                            <div class="project-price-row">
+                                <span class="price-value">₹ <?php echo htmlspecialchars($project['price_range'] ?: 'On Request'); ?></span>
+                                <span class="price-sub">Est. Price</span>
+                            </div>
+                            
+                            <div class="project-cta-row">
+                                <a href="<?php echo BASE_URL; ?>project/<?php echo $project['slug'] ? $project['slug'] : $project['id']; ?>" class="cta-btn cta-secondary">
+                                    Details
+                                </a>
+                                <a href="#siteVisitForm" class="cta-btn cta-primary">
+                                    Inquire <i class="fas fa-arrow-right" style="font-size: 10px; margin-left: 6px;"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -387,6 +489,38 @@ try {
 
         projWrapper.addEventListener('mouseenter', () => clearInterval(projAutoSlide));
         projWrapper.addEventListener('mouseleave', () => {
+            projAutoSlide = setInterval(() => {
+                projNext.click();
+            }, 4500);
+        });
+
+        // Professional Touch Swiping Gestures for Mobile (Housing/Square Yards Style)
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+
+        projWrapper.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            clearInterval(projAutoSlide);
+        }, { passive: true });
+
+        projWrapper.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+        }, { passive: true });
+
+        projWrapper.addEventListener('touchend', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            const diffX = startX - currentX;
+            if (Math.abs(diffX) > 50) { // threshold of 50px swipe
+                if (diffX > 0) {
+                    projNext.click();
+                } else {
+                    projPrev.click();
+                }
+            }
             projAutoSlide = setInterval(() => {
                 projNext.click();
             }, 4500);

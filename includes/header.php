@@ -473,7 +473,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
     <!-- Top Bar -->
     <div class="top-bar" style="justify-content: flex-end;">
         <div class="top-bar-left" style="justify-content: flex-end; width: 100%;">
-            <span><i class="fa-solid fa-bullhorn"></i> <span class="offer-tag">Latest Update</span> - /Blogs Cooming Soon</span>
+            <span><i class="fa-solid fa-bullhorn"></i> <span class="offer-tag">Latest Update</span> - | Blogs</span>
         </div>
     </div>
 
