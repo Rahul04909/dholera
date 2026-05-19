@@ -358,11 +358,12 @@
         </div>
     </div>
 
-    <!-- Bottom Bar
+    Bottom Bar
     <div class="footer-bottom-bar">
         <div class="footer-bottom-container">
             <div class="copyright-text">
-                &copy; <?php echo date('Y'); ?> Dholera Smart City. All Rights Reserved. A Website Powerd By <a href="https://mineib.com" class="mineib-blink">Mineib</a>
+                &copy; <?php echo date('Y'); ?> Dholera Smart City. All Rights Reserved. A Website Powerd By <a
+                    href="https://mineib.com" class="mineib-blink">Mineib</a>
             </div>
             <div class="footer-bottom-links">
                 <a href="#">Privacy Policy</a>
@@ -370,5 +371,5 @@
                 <a href="#">Disclaimer</a>
             </div>
         </div>
-    </div> -->
+    </div>
 </footer>
