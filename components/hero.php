@@ -61,17 +61,7 @@ $total_slides_count = count($active_slides);
         display: block;
     }
 
-    /* Luxury Vignette Overlay to guarantee high text legibility */
-    .slide::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(to right, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0.45) 50%, rgba(15, 23, 42, 0.2) 100%);
-        z-index: 2;
-    }
+
 
     /* Slider Navigation Indicators */
     .slider-nav {
@@ -450,16 +440,7 @@ $total_slides_count = count($active_slides);
                     <!-- Background slide image -->
                     <img src="<?php echo htmlspecialchars($slide['image_path']); ?>" class="foreground-img" alt="<?php echo isset($slide['title']) ? htmlspecialchars($slide['title']) : 'Dholera Hero Slide'; ?>">
                     
-                    <!-- Text Overlay -->
-                    <div class="slide-content">
-                        <h2><?php echo !empty($slide['title']) ? htmlspecialchars($slide['title']) : 'Premium Smart City Plots in Dholera SIR'; ?></h2>
-                        <p><?php echo !empty($slide['subtitle']) ? htmlspecialchars($slide['subtitle']) : 'RERA Approved • Starting ₹ 12.5 Lacs* • 12% Assured Returns'; ?></p>
-                        <div>
-                            <button class="slide-cta-btn" onclick="openHeroModal(event)">
-                                <i class="fa-solid fa-paper-plane"></i> Inquire Now & Get Brochure
-                            </button>
-                        </div>
-                    </div>
+
                 </div>
             <?php endforeach; ?>
         </div>
@@ -647,5 +628,12 @@ $total_slides_count = count($active_slides);
             submitBtn.disabled = false;
             submitBtn.innerText = originalBtnText;
         });
+    });
+
+    // Automatically trigger frosted glass pop-up modal on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            openHeroModal();
+        }, 1000); // 1-second delay for premium appearance
     });
 </script>
