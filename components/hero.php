@@ -61,7 +61,17 @@ $total_slides_count = count($active_slides);
         display: block;
     }
 
-
+    /* Elegant Left-to-Right vignette gradient to ensure text readability */
+    .slide::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.3) 60%, rgba(15, 23, 42, 0) 100%);
+        z-index: 2;
+    }
 
     /* Slider Navigation Indicators */
     .slider-nav {
@@ -130,25 +140,20 @@ $total_slides_count = count($active_slides);
     .slide-content h2 {
         font-size: 52px;
         font-weight: 900;
-        margin-bottom: 20px;
+        margin-bottom: 12px;
         line-height: 1.15;
         letter-spacing: -1px;
-        text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        text-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
 
     .slide-content p {
-        font-size: 19px;
-        font-weight: 550;
-        background: rgba(184, 134, 11, 0.95);
-        color: #fff;
-        padding: 8px 20px;
-        display: inline-block;
-        border-radius: 4px;
-        margin-bottom: 30px;
-        box-shadow: 0 10px 25px rgba(184, 134, 11, 0.3);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        font-family: 'Outfit', sans-serif;
+        font-size: 20px;
+        font-weight: 500;
+        color: #e2e8f0;
+        margin: 0;
+        line-height: 1.5;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        font-family: 'Inter', sans-serif;
     }
 
     /* Symmetrical Premium Call To Action Button */
@@ -440,7 +445,16 @@ $total_slides_count = count($active_slides);
                     <!-- Background slide image -->
                     <img src="<?php echo htmlspecialchars($slide['image_path']); ?>" class="foreground-img" alt="<?php echo isset($slide['title']) ? htmlspecialchars($slide['title']) : 'Dholera Hero Slide'; ?>">
                     
-
+                    <?php if (!empty($slide['title']) || !empty($slide['subtitle'])): ?>
+                        <div class="slide-content">
+                            <?php if (!empty($slide['title'])): ?>
+                                <h2><?php echo htmlspecialchars($slide['title']); ?></h2>
+                            <?php endif; ?>
+                            <?php if (!empty($slide['subtitle'])): ?>
+                                <p><?php echo htmlspecialchars($slide['subtitle']); ?></p>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         </div>
