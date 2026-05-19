@@ -211,13 +211,13 @@
                 ['name' => 'Mr. Rajdipsinh Chudasama', 'img' => 'rajdeepsinh.png', 'role' => 'Managing Director', 'project' => '7oak Dholera'],
                 ['name' => 'Mr. Gopal Goswami', 'img' => 'gopal-goswami.webp', 'role' => 'Chairman', 'project' => 'SVNIT'],
                 ['name' => 'Mr. Ambrish Parajiya', 'img' => 'ambrish-parajiya.webp', 'role' => 'Managing Director', 'project' => 'GAP Group Dholera'],
-                ['name' => 'Mr. Ramrajsinh Chudasama', 'img' => 'ramrajsinh.png', 'role' => 'Founder & CEO', 'project' => 'RSC Group'],
+                ['name' => 'Mr. Ramrajsinh Chudasama', 'img' => 'Ramrajsinh.png', 'role' => 'Founder & CEO', 'project' => 'RSC Group'],
                 ['name' => 'Mr. Nitin Singh Tomar', 'img' => 'nitin-singh-tomar.jpg', 'role' => 'Director', 'project' => 'Nestoria Group'],
                 ['name' => 'Mr. C.J. Patel', 'img' => 'cj-vasoya-sir.jpg', 'role' => 'Founder & Director', 'project' => 'Dholera Metro City'],
                 ['name' => 'Mr. Akshay Patel', 'img' => 'akshay-patel-developer.jpg', 'role' => 'CO-Developer & Director', 'project' => 'DMC Group'],
-                ['name' => 'Karan Johar', 'img' => 'dev1.png', 'role' => 'Manager', 'project' => 'Kings Landing'],
-                ['name' => 'Meera Bai', 'img' => 'dev2.png', 'role' => 'Lead', 'project' => 'Lotus Garden'],
-                ['name' => 'Rahul Bose', 'img' => 'dev3.png', 'role' => 'Specialist', 'project' => 'Dholera Central'],
+                ['name' => 'Mr. Ujas Shah', 'img' => 'ujas.jpg', 'role' => 'Founder & Owner', 'project' => 'Ethereum Infracon'],
+                ['name' => 'Mr. Kuldip Patel', 'img' => 'kuldip-patel.png', 'role' => 'Founder & Partner', 'project' => 'Satyaja Infratech'],
+                ['name' => 'Mr. Nikhil Patel', 'img' => 'nikhil-patel.png', 'role' => 'Founder & Partner', 'project' => 'Satyaja Infratech'],
             ];
 
             foreach ($devs as $dev) {
