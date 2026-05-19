@@ -560,35 +560,75 @@ include 'includes/header.php';
     .projects-feed.layout-list .project-card {
         flex-direction: row;
         width: 100%;
-        height: 240px;
+        min-height: 250px;
+        height: auto;
         overflow: hidden;
     }
 
     .projects-feed.layout-list .project-img-wrapper {
         width: 35%;
+        height: auto;
+        min-height: 100%;
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    .projects-feed.layout-list .project-img-wrapper .project-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
         height: 100%;
+        object-fit: cover;
     }
 
     .projects-feed.layout-list .project-content {
         width: 65%;
-        padding: 22px 25px;
+        padding: 24px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .projects-feed.layout-list .project-verified-badge {
+        flex-shrink: 0;
+    }
+
+    .projects-feed.layout-list .project-title {
+        font-size: 22px;
+        font-weight: 800;
+        color: #1c335a;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        line-height: 1.3;
+        margin-bottom: 8px;
+        flex-shrink: 0;
+    }
+
+    .projects-feed.layout-list .project-location {
+        flex-shrink: 0;
     }
 
     .projects-feed.layout-list .project-specs-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 12px;
-        margin-bottom: 12px;
+        margin-bottom: 15px;
+        flex-shrink: 0;
     }
 
     .projects-feed.layout-list .project-price-row {
         border-top: none;
         padding-top: 0;
-        margin-bottom: 12px;
+        margin-bottom: 15px;
+        flex-shrink: 0;
     }
 
     .projects-feed.layout-list .project-cta-row {
         margin-top: 5px;
         max-width: 350px;
+        flex-shrink: 0;
     }
 
     /* Centered Pagination Elements */
