@@ -539,7 +539,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             </li>
             <li><a href="<?php echo BASE_URL; ?>contact.php">Site Visit</a></li>
             <li><a href="<?php echo BASE_URL; ?>index.php#developers">Developers</a></li>
-            <li><a href="<?php echo BASE_URL; ?>index.php#floor-plans">Floor Plans</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php#floor-plans">Our Partners</a></li>
         </ul>
     </nav>
 
