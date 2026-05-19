@@ -620,6 +620,9 @@ $total_slides_count = count($active_slides);
         setTimeout(() => {
             modal.style.display = 'none';
         }, 300);
+
+        // Start typewriter typing animation once the pop-up modal is closed
+        animateSlideText(currentSlide);
     }
 
     function closeHeroModal(e) {
@@ -714,11 +717,8 @@ $total_slides_count = count($active_slides);
         });
     }
 
-    // Automatically trigger frosted glass pop-up modal & start GSAP slide 1 text typing on page load
+    // Automatically trigger frosted glass pop-up modal on page load
     window.addEventListener('DOMContentLoaded', () => {
-        // Trigger first slide text typing immediately
-        animateSlideText(0);
-
         setTimeout(() => {
             openHeroModal();
         }, 1000); // 1-second delay for premium appearance
