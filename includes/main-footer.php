@@ -358,7 +358,7 @@
         </div>
     </div>
 
-    Bottom Bar
+    <!-- Bottom Bar -->
     <div class="footer-bottom-bar">
         <div class="footer-bottom-container">
             <div class="copyright-text">
