@@ -23,6 +23,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,14 +43,17 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
     <meta property="og:image" content="<?php echo $seo_image; ?>">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary-color: #b8860b; /* Gold */
-            --secondary-color: #1c335a; /* Navy Blue */
+            --primary-color: #b8860b;
+            /* Gold */
+            --secondary-color: #1c335a;
+            /* Navy Blue */
             --text-color: #333;
             --light-grey: #f8f9fa;
             --border-color: #dee2e6;
@@ -81,7 +85,8 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             z-index: 1001;
         }
 
-        .top-bar-left, .top-bar-right {
+        .top-bar-left,
+        .top-bar-right {
             display: flex;
             align-items: center;
             gap: 15px;
@@ -113,7 +118,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .logo img {
@@ -226,7 +231,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
         .nav-bar {
             padding: 10px 5%;
             background: var(--white);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -266,7 +271,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             left: 0;
             background: #fff;
             min-width: 250px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             padding: 10px 0;
             opacity: 0;
@@ -330,7 +335,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             background: var(--white);
             z-index: 2001;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 5px 0 25px rgba(0,0,0,0.15);
+            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.15);
             display: flex;
             flex-direction: column;
         }
@@ -406,12 +411,17 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
 
         /* Responsive */
         @media (max-width: 1200px) {
-            .header-links, .auth-buttons, .top-bar-right {
+
+            .header-links,
+            .auth-buttons,
+            .top-bar-right {
                 display: none;
             }
+
             .mobile-toggle {
                 display: block;
             }
+
             .main-header {
                 justify-content: space-between;
             }
@@ -422,28 +432,35 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
                 justify-content: center;
                 padding: 5px;
             }
+
             .top-bar-left span {
                 display: none;
             }
-            .header-search-container, .nav-bar {
+
+            .header-search-container,
+            .nav-bar {
                 display: none;
             }
+
             .logo img {
                 height: 35px;
             }
         }
     </style>
 </head>
+
 <body>
 
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="top-bar-left">
             <span><i class="fa-solid fa-phone"></i> Contact for Site Visit :</span>
-            <a href="tel:+918059982049"><img src="https://flagcdn.com/w20/in.png" alt="IN" width="16"> +91 80599 82049</a>
+            <a href="tel:+918059982049"><img src="https://flagcdn.com/w20/in.png" alt="IN" width="16"> +91 80599
+                82049</a>
         </div>
         <div class="top-bar-right">
-            <span><i class="fa-solid fa-bullhorn"></i> <span class="offer-tag">Live Update</span> - Greenfield Smart City Development | Ends in : <span id="timer">09h 08m 01s</span></span>
+            <span><i class="fa-solid fa-bullhorn"></i> <span class="offer-tag">Live Update</span> - Greenfield Smart
+                City Development | Ends in : <span id="timer">09h 08m 01s</span></span>
             <a href="<?php echo BASE_URL; ?>contact.php" class="grab-now">BOOK VISIT</a>
         </div>
     </div>
@@ -452,7 +469,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
     <header class="main-header">
         <div class="logo">
             <a href="<?php echo BASE_URL; ?>index.php">
-                <img src="<?php echo BASE_URL; ?>assets/logo.webp" alt="Dholera By Us Logo">
+                <img src="<?php echo BASE_URL; ?>assets/dholera-logo.png" alt="Dholera By Us Logo">
             </a>
         </div>
 
@@ -490,7 +507,9 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
                         <li><a href="#">No Active Projects</a></li>
                     <?php else: ?>
                         <?php foreach ($header_projects as $proj): ?>
-                            <li><a href="<?php echo BASE_URL; ?>project/<?php echo $proj['slug'] ? $proj['slug'] : $proj['id']; ?>"><?php echo htmlspecialchars($proj['title']); ?></a></li>
+                            <li><a
+                                    href="<?php echo BASE_URL; ?>project/<?php echo $proj['slug'] ? $proj['slug'] : $proj['id']; ?>"><?php echo htmlspecialchars($proj['title']); ?></a>
+                            </li>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </ul>
@@ -523,10 +542,14 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
                 <h4>Main Menu</h4>
                 <ul>
                     <li><a href="<?php echo BASE_URL; ?>index.php"><i class="fa-solid fa-house"></i> Home</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>index.php#projects"><i class="fa-solid fa-building"></i> Projects</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>dholera-sir/"><i class="fa-solid fa-city"></i> Dholera SIR</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>about.php"><i class="fa-solid fa-info-circle"></i> About Us</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>contact.php"><i class="fa-solid fa-envelope"></i> Contact Us</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>index.php#projects"><i class="fa-solid fa-building"></i>
+                            Projects</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>dholera-sir/"><i class="fa-solid fa-city"></i> Dholera SIR</a>
+                    </li>
+                    <li><a href="<?php echo BASE_URL; ?>about.php"><i class="fa-solid fa-info-circle"></i> About Us</a>
+                    </li>
+                    <li><a href="<?php echo BASE_URL; ?>contact.php"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+                    </li>
                 </ul>
             </div>
             <div class="sidebar-section">
