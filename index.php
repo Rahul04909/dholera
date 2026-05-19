@@ -1,6 +1,5 @@
 <?php include 'includes/header.php'; ?>
 <?php include 'components/hero.php'; ?>
-<?php include 'components/hero-info.php'; ?>
 <?php include 'components/overview.php'; ?>
 <?php include 'components/why-choose-us.php'; ?>
 <?php include 'components/highlights.php'; ?>
