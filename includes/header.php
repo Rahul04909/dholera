@@ -487,8 +487,8 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
         </div>
 
         <div class="auth-buttons">
-            <a href="<?php echo BASE_URL; ?>register.php" class="btn-auth btn-signup">Register</a>
-            <a href="<?php echo BASE_URL; ?>admin/login.php" class="btn-auth btn-login">Login</a>
+            <!-- <a href="<?php echo BASE_URL; ?>register.php" class="btn-auth btn-signup">Register</a> -->
+            <a href="<?php echo BASE_URL; ?>admin/login.php" class="btn-auth btn-login">Partners</a>
         </div>
 
         <div class="mobile-toggle" id="mobile-menu-btn">
