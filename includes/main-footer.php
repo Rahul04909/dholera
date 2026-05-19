@@ -338,7 +338,7 @@
                 <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                 <div class="contact-text">
                     <strong>Our Location</strong>
-                    Dholera Special Investment Region, Gujarat, India.
+                    Omaxe World Street, Sector 79, Faridabad, Haryana, India
                 </div>
             </div>
             <div class="footer-contact-item">
