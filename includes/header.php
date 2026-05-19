@@ -495,7 +495,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
 
         <div class="header-links">
             <a href="<?php echo BASE_URL; ?>about.php">About Us</a>
-            <a href="<?php echo BASE_URL; ?>index.php#projects">Our Projects</a>
+            <a href="<?php echo BASE_URL; ?>projects.php">Our Projects</a>
             <a href="<?php echo BASE_URL; ?>contact.php">Contact</a>
         </div>
 
@@ -555,7 +555,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
                 <h4>Main Menu</h4>
                 <ul>
                     <li><a href="<?php echo BASE_URL; ?>index.php"><i class="fa-solid fa-house"></i> Home</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>index.php#projects"><i class="fa-solid fa-building"></i>
+                    <li><a href="<?php echo BASE_URL; ?>projects.php"><i class="fa-solid fa-building"></i>
                             Projects</a></li>
                     <li><a href="<?php echo BASE_URL; ?>dholera-sir/"><i class="fa-solid fa-city"></i> Dholera SIR</a>
                     </li>
