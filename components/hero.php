@@ -645,8 +645,8 @@ $total_slides_count = count($active_slides);
             });
         });
 
-        // Autoplay
-        setInterval(nextSlide, 5000);
+        // Autoplay - increased to 8 seconds for a more relaxed and legible text-reading experience
+        setInterval(nextSlide, 8000);
     }
 
     /* Modal Interaction Logic */
