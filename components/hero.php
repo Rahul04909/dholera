@@ -38,20 +38,27 @@ $total_slides_count = count($active_slides);
     }
 
     .slider-container {
-        display: flex;
-        width:
-            <?php echo $total_slides_count * 100; ?>
-            %;
+        position: relative;
+        width: 100%;
         height: 100%;
-        transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
     }
 
     .slide {
-        width: calc(100% / <?php echo $total_slides_count; ?>);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
         height: 100%;
-        position: relative;
-        flex-shrink: 0;
-        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), visibility 1s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1;
+    }
+
+    .slide.active {
+        opacity: 1;
+        visibility: visible;
+        z-index: 2;
     }
 
     /* Full Width cover styling */
@@ -482,8 +489,8 @@ $total_slides_count = count($active_slides);
     <!-- Slider -->
     <div class="hero-slider-col">
         <div class="slider-container" id="slider">
-            <?php foreach ($active_slides as $slide): ?>
-                <div class="slide">
+            <?php foreach ($active_slides as $index => $slide): ?>
+                <div class="slide <?php echo $index === 0 ? 'active' : ''; ?>">
                     <!-- Background slide image -->
                     <img src="<?php echo htmlspecialchars($slide['image_path']); ?>" class="foreground-img"
                         alt="<?php echo isset($slide['title']) ? htmlspecialchars($slide['title']) : 'Dholera Hero Slide'; ?>">
@@ -608,7 +615,10 @@ $total_slides_count = count($active_slides);
 
     if (totalSlides > 1) {
         function updateSlider() {
-            sliderContainer.style.transform = `translateX(-${(currentSlide * 100) / totalSlides}%)`;
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach((slide, idx) => {
+                slide.classList.toggle('active', idx === currentSlide);
+            });
             dots.forEach((dot, idx) => {
                 dot.classList.toggle('active', idx === currentSlide);
             });
