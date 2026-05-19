@@ -31,7 +31,7 @@ $total_slides_count = count($active_slides);
     /* 100% Full Width Hero Slider */
     .hero-slider-col {
         width: 100%;
-        height: 650px;
+        height: 380px;
         position: relative;
         overflow: hidden;
         background-color: #000;
@@ -39,7 +39,9 @@ $total_slides_count = count($active_slides);
 
     .slider-container {
         display: flex;
-        width: <?php echo $total_slides_count * 100; ?>%;
+        width:
+            <?php echo $total_slides_count * 100; ?>
+            %;
         height: 100%;
         transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
     }
@@ -117,13 +119,18 @@ $total_slides_count = count($active_slides);
         backdrop-filter: blur(5px);
     }
 
-    .slider-arrow:hover { 
+    .slider-arrow:hover {
         background: rgba(184, 134, 11, 0.8);
         transform: translateY(-50%) scale(1.05);
     }
-    
-    .arrow-left { left: 30px; }
-    .arrow-right { right: 30px; }
+
+    .arrow-left {
+        left: 30px;
+    }
+
+    .arrow-right {
+        right: 30px;
+    }
 
     /* High-Impact Centered Overlay Content */
     .slide-content {
@@ -138,36 +145,44 @@ $total_slides_count = count($active_slides);
     }
 
     .slide-content h2 {
-        font-size: 52px;
+        font-size: 34px;
         font-weight: 900;
-        margin-bottom: 12px;
-        line-height: 1.15;
-        letter-spacing: -1px;
-        text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        margin-bottom: 10px;
+        line-height: 1.2;
+        letter-spacing: -0.5px;
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
     }
 
     .slide-content p {
-        font-size: 20px;
-        font-weight: 500;
+        font-size: 16px;
+        font-weight: 550;
         color: #e2e8f0;
         margin: 0;
-        line-height: 1.5;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        line-height: 1.4;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
         font-family: 'Inter', sans-serif;
     }
 
     /* Dynamic Typing Cursor */
-    .typing-title.typing-active::after, .typing-subtitle.typing-active::after {
+    .typing-title.typing-active::after,
+    .typing-subtitle.typing-active::after {
         content: '|';
         display: inline-block;
         margin-left: 4px;
         color: var(--primary-gold, #b8860b);
         animation: cursorBlink 0.75s step-end infinite;
     }
-    
+
     @keyframes cursorBlink {
-        from, to { color: transparent }
-        50% { color: var(--primary-gold, #b8860b) }
+
+        from,
+        to {
+            color: transparent
+        }
+
+        50% {
+            color: var(--primary-gold, #b8860b)
+        }
     }
 
     /* Symmetrical Premium Call To Action Button */
@@ -184,7 +199,7 @@ $total_slides_count = count($active_slides);
         font-weight: 800;
         cursor: pointer;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         text-transform: uppercase;
         letter-spacing: 0.5px;
         font-family: 'Outfit', sans-serif;
@@ -408,42 +423,55 @@ $total_slides_count = count($active_slides);
     /* Responsive Scaling */
     @media (max-width: 992px) {
         .hero-slider-col {
-            height: 480px;
+            height: 280px;
         }
+
         .slide-content {
             left: 5%;
             right: 5%;
             max-width: 90%;
         }
+
         .slide-content h2 {
-            font-size: 32px;
+            font-size: 22px;
         }
+
         .slide-content p {
-            font-size: 15px;
-            padding: 6px 12px;
-            margin-bottom: 20px;
+            font-size: 13px;
+            padding: 0;
+            margin-bottom: 0;
         }
-        .slide-cta-btn {
-            padding: 12px 25px;
-            font-size: 14px;
+
+        .arrow-left {
+            left: 15px;
         }
-        .arrow-left { left: 15px; }
-        .arrow-right { right: 15px; }
+
+        .arrow-right {
+            right: 15px;
+        }
     }
 
     @media (max-width: 480px) {
         .hero-slider-col {
-            height: 420px;
+            height: 200px;
         }
+
         .slide-content h2 {
-            font-size: 26px;
+            font-size: 18px;
         }
+
+        .slide-content p {
+            font-size: 11px;
+        }
+
         .enquiry-grid {
             grid-template-columns: 1fr;
         }
+
         .submit-btn {
             grid-column: span 1;
         }
+
         .modal-interior {
             padding: 25px 20px;
         }
@@ -457,8 +485,9 @@ $total_slides_count = count($active_slides);
             <?php foreach ($active_slides as $slide): ?>
                 <div class="slide">
                     <!-- Background slide image -->
-                    <img src="<?php echo htmlspecialchars($slide['image_path']); ?>" class="foreground-img" alt="<?php echo isset($slide['title']) ? htmlspecialchars($slide['title']) : 'Dholera Hero Slide'; ?>">
-                    
+                    <img src="<?php echo htmlspecialchars($slide['image_path']); ?>" class="foreground-img"
+                        alt="<?php echo isset($slide['title']) ? htmlspecialchars($slide['title']) : 'Dholera Hero Slide'; ?>">
+
                     <?php if (!empty($slide['title']) || !empty($slide['subtitle'])): ?>
                         <div class="slide-content">
                             <?php if (!empty($slide['title'])): ?>
@@ -482,7 +511,7 @@ $total_slides_count = count($active_slides);
             </div>
 
             <div class="slider-nav">
-                <?php for($i = 0; $i < $total_slides_count; $i++): ?>
+                <?php for ($i = 0; $i < $total_slides_count; $i++): ?>
                     <div class="slider-dot <?php echo $i === 0 ? 'active' : ''; ?>" data-index="<?php echo $i; ?>"></div>
                 <?php endfor; ?>
             </div>
@@ -496,7 +525,7 @@ $total_slides_count = count($active_slides);
         <div class="hero-modal-close" onclick="hideHeroModal()">
             <i class="fas fa-times"></i>
         </div>
-        
+
         <div class="modal-interior">
             <div class="info-header">
                 <div class="logo-small">
@@ -547,14 +576,20 @@ $total_slides_count = count($active_slides);
 </div>
 
 <!-- Success Popup Modal -->
-<div id="successModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.85); z-index: 20000; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
-    <div style="background: #fff; padding: 40px; border-radius: 16px; text-align: center; max-width: 400px; position: relative; border-top: 5px solid var(--primary-gold, #b8860b); box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
-        <div style="width: 80px; height: 80px; background: #f0fff4; color: #38a169; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 20px;">
+<div id="successModal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.85); z-index: 20000; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+    <div
+        style="background: #fff; padding: 40px; border-radius: 16px; text-align: center; max-width: 400px; position: relative; border-top: 5px solid var(--primary-gold, #b8860b); box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+        <div
+            style="width: 80px; height: 80px; background: #f0fff4; color: #38a169; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 20px;">
             <i class="fas fa-check"></i>
         </div>
         <h2 style="font-size: 24px; margin-bottom: 10px; color: #1c335a; font-weight: 800;">Thank You!</h2>
-        <p style="color: #64748b; margin-bottom: 25px; font-family: 'Inter', sans-serif; font-size: 14.5px;">Your enquiry has been received. Our team will contact you shortly.</p>
-        <button onclick="document.getElementById('successModal').style.display = 'none'" style="background: #1c335a; color: #fff; border: none; padding: 12px 30px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.2s;" onmouseover="this.style.background='#b8860b'" onmouseout="this.style.background='#1c335a'">Close</button>
+        <p style="color: #64748b; margin-bottom: 25px; font-family: 'Inter', sans-serif; font-size: 14.5px;">Your
+            enquiry has been received. Our team will contact you shortly.</p>
+        <button onclick="document.getElementById('successModal').style.display = 'none'"
+            style="background: #1c335a; color: #fff; border: none; padding: 12px 30px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.2s;"
+            onmouseover="this.style.background='#b8860b'" onmouseout="this.style.background='#1c335a'">Close</button>
     </div>
 </div>
 
@@ -567,7 +602,7 @@ $total_slides_count = count($active_slides);
     const dots = document.querySelectorAll('.slider-dot');
     const prevBtn = document.getElementById('prevSlide');
     const nextBtn = document.getElementById('nextSlide');
-    
+
     let currentSlide = 0;
     const totalSlides = <?php echo $total_slides_count; ?>;
 
@@ -620,9 +655,6 @@ $total_slides_count = count($active_slides);
         setTimeout(() => {
             modal.style.display = 'none';
         }, 300);
-
-        // Start typewriter typing animation once the pop-up modal is closed
-        animateSlideText(currentSlide);
     }
 
     function closeHeroModal(e) {
@@ -632,7 +664,7 @@ $total_slides_count = count($active_slides);
     }
 
     // AJAX Enquiry Submission
-    document.getElementById('enquiryForm').addEventListener('submit', function(e) {
+    document.getElementById('enquiryForm').addEventListener('submit', function (e) {
         e.preventDefault();
         const form = this;
         const formData = new FormData(form);
@@ -646,24 +678,24 @@ $total_slides_count = count($active_slides);
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                hideHeroModal();
-                document.getElementById('successModal').style.display = 'flex';
-                form.reset();
-            } else {
-                alert(data.message || 'Something went wrong. Please try again.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('A technical error occurred.');
-        })
-        .finally(() => {
-            submitBtn.disabled = false;
-            submitBtn.innerText = originalBtnText;
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    hideHeroModal();
+                    document.getElementById('successModal').style.display = 'flex';
+                    form.reset();
+                } else {
+                    alert(data.message || 'Something went wrong. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('A technical error occurred.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalBtnText;
+            });
     });
 
     // GSAP Text Typing Animation Logic
@@ -717,8 +749,11 @@ $total_slides_count = count($active_slides);
         });
     }
 
-    // Automatically trigger frosted glass pop-up modal on page load
+    // Automatically trigger frosted glass pop-up modal & start GSAP slide 1 text typing on page load
     window.addEventListener('DOMContentLoaded', () => {
+        // Trigger first slide text typing immediately
+        animateSlideText(0);
+
         setTimeout(() => {
             openHeroModal();
         }, 1000); // 1-second delay for premium appearance
