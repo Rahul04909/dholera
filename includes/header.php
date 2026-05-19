@@ -235,16 +235,16 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
         }
 
         .btn-login {
-            background: var(--secondary-color);
-            color: #fff;
-            border-color: var(--secondary-color);
-        }
-
-        .btn-login:hover {
             background: var(--primary-color);
             color: #fff;
             border-color: var(--primary-color);
-            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.2);
+        }
+
+        .btn-login:hover {
+            background: #916a09;
+            color: #fff;
+            border-color: #916a09;
+            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.3);
             transform: translateY(-2px);
         }
 
