@@ -97,9 +97,28 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             text-decoration: none;
         }
 
-        .top-bar-right .offer-tag {
-            color: #ffc107;
-            font-weight: bold;
+        .top-bar .offer-tag {
+            background-color: #dc3545;
+            color: #fff !important;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            display: inline-block;
+            margin-right: 5px;
+            text-transform: uppercase;
+            font-size: 11px;
+            animation: blink-bg 1.2s infinite alternate;
+        }
+
+        @keyframes blink-bg {
+            0% {
+                background-color: #dc3545;
+                box-shadow: 0 0 3px rgba(220, 53, 69, 0.6);
+            }
+            100% {
+                background-color: #bd2130;
+                box-shadow: 0 0 10px rgba(220, 53, 69, 0.9);
+            }
         }
 
         .grab-now {
@@ -452,12 +471,9 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
 <body>
 
     <!-- Top Bar -->
-    <div class="top-bar">
-        <div class="top-bar-left">
-            <span><i class="fa-solid fa-bullhorn"></i> <span class="offer-tag">Live Update</span> - Greenfield Smart City Development | Ends in : <span id="timer">09h 08m 01s</span></span>
-        </div>
-        <div class="top-bar-right">
-            <a href="<?php echo BASE_URL; ?>contact.php" class="grab-now">BOOK VISIT</a>
+    <div class="top-bar" style="justify-content: center;">
+        <div class="top-bar-left" style="justify-content: center; width: 100%;">
+            <span><i class="fa-solid fa-bullhorn"></i> <span class="offer-tag">Latest Update</span> - Greenfield Smart City Development | Ends in : <span id="timer">09h 08m 01s</span></span>
         </div>
     </div>
 
