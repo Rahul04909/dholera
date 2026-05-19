@@ -473,7 +473,7 @@ $total_slides_count = count($active_slides);
             <div class="info-header">
                 <div class="logo-small">
                     <!-- Uses the exact same branding logo as header -->
-                    <img src="<?php echo BASE_URL; ?>assets/logo.webp" alt="Dholera Smart City Branding Logo">
+                    <img src="<?php echo BASE_URL; ?>assets/dholera-logo.png" alt="Dholera Smart City Branding Logo">
                 </div>
                 <div class="location-badge">
                     <i class="fas fa-map-marker-alt"></i> At Gujarat
