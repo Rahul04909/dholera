@@ -47,7 +47,7 @@ $total_slides_count = count($active_slides);
     }
 
     .slide {
-        width: 100%;
+        width: calc(100% / <?php echo $total_slides_count; ?>);
         height: 100%;
         position: relative;
         flex-shrink: 0;
