@@ -216,13 +216,15 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
         }
 
         .btn-login {
-            background: transparent;
-            color: var(--primary-color);
+            background: var(--secondary-color);
+            color: #fff;
+            border-color: var(--secondary-color);
         }
 
         .btn-login:hover {
             background: var(--primary-color);
             color: #fff;
+            border-color: var(--primary-color);
             box-shadow: 0 4px 12px rgba(184, 134, 11, 0.2);
             transform: translateY(-2px);
         }
@@ -433,9 +435,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
                 padding: 5px;
             }
 
-            .top-bar-left span {
-                display: none;
-            }
+            /* Keep Live Update visible on mobile */
 
             .header-search-container,
             .nav-bar {
@@ -454,13 +454,9 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="top-bar-left">
-            <span><i class="fa-solid fa-phone"></i> Contact for Site Visit :</span>
-            <a href="tel:+918059982049"><img src="https://flagcdn.com/w20/in.png" alt="IN" width="16"> +91 80599
-                82049</a>
+            <span><i class="fa-solid fa-bullhorn"></i> <span class="offer-tag">Live Update</span> - Greenfield Smart City Development | Ends in : <span id="timer">09h 08m 01s</span></span>
         </div>
         <div class="top-bar-right">
-            <span><i class="fa-solid fa-bullhorn"></i> <span class="offer-tag">Live Update</span> - Greenfield Smart
-                City Development | Ends in : <span id="timer">09h 08m 01s</span></span>
             <a href="<?php echo BASE_URL; ?>contact.php" class="grab-now">BOOK VISIT</a>
         </div>
     </div>
