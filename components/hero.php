@@ -30,7 +30,7 @@ $total_slides_count = count($active_slides);
 
     /* 100% Full Width Hero Slider */
     .hero-slider-col {
-        width: 100%;
+        width: 1250px;
         height: 400px;
         position: relative;
         overflow: hidden;
