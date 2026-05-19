@@ -442,9 +442,13 @@ include 'includes/header.php';
         font-weight: 800;
         color: #1c335a;
         margin-bottom: 6px;
-        white-space: nowrap;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
+        height: 46px; /* Symmetrical grid alignment */
     }
 
     .project-location {
