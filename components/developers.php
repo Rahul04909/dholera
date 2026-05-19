@@ -208,9 +208,9 @@
         <div class="developers-slider-wrapper" id="dev-slider-wrapper">
             <?php
             $devs = [
-                ['name' => 'Mr. Rajdipsinh Chudasama', 'img' => 'rajdeepsinh.png', 'role' => 'Architect', 'project' => 'Dholera Heights'],
-                ['name' => 'Priya Sharma', 'img' => 'dev2.png', 'role' => 'Director', 'project' => 'Greenfield Res.'],
-                ['name' => 'Amit Patel', 'img' => 'dev3.png', 'role' => 'Developer', 'project' => 'Smart City Villas'],
+                ['name' => 'Mr. Rajdipsinh Chudasama', 'img' => 'rajdeepsinh.png', 'role' => 'Managing Director', 'project' => '7oak Dholera'],
+                ['name' => 'Mr. Gopal Goswami', 'img' => 'gopal-goswami.webp', 'role' => 'Chairman', 'project' => 'SVNIT'],
+                ['name' => 'Mr. Ambrish Parajiya', 'img' => 'ambrish-parajiya.webp', 'role' => 'Managing Director', 'project' => 'GAP Group Dholera'],
                 ['name' => 'Sanjay Singh', 'img' => 'dev1.png', 'role' => 'Engineer', 'project' => 'Dholera Phase II'],
                 ['name' => 'Anjali Gupta', 'img' => 'dev2.png', 'role' => 'Planning', 'project' => 'Metro Residency'],
                 ['name' => 'Vikram Rao', 'img' => 'dev3.png', 'role' => 'Designer', 'project' => 'Smart Hub'],
