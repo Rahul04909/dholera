@@ -208,7 +208,7 @@
         <div class="developers-slider-wrapper" id="dev-slider-wrapper">
             <?php
             $devs = [
-                ['name' => 'Rajesh Mehta', 'img' => 'https://dholeracitysmart.com/wp-content/uploads/2026/01/rajdeepsinh.png', 'role' => 'Architect', 'project' => 'Dholera Heights'],
+                ['name' => 'Mr. Rajdipsinh Chudasama', 'img' => 'rajdeepsinh.png', 'role' => 'Architect', 'project' => 'Dholera Heights'],
                 ['name' => 'Priya Sharma', 'img' => 'dev2.png', 'role' => 'Director', 'project' => 'Greenfield Res.'],
                 ['name' => 'Amit Patel', 'img' => 'dev3.png', 'role' => 'Developer', 'project' => 'Smart City Villas'],
                 ['name' => 'Sanjay Singh', 'img' => 'dev1.png', 'role' => 'Engineer', 'project' => 'Dholera Phase II'],
