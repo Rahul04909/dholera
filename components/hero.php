@@ -156,6 +156,20 @@ $total_slides_count = count($active_slides);
         font-family: 'Inter', sans-serif;
     }
 
+    /* Dynamic Typing Cursor */
+    .typing-title.typing-active::after, .typing-subtitle.typing-active::after {
+        content: '|';
+        display: inline-block;
+        margin-left: 4px;
+        color: var(--primary-gold, #b8860b);
+        animation: cursorBlink 0.75s step-end infinite;
+    }
+    
+    @keyframes cursorBlink {
+        from, to { color: transparent }
+        50% { color: var(--primary-gold, #b8860b) }
+    }
+
     /* Symmetrical Premium Call To Action Button */
     .slide-cta-btn {
         display: inline-flex;
@@ -448,10 +462,10 @@ $total_slides_count = count($active_slides);
                     <?php if (!empty($slide['title']) || !empty($slide['subtitle'])): ?>
                         <div class="slide-content">
                             <?php if (!empty($slide['title'])): ?>
-                                <h2><?php echo htmlspecialchars($slide['title']); ?></h2>
+                                <h2 class="typing-title" data-text="<?php echo htmlspecialchars($slide['title']); ?>"></h2>
                             <?php endif; ?>
                             <?php if (!empty($slide['subtitle'])): ?>
-                                <p><?php echo htmlspecialchars($slide['subtitle']); ?></p>
+                                <p class="typing-subtitle" data-text="<?php echo htmlspecialchars($slide['subtitle']); ?>"></p>
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
@@ -544,6 +558,10 @@ $total_slides_count = count($active_slides);
     </div>
 </div>
 
+<!-- GSAP Core & TextPlugin for Dynamic Typing Animation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+
 <script>
     const sliderContainer = document.getElementById('slider');
     const dots = document.querySelectorAll('.slider-dot');
@@ -559,6 +577,7 @@ $total_slides_count = count($active_slides);
             dots.forEach((dot, idx) => {
                 dot.classList.toggle('active', idx === currentSlide);
             });
+            animateSlideText(currentSlide);
         }
 
         function nextSlide() {
@@ -644,8 +663,62 @@ $total_slides_count = count($active_slides);
         });
     });
 
-    // Automatically trigger frosted glass pop-up modal on page load
+    // GSAP Text Typing Animation Logic
+    gsap.registerPlugin(TextPlugin);
+
+    function animateSlideText(slideIndex) {
+        // Kill existing animations on titles and subtitles to prevent overlaps
+        gsap.killTweensOf('.typing-title');
+        gsap.killTweensOf('.typing-subtitle');
+
+        const slides = document.querySelectorAll('.slide');
+        slides.forEach((slide, idx) => {
+            const titleEl = slide.querySelector('.typing-title');
+            const subtitleEl = slide.querySelector('.typing-subtitle');
+
+            if (idx === slideIndex) {
+                // Animate active slide text
+                if (titleEl) {
+                    const titleText = titleEl.getAttribute('data-text') || '';
+                    titleEl.textContent = '';
+                    titleEl.classList.add('typing-active');
+                    gsap.to(titleEl, {
+                        duration: 1.5,
+                        text: { value: titleText, delimiter: "" },
+                        ease: "none",
+                        onComplete: () => {
+                            titleEl.classList.remove('typing-active');
+                        }
+                    });
+                }
+
+                if (subtitleEl) {
+                    const subtitleText = subtitleEl.getAttribute('data-text') || '';
+                    subtitleEl.textContent = '';
+                    subtitleEl.classList.add('typing-active');
+                    gsap.to(subtitleEl, {
+                        duration: 2.0,
+                        text: { value: subtitleText, delimiter: "" },
+                        ease: "none",
+                        delay: 1.5, // Start typing subtitle after title finishes
+                        onComplete: () => {
+                            subtitleEl.classList.remove('typing-active');
+                        }
+                    });
+                }
+            } else {
+                // Clear inactive slides
+                if (titleEl) titleEl.textContent = '';
+                if (subtitleEl) subtitleEl.textContent = '';
+            }
+        });
+    }
+
+    // Automatically trigger frosted glass pop-up modal & start GSAP slide 1 text typing on page load
     window.addEventListener('DOMContentLoaded', () => {
+        // Trigger first slide text typing immediately
+        animateSlideText(0);
+
         setTimeout(() => {
             openHeroModal();
         }, 1000); // 1-second delay for premium appearance
