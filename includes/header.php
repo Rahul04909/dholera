@@ -473,7 +473,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
     <!-- Top Bar -->
     <div class="top-bar" style="justify-content: center;">
         <div class="top-bar-left" style="justify-content: center; width: 100%;">
-            <span><i class="fa-solid fa-bullhorn"></i> <span class="offer-tag">Latest Update</span> - Greenfield Smart City Development | Ends in : <span id="timer">09h 08m 01s</span></span>
+            <span><i class="fa-solid fa-bullhorn"></i> <span class="offer-tag">Latest Update</span> - Greenfield Smart City Development</span>
         </div>
     </div>
 
