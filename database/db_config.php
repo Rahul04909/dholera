@@ -12,7 +12,12 @@ $password = 'Rd14072003@./';
 
 try {
     // Create a new PDO instance
-    $conn = new PDO("mysql:host=$host;dbname=$db_name;charset=utf8", $username, $password);
+    try {
+        $conn = new PDO("mysql:host=$host;dbname=$db_name;charset=utf8", $username, $password);
+    } catch (PDOException $e) {
+        // Fallback for local development environments (e.g., standard WAMP)
+        $conn = new PDO("mysql:host=$host;dbname=$db_name;charset=utf8", 'root', '');
+    }
 
     // Set PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -22,7 +27,7 @@ try {
 
     // Dynamic Base Path / URL detection
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-    $host_url = $_SERVER['HTTP_HOST'];
+    $host_url = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
 
     // Physical root of the project
     $project_root = str_replace('\\', '/', dirname(__DIR__));

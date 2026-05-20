@@ -501,7 +501,7 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
 
         <div class="auth-buttons">
             <!-- <a href="<?php echo BASE_URL; ?>register.php" class="btn-auth btn-signup">Register</a> -->
-            <a href="<?php echo BASE_URL; ?>admin/login.php" class="btn-auth btn-login">Partners</a>
+            <a href="javascript:void(0)" class="btn-auth btn-login" id="partner-login-trigger">Partners</a>
         </div>
 
         <div class="mobile-toggle" id="mobile-menu-btn">
@@ -614,3 +614,4 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
             }, 1000);
         }
     </script>
+<?php include_once ROOT_PATH . 'components/partner-login-modal.php'; ?>
