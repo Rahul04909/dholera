@@ -23,8 +23,9 @@
         left: 0;
         width: 100%;
         height: 220px;
-        background: linear-gradient(135deg, #a7ffeb 0%, #e0f2f1 100%);
+        background: linear-gradient(135deg, #fdfbf7 0%, #f5eedc 100%);
         border-radius: 20px;
+        border: 1px solid rgba(184, 134, 11, 0.1);
         z-index: -1;
     }
 
@@ -97,22 +98,24 @@
         width: 100%;
         aspect-ratio: 1/1;
         border-radius: 50%;
-        background: radial-gradient(circle, #a7ffeb 0%, #e0f2f1 100%);
-        padding: 10px;
+        background: #ffffff;
+        border: 2.5px solid rgba(184, 134, 11, 0.15);
+        padding: 15px;
         box-sizing: border-box;
         display: flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 12px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 8px 24px rgba(28, 51, 90, 0.04);
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
     .developer-circle img {
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        object-fit: cover;
-        border: 3px solid #fff;
+        object-fit: contain;
+        background: transparent;
     }
 
     .developer-card h3 {
@@ -120,22 +123,18 @@
         font-size: 15px;
         color: #1c335a;
         font-weight: 700;
-        margin-bottom: 2px;
+        margin-top: 5px;
+        transition: color 0.3s ease;
     }
 
-    .developer-card .designation {
-        font-size: 11px;
+    .developer-card:hover .developer-circle {
+        border-color: #b8860b;
+        transform: scale(1.05);
+        box-shadow: 0 12px 30px rgba(184, 134, 11, 0.18);
+    }
+
+    .developer-card:hover h3 {
         color: #b8860b;
-        font-weight: 700;
-        text-transform: uppercase;
-        display: block;
-        margin-bottom: 2px;
-    }
-
-    .developer-card p.project {
-        font-family: 'Inter', sans-serif;
-        font-size: 12px;
-        color: #777;
     }
 
     /* Navigation Buttons */
@@ -208,16 +207,17 @@
         <div class="developers-slider-wrapper" id="dev-slider-wrapper">
             <?php
             $devs = [
-                ['name' => 'Mr. Rajdipsinh Chudasama', 'img' => 'rajdeepsinh.png', 'role' => 'Managing Director', 'project' => '7oak Dholera'],
-                ['name' => 'Mr. Gopal Goswami', 'img' => 'gopal-goswami.webp', 'role' => 'Chairman', 'project' => 'SVNIT'],
-                ['name' => 'Mr. Ambrish Parajiya', 'img' => 'ambrish-parajiya.webp', 'role' => 'Managing Director', 'project' => 'GAP Group Dholera'],
-                ['name' => 'Mr. Ramrajsinh Chudasama', 'img' => 'Ramrajsinh.png', 'role' => 'Founder & CEO', 'project' => 'RSC Group'],
-                ['name' => 'Mr. Nitin Singh Tomar', 'img' => 'nitin-singh-tomar.jpg', 'role' => 'Director', 'project' => 'Nestoria Group'],
-                ['name' => 'Mr. C.J. Patel', 'img' => 'cj-vasoya-sir.jpg', 'role' => 'Founder & Director', 'project' => 'Dholera Metro City'],
-                ['name' => 'Mr. Akshay Patel', 'img' => 'akshay-patel-developer.jpg', 'role' => 'CO-Developer & Director', 'project' => 'DMC Group'],
-                ['name' => 'Mr. Ujas Shah', 'img' => 'ujas.jpg', 'role' => 'Founder & Owner', 'project' => 'Ethereum Infracon'],
-                ['name' => 'Mr. Kuldip Patel', 'img' => 'kuldip-patel.png', 'role' => 'Founder & Partner', 'project' => 'Satyaja Infratech'],
-                ['name' => 'Mr. Nikhil Patel', 'img' => 'nikhil-patel.png', 'role' => 'Founder & Partner', 'project' => 'Satyaja Infratech'],
+                ['name' => '7Oak Group', 'img' => '7oak.jpg'],
+                ['name' => 'Ethereum Infracon', 'img' => 'ethereum.jpg'],
+                ['name' => 'GAIM Group', 'img' => 'gaim-1.jpg'],
+                ['name' => 'Gohil Group', 'img' => 'gohil.jpg'],
+                ['name' => 'GAP Group', 'img' => 'gap-group.jpg'],
+                ['name' => 'Mirrikh Infratech', 'img' => 'mirrikh.jpg'],
+                ['name' => 'Nestoria Group', 'img' => 'nestoria.jpg'],
+                ['name' => 'RSC Group', 'img' => 'rsc-group.jpg'],
+                ['name' => 'SCRJ Group', 'img' => 'scrj.jpg'],
+                ['name' => 'Seksaria Group', 'img' => 'seksaria.jpg'],
+                ['name' => 'Singhal Group', 'img' => 'singhal.jpg'],
             ];
 
             foreach ($devs as $dev) {
@@ -227,9 +227,7 @@
                         <img src="<?php echo BASE_URL; ?>assets/images/developers/<?php echo $dev['img']; ?>"
                             alt="<?php echo $dev['name']; ?>" loading="lazy">
                     </div>
-                    <span class="designation"><?php echo $dev['role']; ?></span>
                     <h3><?php echo $dev['name']; ?></h3>
-                    <p class="project"><?php echo $dev['project']; ?></p>
                 </div>
                 <?php
             }
