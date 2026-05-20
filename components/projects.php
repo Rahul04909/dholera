@@ -20,7 +20,7 @@ try {
         font-family: 'Outfit', sans-serif;
     }
 
-    /* Stylized Background Overlay - Matching Influencers exactly */
+    /* Stylized Background Overlay - Matching Developers exactly */
     .projects-section::after {
         content: '';
         position: absolute;
@@ -28,8 +28,9 @@ try {
         left: 0;
         width: 100%;
         height: 220px;
-        background: linear-gradient(135deg, #a7ffeb 0%, #e0f2f1 100%);
+        background: linear-gradient(135deg, #fdfbf7 0%, #f5eedc 100%);
         border-radius: 20px;
+        border: 1px solid rgba(184, 134, 11, 0.1);
         z-index: -1;
     }
 
