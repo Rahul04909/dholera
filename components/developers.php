@@ -81,10 +81,18 @@
         gap: 30px;
     }
 
-    /* Developer Card */
-    .developer-card {
+    /* Developer Card Wrapper Link */
+    .developer-card-link {
         min-width: calc(16.666% - 25px);
         /* 6 items on desktop */
+        text-decoration: none;
+        display: block;
+        transition: all 0.3s ease;
+    }
+
+    /* Developer Card */
+    .developer-card {
+        width: 100%;
         text-align: center;
         cursor: pointer;
         transition: all 0.3s;
@@ -166,7 +174,7 @@
 
     /* Mobile View */
     @media (max-width: 1024px) {
-        .developer-card {
+        .developer-card-link {
             min-width: calc(25% - 22.5px);
         }
     }
@@ -181,7 +189,7 @@
             height: 180px;
         }
 
-        .developer-card {
+        .developer-card-link {
             min-width: calc(33.333% - 20px);
         }
 
@@ -207,28 +215,30 @@
         <div class="developers-slider-wrapper" id="dev-slider-wrapper">
             <?php
             $devs = [
-                ['name' => '7Oak Group', 'img' => '7oak.jpg'],
-                ['name' => 'Ethereum Infracon', 'img' => 'ethereum.jpg'],
-                ['name' => 'GAIM Group', 'img' => 'gaim-1.jpg'],
-                ['name' => 'Gohil Group', 'img' => 'gohil.jpg'],
-                ['name' => 'GAP Group', 'img' => 'gap-group.jpg'],
-                ['name' => 'Mirrikh Infratech', 'img' => 'mirrikh.jpg'],
-                ['name' => 'Nestoria Group', 'img' => 'nestoria.jpg'],
-                ['name' => 'RSC Group', 'img' => 'rsc-group.jpg'],
-                ['name' => 'SCRJ Group', 'img' => 'scrj.jpg'],
-                ['name' => 'Seksaria Group', 'img' => 'seksaria.jpg'],
-                ['name' => 'Singhal Group', 'img' => 'singhal.jpg'],
+                ['name' => '7Oak Group', 'img' => '7oak.jpg', 'slug' => '7oak-group'],
+                ['name' => 'Ethereum Infracon', 'img' => 'ethereum.jpg', 'slug' => 'ethereum-infracon'],
+                ['name' => 'GAIM Group', 'img' => 'gaim-1.jpg', 'slug' => 'gaim-group'],
+                ['name' => 'Gohil Group', 'img' => 'gohil.jpg', 'slug' => 'gohil-group'],
+                ['name' => 'GAP Group', 'img' => 'gap-group.jpg', 'slug' => 'gap-group'],
+                ['name' => 'Mirrikh Infratech', 'img' => 'mirrikh.jpg', 'slug' => 'mirrikh-infratech'],
+                ['name' => 'Nestoria Group', 'img' => 'nestoria.jpg', 'slug' => 'nestoria-group'],
+                ['name' => 'RSC Group', 'img' => 'rsc-group.jpg', 'slug' => 'rsc-group'],
+                ['name' => 'SCRJ Group', 'img' => 'scrj.jpg', 'slug' => 'scrj-group'],
+                ['name' => 'Seksaria Group', 'img' => 'seksaria.jpg', 'slug' => 'seksaria-group'],
+                ['name' => 'Singhal Group', 'img' => 'singhal.jpg', 'slug' => 'singhal-group'],
             ];
 
             foreach ($devs as $dev) {
                 ?>
-                <div class="developer-card">
-                    <div class="developer-circle">
-                        <img src="<?php echo BASE_URL; ?>assets/images/developers/<?php echo $dev['img']; ?>"
-                            alt="<?php echo $dev['name']; ?>" loading="lazy">
+                <a href="<?php echo BASE_URL; ?>developer.php?slug=<?php echo urlencode($dev['slug']); ?>" class="developer-card-link">
+                    <div class="developer-card">
+                        <div class="developer-circle">
+                            <img src="<?php echo BASE_URL; ?>assets/images/developers/<?php echo $dev['img']; ?>"
+                                alt="<?php echo $dev['name']; ?>" loading="lazy">
+                        </div>
+                        <h3><?php echo $dev['name']; ?></h3>
                     </div>
-                    <h3><?php echo $dev['name']; ?></h3>
-                </div>
+                </a>
                 <?php
             }
             ?>
@@ -254,7 +264,7 @@
         }
 
         function updateDevSlider() {
-            const items = devWrapper.querySelectorAll('.developer-card');
+            const items = devWrapper.querySelectorAll('.developer-card-link');
             if (items.length === 0) return;
 
             const gap = 30;
@@ -264,7 +274,7 @@
 
         devNext.addEventListener('click', () => {
             const visible = getVisibleDevItems();
-            const total = devWrapper.querySelectorAll('.developer-card').length;
+            const total = devWrapper.querySelectorAll('.developer-card-link').length;
             if (devIndex < total - visible) {
                 devIndex++;
             } else {
@@ -278,7 +288,7 @@
                 devIndex--;
             } else {
                 const visible = getVisibleDevItems();
-                const total = devWrapper.querySelectorAll('.developer-card').length;
+                const total = devWrapper.querySelectorAll('.developer-card-link').length;
                 devIndex = total - visible;
             }
             updateDevSlider();
