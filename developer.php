@@ -328,7 +328,7 @@ include __DIR__ . '/includes/header.php';
         display: flex;
         align-items: flex-end;
         position: relative;
-        margin-top: -80px;
+        margin-top: 0;
         z-index: 5;
         gap: 30px;
         text-align: left;
@@ -347,6 +347,7 @@ include __DIR__ . '/includes/header.php';
         justify-content: center;
         border: 3px solid #fff;
         flex-shrink: 0;
+        margin-top: -85px;
     }
 
     .dev-profile-logo-wrapper img {
@@ -1080,6 +1081,10 @@ include __DIR__ . '/includes/header.php';
             text-align: center;
             margin-top: -60px;
             padding: 20px;
+        }
+
+        .dev-profile-logo-wrapper {
+            margin-top: 0;
         }
 
         .dev-profile-header-info {
