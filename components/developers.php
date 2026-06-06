@@ -230,7 +230,7 @@
 
             foreach ($devs as $dev) {
                 ?>
-                <a href="<?php echo BASE_URL; ?>developer.php?slug=<?php echo urlencode($dev['slug']); ?>" class="developer-card-link">
+                <a href="<?php echo BASE_URL; ?>developers/<?php echo $dev['slug']; ?>.php" class="developer-card-link">
                     <div class="developer-card">
                         <div class="developer-circle">
                             <img src="<?php echo BASE_URL; ?>assets/images/developers/<?php echo $dev['img']; ?>"

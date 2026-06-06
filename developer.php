@@ -3,10 +3,10 @@
  * Developer Profile & Details Page - Justdial Style Premium Layout
  * Dholera Smart City
  */
-require_once 'database/db_config.php';
+require_once __DIR__ . '/database/db_config.php';
 
 // Retrieve and validate the developer slug
-$slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
+$slug = isset($slug) ? $slug : (isset($_GET['slug']) ? trim($_GET['slug']) : '');
 
 // Comprehensive, high-fidelity developer profiles config array
 $developer_profiles = [
@@ -269,7 +269,7 @@ $seo_desc = htmlspecialchars($dev_info['short_desc']) . " Explore active plottin
 $seo_keywords = htmlspecialchars($dev_info['name']) . ", Dholera Developer, Dholera SIR Plots, Verified Builder Dholera, Real Estate Gujarat";
 
 // Include site header
-include 'includes/header.php';
+include __DIR__ . '/includes/header.php';
 ?>
 
 <style>
@@ -1580,5 +1580,5 @@ include 'includes/header.php';
 
 <?php
 // Include site footer
-include 'includes/footer.php';
+include __DIR__ . '/includes/footer.php';
 ?>

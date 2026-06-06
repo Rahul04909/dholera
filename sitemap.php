@@ -46,5 +46,16 @@ try {
     // Silence error for XML integrity
 }
 
+// 3. Developers
+$devs = ['7oak-group', 'ethereum-infracon', 'gaim-group', 'gohil-group', 'gap-group', 'mirrikh-infratech', 'nestoria-group', 'rsc-group', 'scrj-group', 'seksaria-group', 'singhal-group'];
+foreach ($devs as $dev_slug) {
+    echo '  <url>' . PHP_EOL;
+    echo '    <loc>' . BASE_URL . 'developers/' . $dev_slug . '.php</loc>' . PHP_EOL;
+    echo '    <lastmod>' . date('Y-m-d') . '</lastmod>' . PHP_EOL;
+    echo '    <changefreq>monthly</changefreq>' . PHP_EOL;
+    echo '    <priority>0.6</priority>' . PHP_EOL;
+    echo '  </url>' . PHP_EOL;
+}
+
 echo '</urlset>';
 ?>
